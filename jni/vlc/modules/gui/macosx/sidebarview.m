@@ -27,7 +27,7 @@
 #import "playlist.h"
 
 @implementation sidebarview
-- (void) resetCursorRects 
+- (void) resetCursorRects
 {
 	if( ! [self isPaneSplitter] )
 		[super resetCursorRects];
@@ -61,16 +61,16 @@
 		[super adjustSubviews];
 		return;
 	}
-    
+
 	float dividerThickness = [self dividerThickness];
 	NSRect newFrame = [self frame];
-    
+
 	NSView *mainView = [[self subviews] objectAtIndex:_mainSubviewIndex];
 	NSView *otherView = ( _mainSubviewIndex ? [[self subviews] objectAtIndex:0] : [[self subviews] objectAtIndex:1] );
-    
+
 	NSRect mainFrame = [mainView frame];
 	NSRect otherFrame = [otherView frame];
-    
+
 
 	mainFrame.size.width = NSWidth( newFrame ) - dividerThickness - NSWidth( otherFrame );
 	mainFrame.size.height = NSHeight( newFrame );
@@ -81,10 +81,10 @@
 	otherFrame.size.height = NSHeight( newFrame );
 	otherFrame.origin.x = ( _mainSubviewIndex ? 0. : NSWidth( mainFrame ) + dividerThickness );
 	otherFrame.origin.y = 0.;
-    
+
 	[mainView setFrame:mainFrame];
 	[otherView setFrame:otherFrame];
-    
+
 	[self setNeedsDisplay:YES];
 }
 @end

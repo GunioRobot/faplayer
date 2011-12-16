@@ -11,12 +11,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -57,7 +57,7 @@ public:
 	UTFstring();
 	UTFstring(const wchar_t *); // should be NULL terminated
 	UTFstring(const UTFstring &);
-	
+
 	virtual ~UTFstring();
 	bool operator==(const UTFstring&) const;
 	inline bool operator!=(const UTFstring &cmp) const
@@ -83,7 +83,7 @@ public:
     protected:
 #endif
 	size_t _Length; ///< length of the UCS string excluding the \0
-	wchar_t* _Data; ///< internal UCS representation	
+	wchar_t* _Data; ///< internal UCS representation
 	std::string UTF8string;
 	static bool wcscmp_internal(const wchar_t *str1, const wchar_t *str2);
 	void UpdateFromUTF8();
@@ -101,19 +101,19 @@ class EBML_DLL_API EbmlUnicodeString : public EbmlElement {
 		EbmlUnicodeString();
 		EbmlUnicodeString(const UTFstring & DefaultValue);
 		EbmlUnicodeString(const EbmlUnicodeString & ElementToClone);
-	
+
 		virtual ~EbmlUnicodeString() {}
-	
+
 		virtual bool ValidateSize() const {return IsFiniteSize();} // any size is possible
 		filepos_t RenderData(IOCallback & output, bool bForceRender, bool bWithDefault = false);
 		filepos_t ReadData(IOCallback & input, ScopeMode ReadFully = SCOPE_ALL_DATA);
 		filepos_t UpdateSize(bool bWithDefault = false, bool bForceRender = false);
-	
+
 		EbmlUnicodeString & operator=(const UTFstring &); ///< platform dependant code
 		operator const UTFstring &() const;
-	
+
 		void SetDefaultValue(UTFstring &);
-    
+
 		const UTFstring & DefaultVal() const;
 
 		bool IsDefaultValue() const {

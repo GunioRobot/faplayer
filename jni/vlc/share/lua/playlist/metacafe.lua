@@ -21,7 +21,7 @@
 -- Probe function.
 function probe()
     return vlc.access == "http"
-        and string.match( vlc.path, "metacafe.com" ) 
+        and string.match( vlc.path, "metacafe.com" )
         and (  string.match( vlc.path, "watch/" )
             or string.match( vlc.path, "mediaURL=" ) )
 end
@@ -36,10 +36,10 @@ function parse()
             line = vlc.readline()
             if not line then break end
             if string.match( line, "<meta name=\"title\"" ) then
-                _,_,name = string.find( line, "content=\"Metacafe %- (.-)\"" )  
+                _,_,name = string.find( line, "content=\"Metacafe %- (.-)\"" )
             end
             if string.match( line, "<meta name=\"description\"" ) then
-                _,_,description = string.find( line, "content=\"(.-)\"" )  
+                _,_,description = string.find( line, "content=\"(.-)\"" )
             end
             if string.match( line, "<link rel=\"image_src\"" ) then
                 _,_,arturl = string.find( line, "href=\"(.-)\"" )

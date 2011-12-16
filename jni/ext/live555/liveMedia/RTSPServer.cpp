@@ -407,7 +407,7 @@ void RTSPServer::RTSPClientSession::handleRequestBytes(int newBytesRead) {
       // Copy the new decoded bytes in place of the old ones (we can do this because there are fewer decoded bytes than original):
       unsigned char* to = ptr-fBase64RemainderCount;
       for (unsigned i = 0; i < decodedSize; ++i) *to++ = decodedBytes[i];
-      
+
       // Then copy any remaining (undecoded) bytes to the end:
       for (unsigned j = 0; j < newBase64RemainderCount; ++j) *to++ = (ptr-fBase64RemainderCount+numBytesToDecode)[j];
 
@@ -1307,7 +1307,7 @@ Boolean RTSPServer::RTSPClientSession::parseHTTPRequestString(char* resultCmdNam
   unsigned j = k;
   while (j > 0 && reqStr[j] != ' ' && reqStr[j] != '/') --j;
   // The URL suffix is in position (j,k]:
-  if (k - j + 1 > urlSuffixMaxSize) return False; // there's no room> 
+  if (k - j + 1 > urlSuffixMaxSize) return False; // there's no room>
   unsigned n = 0;
   while (++j <= k) urlSuffix[n++] = reqStr[j];
   urlSuffix[n] = '\0';

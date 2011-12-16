@@ -69,7 +69,7 @@ enum mad_flow {
 			         normally */
   MAD_FLOW_BREAK    = 0x0011, /* Stop decoding this stream, and exit
                                  with an error */
-  MAD_FLOW_IGNORE   = 0x0020  /* Don't decode this frame, 
+  MAD_FLOW_IGNORE   = 0x0020  /* Don't decode this frame,
 				 but continue afterwards */
 };
 
@@ -133,7 +133,7 @@ while (nsamples--)
 
             *ptr++ = (unsigned char) (sample >> 0);
             *ptr++ = (unsigned char) (sample >> 8);
-            
+
             sample = (signed int) do_downsample(*right_ch++)
 
             *ptr++ = (unsigned char) (sample >> 0);
@@ -151,7 +151,7 @@ appreciated, though I think in knowing this information anyone should be
 able to puzzle it out.
 
 Now that the decoder is set up with all these callback functions, you
-call 
+call
 
 mad_decoder_run(&decoder, MAD_DECODER_MODE_SYNC);
 
@@ -168,7 +168,7 @@ I hope this helps people get their feet wet with MAD. Read the source,
 and particularly mad.h - there are a lot of things there you might not
 expect. Rob has done a good job in making MAD a complete solution. :)
 
--- 
+--
 Joe Drew <hoserhead@woot.net> <drew@debian.org>
 
 Please encrypt email sent to me.

@@ -57,7 +57,7 @@ void on_select_source_path(GtkWidget *widget, gpointer data) {
         strncat(uri, scheme, strlen(scheme));
         strncat(uri, path, strlen(path));
         g_free(path);
-        
+
         gtk_entry_set_text(GTK_ENTRY(source_entry), uri);
         free(uri);
     }

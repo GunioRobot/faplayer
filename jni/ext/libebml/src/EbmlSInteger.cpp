@@ -9,12 +9,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -67,16 +67,16 @@ filepos_t EbmlSInteger::RenderData(IOCallback & output, bool bForceRender, bool 
 {
 	binary FinalData[8]; // we don't handle more than 64 bits integers
 	unsigned int i;
-	
+
 	if (GetSizeLength() > 8)
 		return 0; // integer bigger coded on more than 64 bits are not supported
-	
+
 	int64 TempValue = Value;
 	for (i=0; i<GetSize();i++) {
 		FinalData[GetSize()-i-1] = binary(TempValue & 0xFF);
 		TempValue >>= 8;
 	}
-	
+
 	output.writeFully(FinalData,GetSize());
 
 	return GetSize();
@@ -121,12 +121,12 @@ filepos_t EbmlSInteger::ReadData(IOCallback & input, ScopeMode ReadFully)
 	{
 		binary Buffer[8];
 		input.readFully(Buffer, GetSize());
-		
+
 		if (Buffer[0] & 0x80)
 			Value = -1; // this is a negative value
 		else
 			Value = 0; // this is a positive value
-		
+
 		for (unsigned int i=0; i<GetSize(); i++)
 		{
 			Value <<= 8;

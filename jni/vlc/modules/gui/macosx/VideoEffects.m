@@ -44,7 +44,7 @@ static VLCVideoEffects *_o_sharedInstance = nil;
         p_intf = VLCIntf;
         _o_sharedInstance = [super init];
     }
-    
+
     return _o_sharedInstance;
 }
 
@@ -701,7 +701,7 @@ static VLCVideoEffects *_o_sharedInstance = nil;
 
 - (IBAction)extractModifierChanged:(id)sender
 {
-    [self setVideoFilterProperty: "extract-component" forFilter: "extract" integer: [o_extract_fld intValue]];  
+    [self setVideoFilterProperty: "extract-component" forFilter: "extract" integer: [o_extract_fld intValue]];
 }
 
 - (IBAction)enableInvert:(id)sender

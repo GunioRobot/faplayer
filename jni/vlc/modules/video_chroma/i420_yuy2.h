@@ -27,7 +27,7 @@
 #if defined(CAN_COMPILE_MMX)
 
 /* MMX assembly */
- 
+
 #define MMX_CALL(MMX_INSTRUCTIONS)          \
     do {                                    \
     __asm__ __volatile__(                   \
@@ -130,7 +130,7 @@ movq      %%mm1, (%1)   # Store YUYV                                      \n\
     } while(0)
 
 #define MMX_END _mm_empty()
- 
+
 #define MMX_YUV420_YUYV                     \
     mm1 = _mm_cvtsi32_si64(*(int*)p_u);     \
     mm2 = _mm_cvtsi32_si64(*(int*)p_v);     \

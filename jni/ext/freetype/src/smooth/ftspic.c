@@ -51,7 +51,7 @@
     FT_Memory          memory        = library->memory;
 
 
-    /* since this function also serve smooth_lcd and smooth_lcdv renderers, 
+    /* since this function also serve smooth_lcd and smooth_lcdv renderers,
        it implements reference counting */
     if(pic_container->smooth)
     {

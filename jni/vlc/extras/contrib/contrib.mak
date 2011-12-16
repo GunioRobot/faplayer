@@ -3,7 +3,7 @@
 # ***************************************************************************
 # Copyright (C) 2003-2011 the VideoLAN team
 # $Id$
-# 
+#
 # Authors: Christophe Massiot <massiot@via.ecp.fr>
 #          Derk-Jan Hartman <hartman at videolan dot org>
 #          Christophe Mutricy <xtophe at videolan dot org>
@@ -11,7 +11,7 @@
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or    
+# the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -76,7 +76,7 @@ ifdef HAVE_MACOSX_DARWIN_10
 endif
 	touch .$(CONTRIBREV)
 
-using-bin: .$(CONTRIBREV) 
+using-bin: .$(CONTRIBREV)
 
 endif
 

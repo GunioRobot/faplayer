@@ -11,7 +11,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -41,16 +41,16 @@
  *****************************************************************************/
 @implementation VLCFSPanel
 /* We override this initializer so we can set the NSBorderlessWindowMask styleMask, and set a few other important settings */
-- (id)initWithContentRect:(NSRect)contentRect 
-                styleMask:(NSUInteger)aStyle 
-                  backing:(NSBackingStoreType)bufferingType 
+- (id)initWithContentRect:(NSRect)contentRect
+                styleMask:(NSUInteger)aStyle
+                  backing:(NSBackingStoreType)bufferingType
                     defer:(BOOL)flag
 {
     id win = [super initWithContentRect:contentRect styleMask:NSTexturedBackgroundWindowMask backing:bufferingType defer:flag];
     [win setOpaque:NO];
     [win setHasShadow: NO];
     [win setBackgroundColor:[NSColor clearColor]];
-    
+
     /* let the window sit on top of everything else and start out completely transparent */
     [win setLevel:NSModalPanelWindowLevel];
     i_device = 0;
@@ -69,14 +69,14 @@
         [self mouseEntered:NULL];
     if (!isInside)
         [self mouseExited:NULL];
-    
+
     /* get a notification if VLC isn't the active app anymore */
     [[NSNotificationCenter defaultCenter]
     addObserver: self
        selector: @selector(setNonActive:)
            name: NSApplicationDidResignActiveNotification
          object: NSApp];
-    
+
     /* get a notification if VLC is the active app again */
     [[NSNotificationCenter defaultCenter]
     addObserver: self
@@ -116,10 +116,10 @@
     NSRect theScreensFrame;
     NSRect theWindowsFrame;
     NSScreen *screen;
-    
+
     /* user-defined screen */
     screen = [NSScreen screenWithDisplayID: (CGDirectDisplayID)i_device];
-    
+
     if (!screen)
     {
         /* invalid preferences or none specified, using main screen */
@@ -129,7 +129,7 @@
     theScreensFrame = [screen frame];
 
     theWindowsFrame = [self frame];
-    
+
     theCoordinate.x = (theScreensFrame.size.width - theWindowsFrame.size.width) / 2 + theScreensFrame.origin.x;
     theCoordinate.y = (theScreensFrame.size.height / 3) - theWindowsFrame.size.height + theScreensFrame.origin.y;
     [self setFrameTopLeftPoint: theCoordinate];
@@ -169,7 +169,7 @@
 {
     b_nonActive = YES;
     [self orderOut: self];
-    
+
     /* here's fadeOut, just without visibly fading */
     b_displayed = NO;
     [self setAlphaValue:0.0];
@@ -236,10 +236,10 @@
         {
             b_fadeQueued=NO;
             [self setFadeTimer:
-                [NSTimer scheduledTimerWithTimeInterval:0.1 
-                                                 target:self 
-                                               selector:@selector(focus:) 
-                                               userInfo:NULL 
+                [NSTimer scheduledTimerWithTimeInterval:0.1
+                                                 target:self
+                                               selector:@selector(focus:)
+                                               userInfo:NULL
                                                 repeats:YES]];
         }
     }
@@ -272,7 +272,7 @@
         return;
 
     [self orderFront: nil];
-    
+
     if( [self alphaValue] < 1.0 || b_displayed != YES )
     {
         if (![self fadeTimer])
@@ -302,7 +302,7 @@
 {
     /* this will tell the timer to start over again or to start at all */
     b_keptVisible = YES;
-    
+
     /* get us a valid timer */
     if(! b_alreadyCounting )
     {
@@ -314,9 +314,9 @@
         }
         /* released in -autoHide and -dealloc */
         hideAgainTimer = [[NSTimer scheduledTimerWithTimeInterval: 0.5
-                                                          target: self 
+                                                          target: self
                                                         selector: @selector(keepVisible:)
-                                                        userInfo: nil 
+                                                        userInfo: nil
                                                          repeats: YES] retain];
         b_alreadyCounting = YES;
     }
@@ -457,7 +457,7 @@
     [o_fs_volumeSlider setTarget: self];
     [o_fs_volumeSlider setAction: @selector(fsVolumeSliderUpdate:)];
     [self addSubview: o_fs_volumeSlider];
-    
+
     /* time counter and stream title output fields */
     s_rc = [self frame];
     s_rc.origin.x = 98;
@@ -612,7 +612,7 @@
     NSRectClip(NSZeroRect);
     [super drawRect:rect];
     [[NSGraphicsContext currentContext] restoreGraphicsState];
-    
+
     NSRect knobRect = [[self cell] knobRectFlipped:NO];
     knobRect.origin.y+=7.5;
     [[[NSColor blackColor] colorWithAlphaComponent:0.6] set];
@@ -645,7 +645,7 @@
     NSRectClip(NSZeroRect);
     [super drawRect:rect];
     [[NSGraphicsContext currentContext] restoreGraphicsState];
-    
+
     NSRect knobRect = [[self cell] knobRectFlipped:NO];
     knobRect.origin.y+=6;
     [[[NSColor blackColor] colorWithAlphaComponent:0.6] set];

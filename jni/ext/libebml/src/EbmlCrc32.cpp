@@ -11,12 +11,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -273,10 +273,10 @@ bool EbmlCrc32::CheckCRC(uint32 inputCRC, const binary *input, uint32 length)
 
 	//Now we finalize the CRC32
 	crc ^= CRC32_NEGL;
-	
+
 	if (crc == inputCRC)
 		return true;
-	
+
 	return false;
 };
 
@@ -285,7 +285,7 @@ void EbmlCrc32::FillCRC32(const binary *s, uint32 n)
 	ResetCRC();
 	Update(s, n);
 	Finalize();
-	
+
 	/*uint32 crc = CRC32_NEGL;
 
 	for(; !IsAligned<uint32>(s) && n > 0; n--)

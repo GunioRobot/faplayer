@@ -11,12 +11,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -65,24 +65,24 @@ class EBML_DLL_API EbmlMaster : public EbmlElement {
 			\warning be carefull to clear the memory allocated in the ElementList elsewhere
 		*/
 		virtual ~EbmlMaster();
-	
+
 		filepos_t RenderData(IOCallback & output, bool bForceRender, bool bWithDefault = false);
 		filepos_t ReadData(IOCallback & input, ScopeMode ReadFully);
 		filepos_t UpdateSize(bool bWithDefault = false, bool bForceRender = false);
-		
+
 		/*!
 			\brief Set wether the size is finite (size is known in advance when writing, or infinite size is not known on writing)
 		*/
 		bool SetSizeInfinite(bool aIsInfinite = true) {SetSizeIsFinite(!aIsInfinite); return true;}
-	
+
 		bool PushElement(EbmlElement & element);
-		uint64 GetSize() const { 
+		uint64 GetSize() const {
 			if (IsFiniteSize())
                 return EbmlElement::GetSize();
 			else
 				return (0-1);
 		}
-		
+
 		uint64 GetDataStart() const {
 			return GetElementPosition() + EBML_ID_LENGTH((const EbmlId&)*this) + CodedSizeLength(GetSize(), GetSizeLength(), IsFiniteSize());
 		}
@@ -114,7 +114,7 @@ class EBML_DLL_API EbmlMaster : public EbmlElement {
 			\brief Read the data and keep the known children
 		*/
 		void Read(EbmlStream & inDataStream, const EbmlSemanticContext & Context, int & UpperEltFound, EbmlElement * & FoundElt, bool AllowDummyElt, ScopeMode ReadFully = SCOPE_ALL_DATA);
-		
+
 		/*!
 			\brief sort Data when they can
 		*/
@@ -167,7 +167,7 @@ class EBML_DLL_API EbmlMaster : public EbmlElement {
 		bool HasChecksum() const {return bChecksumUsed;}
 		bool VerifyChecksum() const;
 		uint32 GetCrc32() const {return Checksum.GetCrc32();}
-		void ForceChecksum(uint32 NewChecksum) { 
+		void ForceChecksum(uint32 NewChecksum) {
 			Checksum.ForceCrc32(NewChecksum);
 			bChecksumUsed = true;
 		}
@@ -183,12 +183,12 @@ class EBML_DLL_API EbmlMaster : public EbmlElement {
     protected:
 #endif
 		std::vector<EbmlElement *> ElementList;
-	
+
 		const EbmlSemanticContext & Context;
 
 		bool      bChecksumUsed;
 		EbmlCrc32 Checksum;
-			
+
 	private:
 		/*!
 			\brief Add all the mandatory elements to the list

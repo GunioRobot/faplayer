@@ -75,7 +75,7 @@ div.helper hr {
 }
 
 div.title {
-	width: 100%/*576px*/; /* see overflow:hidden several lines 
+	width: 100%/*576px*/; /* see overflow:hidden several lines
                                 * before for explanation */
 	background: #000 url('images/vlc16x16.png') no-repeat top left;
 	padding-left: 24px;

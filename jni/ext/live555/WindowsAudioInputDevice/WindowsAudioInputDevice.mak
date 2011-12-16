@@ -1,5 +1,5 @@
 INCLUDES = -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include
-##### Change the following for your environment: 
+##### Change the following for your environment:
 # Comment out the following line to produce Makefiles that generate debuggable code:
 NODEBUG=1
 
@@ -33,7 +33,7 @@ OBJ =			obj
 LINK =			$(link) -out:
 LIBRARY_LINK =		lib -out:
 LINK_OPTS_0 =		$(linkdebug) msvcirt.lib
-LIBRARY_LINK_OPTS =	
+LIBRARY_LINK_OPTS =
 LINK_OPTS =		$(LINK_OPTS_0) $(UI_OPTS)
 CONSOLE_LINK_OPTS =	$(LINK_OPTS_0) $(CONSOLE_UI_OPTS)
 SERVICE_LINK_OPTS =     kernel32.lib advapi32.lib shell32.lib -subsystem:console,$(APPVER)
@@ -55,7 +55,7 @@ ALL = $(WINDOWSAUDIOINPUTDEVICE_NOMIXER_LIB) $(WINDOWSAUDIOINPUTDEVICE_MIXER_LIB
 all::	$(ALL)
 
 .$(C).$(OBJ):
-	$(C_COMPILER) -c $(C_FLAGS) $<       
+	$(C_COMPILER) -c $(C_FLAGS) $<
 
 .$(CPP).$(OBJ):
 	$(CPLUSPLUS_COMPILER) -c $(CPLUSPLUS_FLAGS) $<

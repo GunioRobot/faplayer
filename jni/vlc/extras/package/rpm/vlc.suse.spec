@@ -5,7 +5,7 @@ Release: 	20395.0
 Source: 	%{name}-%{version}.tar.bz2
 Packager: 	Dominique Leuenberger <dominique-rpm@leuenberger.net>
 License: 	GPL
-Group: Productivity/Multimedia/Video/Players	
+Group: Productivity/Multimedia/Video/Players
 BuildRoot:  %{_tmppath}/%{name}-%{version}-build
 BuildRequires: libdvdnav-devel gettext-devel libvorbis-devel libogg-devel libtheora-devel
 BuildRequires: cvs gnome-vfs2-devel libcdio-devel libdvdread-devel libcddb-devel gnutls-devel alsa-devel
@@ -26,7 +26,7 @@ BuildRequires: xorg-x11-Mesa xorg-x11-Mesa-devel
 %endif
 
 # The requirements for the Mozilla-Plugin (--enable-mozilla)
-# unfortunately, the mozilla-devel get's changed and renamed all the time. So 
+# unfortunately, the mozilla-devel get's changed and renamed all the time. So
 # this gave a complete if endif structure.
 # for the releases 10.2 and 10.3, xulrunner provides gecko-sdk
 %if %suse_version <= 1000
@@ -47,10 +47,10 @@ Requires: %{name} = %{version}
 With this plugin, you enable video content withing the Mozilla Browser Suites
 
 %description
-VLC media player is a highly portable multimedia player for various 
-audio and video formats (MPEG-1, MPEG-2, MPEG-4, DivX, mp3, ogg, ...) 
-as well as DVDs, VCDs, and various streaming protocols. 
-It can also be used as a server to stream in unicast or multicast 
+VLC media player is a highly portable multimedia player for various
+audio and video formats (MPEG-1, MPEG-2, MPEG-4, DivX, mp3, ogg, ...)
+as well as DVDs, VCDs, and various streaming protocols.
+It can also be used as a server to stream in unicast or multicast
 in IPv4 or IPv6 on a high-bandwidth network.
 
 %prep
@@ -58,7 +58,7 @@ in IPv4 or IPv6 on a high-bandwidth network.
 
 
 %debug_package
-%build 
+%build
 %if %suse_version <= 1000
 export XPIDL=/opt/mozilla/%{_lib}/xpidl
 export PATH=${PATH}:/opt/mozilla/bin
@@ -159,11 +159,11 @@ export XPIDL_INCL=$(xulrunner-config --idlflags)
    --enable-dvbpsi
 #   --enable-dvb \
 #   --with-ffmpeg-mp3lame \
-#   --enable-quicktime\ 
+#   --enable-quicktime\
 #   --enable-sdl \
 #   --enable-ggi \
 #   --enable-svgalib \
- 
+
 
 make %{?jobs:-j %jobs}
 

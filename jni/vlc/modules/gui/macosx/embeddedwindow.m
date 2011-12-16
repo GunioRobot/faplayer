@@ -113,24 +113,24 @@
     if ([self showsResizeIndicator] == NO) {
         NSRect view_rect;
         view_rect = [o_backgroundimg_right frame];
-        
+
         [o_backgroundimg_right setFrame: NSMakeRect( view_rect.origin.x+15,
                                                     view_rect.origin.y,
                                                     view_rect.size.width,
                                                     view_rect.size.height )];
-        
+
         view_rect = [o_backgroundimg_middle frame];
         [o_backgroundimg_middle setFrame: NSMakeRect( view_rect.origin.x,
                                                      view_rect.origin.y,
                                                      view_rect.size.width+15,
                                                      view_rect.size.height )];
-        
+
         view_rect = [o_timeslider frame];
         [o_timeslider setFrame: NSMakeRect( view_rect.origin.x,
                                            view_rect.origin.y,
                                            view_rect.size.width+15,
                                            view_rect.size.height )];
-        
+
         view_rect = [o_time frame];
         [o_time setFrame: NSMakeRect( view_rect.origin.x+15,
                                      view_rect.origin.y,

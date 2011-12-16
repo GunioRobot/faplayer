@@ -144,7 +144,7 @@ build:
 clean:
 	-$(MAKE) distclean
 
-install: 
+install:
 	rm -fr ${PKGDIR}/
 	mkdir -p ${PKGDIR}/CONTROL
 	mkdir -p $(PKGDIR)/usr/bin

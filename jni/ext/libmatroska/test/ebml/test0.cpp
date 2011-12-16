@@ -16,7 +16,7 @@
 ** Foundation and appearing in the file LICENSE.GPL included in the
 ** packaging of this file.
 **
-** Licensees holding an other license may use this file in accordance with 
+** Licensees holding an other license may use this file in accordance with
 ** the Agreement provided with the Software.
 **
 ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
@@ -74,7 +74,7 @@ struct Semantic {
 	SemanticType Type;
 };
 
-struct Semantic SemanticList[] = 
+struct Semantic SemanticList[] =
 {
 	{{0x42, 0x45},             2, EBML_U_INTEGER},
 	{{0x1A, 0x45, 0x33, 0x80}, 4, EBML_S_INTEGER},
@@ -92,15 +92,15 @@ struct Semantic SemanticList[] =
 int main(void)
 {
 	StdIOCallback Ebml_file(RW_FILENAME, ::MODE_CREATE);
-	
+
 	///// Writing test
 
 	///////////////////////////////
 	//   Unsigned integer
 	///////////////////////////////
-	
+
 	EbmlUInteger testUInt(4); // supposed to hold a 4*8 bits value
-	
+
 	testUInt.SetID(SemanticList[0].Id, SemanticList[0].IdLength);
 	testUInt = 52;
 	testUInt.SetSizeLength(3); // size should be coded on at least 3 octets
@@ -109,7 +109,7 @@ int main(void)
 	///////////////////////////////
 	//   Signed integer
 	///////////////////////////////
-	
+
 	EbmlSInteger testSInt(4); // supposed to hold a 4*8 bits value
 
 	testSInt.SetID(SemanticList[1].Id, SemanticList[1].IdLength);
@@ -120,7 +120,7 @@ int main(void)
 	//   Binary data
 	///////////////////////////////
 	const int BINARY_SIZE=3000;
-	
+
 	binary *bin = new binary[BINARY_SIZE];
 	memset(bin, 0x61, BINARY_SIZE);
 	EbmlBinary testBin;
@@ -168,20 +168,20 @@ int main(void)
 	testFloat.SetPrecision(EbmlFloat::FLOAT_32);
 	testFloat = 1.01234567890123456;
 	testFloat.Render(Ebml_file);
-	
+
 	testFloat.SetPrecision(EbmlFloat::FLOAT_64);
 	testFloat = -1.01234567890123456L;
 	testFloat.Render(Ebml_file);
-	
+
 	Ebml_file.close();
 
 	///// Reading test
 	StdIOCallback Ebml_Wfile(RW_FILENAME, ::MODE_READ);
-	
+
 	// example 1 skip all the elements found
 	EbmlStream aStream(Ebml_Wfile);
 	EbmlElement * ElementLevel0;
-	
+
 	// read the data until a possible element is found (valid ID + size combination)
 	ElementLevel0 = aStream.FindNextID(0xFFFFFFFFL, false);
 	printf("Read EBML elements & skip data\n");
@@ -197,22 +197,22 @@ int main(void)
 		ElementLevel0->SkipData(Ebml_Wfile);
 		if (ElementLevel0 != NULL)
 			delete ElementLevel0;
-	
+
 		ElementLevel0 = aStream.FindNextID(0xFFFFFFFFL, false);
 	}
-	
+
 	// example 2 evaluation of all elements found
 	EbmlStream bStream(Ebml_Wfile);
 	EbmlElement * EvaledElementLevel0;
 //	EbmlElement * EvaledElementLevel1;
-	
+
 	// reset the stream to the beggining
 	Ebml_Wfile.setFilePointer(0);
-	
+
 	// list of all IDs and their semantic type
 //	std::list<struct Semantic> SemanticList;
 //	SemanticList.push_back();
-	
+
 	ElementLevel0 = aStream.FindNextID(0xFFFFFFFFL, false);
 	printf("Read EBML elements & evaluate data\n");
 	while (ElementLevel0 != NULL)
@@ -294,10 +294,10 @@ int main(void)
 			delete ElementLevel0;
 
 		printf("\n");
-	
+
 		ElementLevel0 = aStream.FindNextID(0xFFFFFFFFL, false);
 	}
-	
+
 	Ebml_Wfile.close();
 
 	return 0;

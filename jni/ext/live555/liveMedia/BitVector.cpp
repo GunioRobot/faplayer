@@ -41,7 +41,7 @@ static unsigned char const singleBitMask[8]
 #define MAX_LENGTH 32
 
 void BitVector::putBits(unsigned from, unsigned numBits) {
-  if (numBits == 0) return; 
+  if (numBits == 0) return;
 
   unsigned char tmpBuf[4];
   unsigned overflowingBits = 0;

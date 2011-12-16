@@ -43,7 +43,7 @@ static const uint64_t mmx_mask_fc = 0xfcfcfcfcfcfcfcfcULL; /* -- as %13 */
 #if defined(CAN_COMPILE_MMX)
 
 /* MMX assembly */
- 
+
 #define MMX_CALL(MMX_INSTRUCTIONS)      \
     do {                                \
     __asm__ __volatile__(               \
@@ -364,7 +364,7 @@ movq      %%mm2, 24(%3) # Store ABGR7 ABGR6                                 \n\
     } while(0)
 
 #define MMX_END _mm_empty()
- 
+
 #define MMX_INIT_16                     \
     mm0 = _mm_cvtsi32_si64(*(int*)p_u); \
     mm1 = _mm_cvtsi32_si64(*(int*)p_v); \

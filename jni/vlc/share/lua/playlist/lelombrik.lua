@@ -23,7 +23,7 @@
 -- Probe function.
 function probe()
     return vlc.access == "http"
-        and string.match( vlc.path, "lelombrik.net/videos" ) 
+        and string.match( vlc.path, "lelombrik.net/videos" )
 end
 
 -- Parse function.

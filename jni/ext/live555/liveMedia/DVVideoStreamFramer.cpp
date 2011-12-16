@@ -85,7 +85,7 @@ void DVVideoStreamFramer::getProfile() {
   // To determine the stream's profile, we need to first read a chunk of data that we can parse:
   fInputSource->getNextFrame(fSavedInitialBlocks, DV_SAVED_INITIAL_BLOCKS_SIZE,
 			     afterGettingFrame, this, FramedSource::handleClosure, this);
-  
+
   // Handle events until the requested data arrives:
   envir().taskScheduler().doEventLoop(&fInitialBlocksPresent);
 }
@@ -111,7 +111,7 @@ void DVVideoStreamFramer::doGetNextFrame() {
     fTo += DV_SAVED_INITIAL_BLOCKS_SIZE;
     fInitialBlocksPresent = False; // for the future
   }
-    
+
   // Arrange to read the (rest of the) requested data.
   // (But first, make sure that we read an integral multiple of the DV block size.)
   fMaxSize -= fMaxSize%DV_DIF_BLOCK_SIZE;

@@ -51,7 +51,7 @@ StrCpy $Name_InstTypeRecommended "Zalecana"
 StrCpy $Name_InstTypeMinimum "Minimalna"
 StrCpy $Name_InstTypeFull "Pe³na"
 
-StrCpy $Action_OnArrivalDVD "Odtwarzaj film na DVD" 
+StrCpy $Action_OnArrivalDVD "Odtwarzaj film na DVD"
 StrCpy $Action_OnArrivalAudioCD "Odtwarzaj audio CD"
 StrCpy $Action_OnArrivalVCDMovie "Odtwarzaj film na VCD"
 StrCpy $Action_OnArrivalSVCDMovie "Odtwarzaj film na SVCD"

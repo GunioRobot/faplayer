@@ -11,12 +11,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -61,13 +61,13 @@ class EBML_DLL_API EbmlBinary : public EbmlElement {
 		EbmlBinary();
 		EbmlBinary(const EbmlBinary & ElementToClone);
 		virtual ~EbmlBinary(void);
-	
+
 		virtual bool ValidateSize() const {return IsFiniteSize() && GetSize() < 0x7FFFFFFF;} // we don't mind about what's inside
 
 		filepos_t RenderData(IOCallback & output, bool bForceRender, bool bWithDefault = false);
 		filepos_t ReadData(IOCallback & input, ScopeMode ReadFully = SCOPE_ALL_DATA);
 		filepos_t UpdateSize(bool bWithDefault = false, bool bForceRender = false);
-	
+
 		void SetBuffer(const binary *Buffer, const uint32 BufferSize) {
 			Data = (binary *) Buffer;
 			SetSize_(BufferSize);
@@ -75,7 +75,7 @@ class EBML_DLL_API EbmlBinary : public EbmlElement {
 		}
 
 		binary *GetBuffer() const {return Data;}
-		
+
 		void CopyBuffer(const binary *Buffer, const uint32 BufferSize) {
 			if (Data != NULL)
 				free(Data);
@@ -84,9 +84,9 @@ class EBML_DLL_API EbmlBinary : public EbmlElement {
 			SetSize_(BufferSize);
 			SetValueIsSet();
 		}
-		
+
 		operator const binary &() const;
-	
+
 		bool IsDefaultValue() const {
 			return false;
 		}

@@ -28,12 +28,12 @@ enum RecordType {
   RECORD_GOP = 2,
   RECORD_PIC_NON_IFRAME = 3, // includes slices
   RECORD_PIC_IFRAME = 4, // includes slices
-  RECORD_NAL_SPS = 5, // H.264	
-  RECORD_NAL_PPS = 6, // H.264	
-  RECORD_NAL_SEI = 7, // H.264	
-  RECORD_NAL_NON_IFRAME = 8, // H.264	
-  RECORD_NAL_IFRAME = 9, // H.264	
-  RECORD_NAL_OTHER = 10, // H.264	
+  RECORD_NAL_SPS = 5, // H.264
+  RECORD_NAL_PPS = 6, // H.264
+  RECORD_NAL_SEI = 7, // H.264
+  RECORD_NAL_NON_IFRAME = 8, // H.264
+  RECORD_NAL_IFRAME = 9, // H.264
+  RECORD_NAL_OTHER = 10, // H.264
   RECORD_JUNK
 };
 
@@ -451,7 +451,7 @@ Boolean MPEG2IFrameIndexFromTransportStream::parseFrame() {
     curRecordType = RECORD_NAL_NON_IFRAME;
     if (!parseToNextCode(nextCode)) return False;
     break;
-  case 5: // Coded slice of an IDR picture (H.264) 
+  case 5: // Coded slice of an IDR picture (H.264)
     curRecordType = RECORD_NAL_IFRAME;
     if (!parseToNextCode(nextCode)) return False;
     break;

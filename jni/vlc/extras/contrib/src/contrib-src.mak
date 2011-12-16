@@ -1614,8 +1614,8 @@ DISTCLEAN_PKG += qt4-$(QT4_VERSION)-win32-bin.tar.bz2
 # ***************************************************************************
 # qt4 (Mac)
 # ***************************************************************************
- 
-qt-mac-opensource-$(QT4_MAC_VERSION).dmg: 
+
+qt-mac-opensource-$(QT4_MAC_VERSION).dmg:
 	$(WGET) $(QT4_MAC_URL)
 
 qt4_mac: qt-mac-opensource-$(QT4_MAC_VERSION).dmg

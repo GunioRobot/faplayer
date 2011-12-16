@@ -116,7 +116,7 @@
   -- #videolan
 %
 <gibalou> --filter distort:transform:distort rocks :)
-<gibalou> hey, I don't have enough processing power for --filter 
+<gibalou> hey, I don't have enough processing power for --filter
           distort:transform:distort:transform:distort :(
 
   -- #videolan
@@ -207,7 +207,7 @@ the Boston strangler is to the woman home alone.
 
   -- #videolan
 %
-<ArkanumJ> meuuh: How's the 0.5 coming along? 
+<ArkanumJ> meuuh: How's the 0.5 coming along?
 <Meuuh> ArkanumJ : about 5 seconds
 <ArkanumJ> meuuh: huh? its going to be released soon?
 <Meuuh> ArkanumJ : no, it works for five seconds, before crashing
@@ -215,7 +215,7 @@ the Boston strangler is to the woman home alone.
   -- #videolan
 %
 <ArkanumJ> BTW, the CVS version runs well on MacOS X, but the sound is a bit
-           broken. 
+           broken.
 <Dnumgis> ArkanumJ: sound is a bit broken everywhere I think
 <Dnumgis> ArkanumJ: except the places where it is completly broken
 
@@ -258,7 +258,7 @@ the Boston strangler is to the woman home alone.
 
   -- #videolan
 %
-<tooney> $grut Dnumgis 
+<tooney> $grut Dnumgis
 <gally> Dnumgis: tiår ditt og nødhavn klikk ?
 <Dnumgis> gally: og hva skulle det bety?
 <Dnumgis> gally: what was that supposed to mean?
@@ -266,7 +266,7 @@ the Boston strangler is to the woman home alone.
   -- #videolan
 %
 <sam> $grut
-<gally> vekt yrer gøten øke utgjøre kan 
+<gally> vekt yrer gøten øke utgjøre kan
 <Dnumgis> sam: you're insane
 <Dnumgis> someone have too much spare time
 <sam> definitely
@@ -306,10 +306,10 @@ the Boston strangler is to the woman home alone.
 <Dnumgis> but I don't get the time of the stream
 <Dnumgis> gibalou: why don't I get the time?
 <sam> because time does not exist
-<sam> as Kant stated, our mind structures our perceptions so that we know a 
-      priori that time is like a mathematical line, rendering time as a form 
+<sam> as Kant stated, our mind structures our perceptions so that we know a
+      priori that time is like a mathematical line, rendering time as a form
       of conscious experience
-<gibalou> Dnumgis: a few things are left to be implemented, like seeking, 
+<gibalou> Dnumgis: a few things are left to be implemented, like seeking,
           stream length display, etc...
 <sam> or you can listen to gibalou's dull explanation
 
@@ -327,10 +327,10 @@ the Boston strangler is to the woman home alone.
 
   -- #videolan
 %
-<Meuuh> at the salsa lesson tonight, a girl told me that she was very happy to  
+<Meuuh> at the salsa lesson tonight, a girl told me that she was very happy to
         dance with me
 <Meuuh> do you think it means something ?
-<Dnumgis> Probably that she finally found someone that was worse at dancing 
+<Dnumgis> Probably that she finally found someone that was worse at dancing
           than she
 
   -- #videolan
@@ -347,8 +347,8 @@ the Boston strangler is to the woman home alone.
 
   -- #videolan
 %
-<haroldo> hi I've got some nice xxx videos, and I'd like to exchange with 
-          anyone 
+<haroldo> hi I've got some nice xxx videos, and I'd like to exchange with
+          anyone
 
   -- #videolan
 %
@@ -516,9 +516,9 @@ the Boston strangler is to the woman home alone.
   -- #videolan
 %
 
-< zorglub> vlc file1.mpg :start-time=300 :stop-time=420 --sout 
+< zorglub> vlc file1.mpg :start-time=300 :stop-time=420 --sout
                     file/ps:file2.mpg
-< boggle> sgagers: use zorglubs command, it will copy the needed 
+< boggle> sgagers: use zorglubs command, it will copy the needed
                    timeslice to file2.mpeg
 < sgagers> boggle: zorglubs is an utility of ffmpeg?
 
@@ -585,12 +585,12 @@ the Boston strangler is to the woman home alone.
 <sam> j'appelle mes variables Illl, lIll, lIlI, IllI, IlII, etc.
   -- #videolan
 %
-20:47:12 < glspi> can you get rid of the wxwidgets interface and only show the 
+20:47:12 < glspi> can you get rid of the wxwidgets interface and only show the
                   video somehow?
 20:47:17 < zorglub> -I dummy
 20:50:10 < glspi> -I didn't work btw, in windows at least
 20:52:28 < glspi> i don't see it in interface/general either! ahhh :(
-20:58:46 < glspi> ok i thought you were calling ME dummy, not saying use -I 
+20:58:46 < glspi> ok i thought you were calling ME dummy, not saying use -I
                   dummy :p
   -- #videolan
 %
@@ -669,7 +669,7 @@ VLC is the greatest thing since sliced bread!
 <j-b> Dnumgis_: do you have a girlfriend ?
 <Dnumgis_> j-b: not at the moment, no
 <j-b> Dnumgis_: so why don't you try this technick ?
-<Dnumgis_> j-b: I don't live close enough to Meuuh 
+<Dnumgis_> j-b: I don't live close enough to Meuuh
 <E-bola> thats some good norwegian reasoning
   -- #videolan
 %
@@ -681,7 +681,7 @@ VLC is the greatest thing since sliced bread!
 %
 < thedj> i need a girlfriend. that would make it so much easier not to do VLC :D
 < j-b> thedj: how old are you ?
-< j-b> thedj: you can buy cheap in Russia... :D Ask thresh 
+< j-b> thedj: you can buy cheap in Russia... :D Ask thresh
 < thedj> lol
 < thedj> haha. i'm rereading my line and it gets funier :D
 < thedj> not to DO vlc :D
@@ -694,7 +694,7 @@ VLC is the greatest thing since sliced bread!
 < thedj> j-b: i know the feeling
 < LordRPI> my mother gets upset if I tell her I'm at a bar without a girl
 < thedj> haha
-< thedj> LordRPI: she fears you will turn into a lonely drunk 
+< thedj> LordRPI: she fears you will turn into a lonely drunk
 < thedj> roaming the city at night looking for a place to stay :D
 < tumu> lonely drunk is good
   -- #videolan, same night, 4:38 am
@@ -742,7 +742,7 @@ Meuuh changed the topic of #videolan to: Welcome! | <funman> i don't remember la
 <sam> try anal sex next time
   -- #videolan
 %
-< Bond493> Can anyone refer me to some documents which describe the VLC player internal? I'd 
+< Bond493> Can anyone refer me to some documents which describe the VLC player internal? I'd
            like to learn how to write a media player espcially on embedded platform.
 < Dnumgis> Bond493: we keep this information secret in order to keep ahead of the competition
   -- #videolan

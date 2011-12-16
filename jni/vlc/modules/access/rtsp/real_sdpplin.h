@@ -22,7 +22,7 @@
  * sdp/sdpplin parser.
  *
  */
- 
+
 #ifndef HAVE_SDPPLIN_H
 #define HAVE_SDPPLIN_H
 

@@ -16,7 +16,7 @@
 ** Foundation and appearing in the file LICENSE.GPL included in the
 ** packaging of this file.
 **
-** Licensees holding an other license may use this file in accordance with 
+** Licensees holding an other license may use this file in accordance with
 ** the Agreement provided with the Software.
 **
 ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
@@ -70,7 +70,7 @@ int main(void)
 {
 	printf("Test00 :\nEBML %s %s / Matroska %s %s\n", EbmlCodeVersion.c_str(), EbmlCodeDate.c_str(), KaxCodeVersion.c_str(), KaxCodeDate.c_str());
 	StdIOCallback Ebml_file(RW_FILENAME, ::MODE_CREATE);
-	
+
 	///// Writing test
 	EbmlHead TestHead;
 
@@ -96,7 +96,7 @@ int main(void)
 	pAllAttachments->SetSizeInfinite();
 	// size is unknown and will always be, we can render it right away
 	pAllAttachments->Render(Ebml_file);
-	
+
 	KaxAttached * pAttachment1 = static_cast<KaxAttached *>(pAllAttachments->FindFirstElt(KaxAttached::ClassInfos, true));
 	if (pAttachment1 == NULL)
 		return -1;
@@ -111,7 +111,7 @@ int main(void)
 	static_cast<EbmlBinary *>(pFileData1)->SetBuffer((const binary*) Buffer1, countof(Buffer1));
 	// should produce an error if the size is not infinite and the data has been rendered
 	pAttachment1->Render(Ebml_file);
-	
+
 	KaxAttached * pAttachment2 = static_cast<KaxAttached *>(pAllAttachments->AddNewElt(KaxAttached::ClassInfos));
 	if (pAttachment2 == NULL)
 		return -1;
@@ -136,14 +136,14 @@ int main(void)
 
 	///// Reading test
 	StdIOCallback Ebml_Wfile(RW_FILENAME, ::MODE_READ);
-	
+
 	// example 1 skip all the elements found
 	EbmlStream aStream(Ebml_Wfile);
 	EbmlElement * ElementLevel0;
 	EbmlElement * ElementLevel1;
 	EbmlElement * ElementLevel2;
 	EbmlElement * ElementLevel3;
-	
+
 	// read the data until a possible element is found (valid ID + size combination)
 	printf("Read EBML elements & skip data\n");
 	// find the EBML head in the file
@@ -232,14 +232,14 @@ int main(void)
 			}
 			ElementLevel1->SkipData(aStream, KaxAttachments_Context);
 			delete ElementLevel1;
-	
+
 			ElementLevel1 = aStream.FindNextID(KaxSegment_Context, bUpperElement, 0xFFFFFFFFL, true);
 		}
 
 		ElementLevel0->SkipData(aStream, KaxSegment_Context);
 		if (ElementLevel0 != NULL)
 			delete ElementLevel0;
-	
+
 		ElementLevel0 = aStream.FindNextID(KaxSegment_Context, bUpperElement, 0xFFFFFFFFL, true);
 	}
 

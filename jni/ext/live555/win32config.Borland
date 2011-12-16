@@ -29,17 +29,17 @@ CPLUSPLUS_COMPILER =	$(C_COMPILER)
 CPLUSPLUS_FLAGS =	$(COMPILE_OPTS)
 OBJ =			obj
 LINK =			$(TOOLS32)\bin\ilink32
-LIBRARY_LINK =		$(TOOLS32)\bin\tlib 
+LIBRARY_LINK =		$(TOOLS32)\bin\tlib
 LINK_OPTS_0 =		$(linkdebug) msvcirt.lib
 LIBRARY_LINK_OPTS =	/u
 LINK_OPTS =		$(LINK_OPTS_0) $(UI_OPTS)
-CONSOLE_LINK_OPTS =	c0x32 
+CONSOLE_LINK_OPTS =	c0x32
 
 SERVICE_LINK_OPTS =     kernel32.lib advapi32.lib shell32.lib -subsystem:console,$(APPVER)
 LIB_SUFFIX =		lib
 LIBS_FOR_CONSOLE_APPLICATION = cw32.lib import32.lib
 LIBS_FOR_GUI_APPLICATION = ,,cw32
-EXE =	
+EXE =
 
 rc32 = $(TOOLS32)\bin\brc32"
 .rc.res:

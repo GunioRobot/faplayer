@@ -11,12 +11,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -82,16 +82,16 @@ EbmlUInteger::operator uint64() const {return Value;}
 filepos_t EbmlUInteger::RenderData(IOCallback & output, bool bForceRender, bool bWithDefault)
 {
 	binary FinalData[8]; // we don't handle more than 64 bits integers
-	
+
 	if (GetSizeLength() > 8)
 		return 0; // integer bigger coded on more than 64 bits are not supported
-	
+
 	uint64 TempValue = Value;
 	for (unsigned int i=0; i<GetSize();i++) {
 		FinalData[GetSize()-i-1] = TempValue & 0xFF;
 		TempValue >>= 8;
 	}
-	
+
 	output.writeFully(FinalData,GetSize());
 
 	return GetSize();
@@ -134,7 +134,7 @@ filepos_t EbmlUInteger::ReadData(IOCallback & input, ScopeMode ReadFully)
 		binary Buffer[8];
 		input.readFully(Buffer, GetSize());
 		Value = 0;
-		
+
 		for (unsigned int i=0; i<GetSize(); i++)
 		{
 			Value <<= 8;

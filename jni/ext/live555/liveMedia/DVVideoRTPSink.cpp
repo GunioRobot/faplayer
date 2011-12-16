@@ -88,7 +88,7 @@ char const* DVVideoRTPSink::auxSDPLineFromFramer(DVVideoStreamFramer* framerSour
     + 3 // max payload format code length
     + strlen(profileName);
   delete[] fFmtpSDPLine; // if it already exists
-  fFmtpSDPLine = new char[fmtpSDPFmtSize];  
+  fFmtpSDPLine = new char[fmtpSDPFmtSize];
   sprintf(fFmtpSDPLine, fmtpSDPFmt, rtpPayloadType(), profileName);
 
   return fFmtpSDPLine;

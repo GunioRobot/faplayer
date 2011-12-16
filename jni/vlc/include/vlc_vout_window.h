@@ -113,7 +113,7 @@ struct vout_window_t {
     vout_window_sys_t *sys;
 };
 
-/** 
+/**
  * Creates a new window.
  *
  * @param module plugin name (usually "$window")

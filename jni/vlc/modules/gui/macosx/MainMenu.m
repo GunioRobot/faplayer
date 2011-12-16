@@ -69,7 +69,7 @@ static VLCMainMenu *_o_sharedInstance = nil;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver: self];
-    
+
     if (b_nib_about_loaded)
         [o_about release];
 
@@ -87,7 +87,7 @@ static VLCMainMenu *_o_sharedInstance = nil;
 
 - (void)awakeFromNib
 {
-    [[NSNotificationCenter defaultCenter] addObserver: self 
+    [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(applicationWillFinishLaunching:)
                                                  name: NSApplicationWillFinishLaunchingNotification
                                                object: nil];
@@ -324,7 +324,7 @@ static VLCMainMenu *_o_sharedInstance = nil;
 - (void)releaseRepresentedObjects:(NSMenu *)the_menu
 {
     if( !p_intf ) return;
-    
+
     NSArray *menuitems_array = [the_menu itemArray];
     for( int i=0; i<[menuitems_array count]; i++ )
     {
@@ -714,10 +714,10 @@ static VLCMainMenu *_o_sharedInstance = nil;
     if( i_type & VLC_VAR_HASCHOICE )
     {
         NSMenu *o_menu = [o_mi submenu];
-        
+
         [self setupVarMenu: o_menu forMenuItem: o_mi target:p_object
                        var:psz_variable selector:pf_callback];
-        
+
         free( text.psz_string );
         return;
     }

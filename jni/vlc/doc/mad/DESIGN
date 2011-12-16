@@ -27,13 +27,13 @@ Design: (ASCII art)
 It represents the function call flow viewed from the vlc main program. The main program is in charge of allocating decoders,
 initializing, starting and stopping them.
 
-      ---------------	
+      ---------------
       |  <library>  |
       |   libmad    |
       ---------------
             ^
             |
-      ---------------		
+      ---------------
       |   <plugin>  |
       |     mad     |
       _______________

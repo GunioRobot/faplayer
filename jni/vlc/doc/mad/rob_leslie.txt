@@ -2,10 +2,10 @@ From - Mon Nov  5 09:19:09 2001
 Return-Path: <mad-dev-admin@lists.mars.org>
 Received: from smtp01.wxs.nl ([195.121.5.15]) by po05.wxs.nl
           (Netscape Messaging Server 4.15) with ESMTP id GLLMFJ00.3DF for
-          <jpsaman@wxs.nl>; Mon, 22 Oct 2001 10:33:19 +0200 
+          <jpsaman@wxs.nl>; Mon, 22 Oct 2001 10:33:19 +0200
 Received: from surveyor.mars.org ([216.98.134.66]) by
           smtp01.wxs.nl (Netscape Messaging Server 4.15) with ESMTP id
-          GLLMFZ00.C2Z for <jpsaman@wxs.nl>; Mon, 22 Oct 2001 10:33:35 +0200 
+          GLLMFZ00.C2Z for <jpsaman@wxs.nl>; Mon, 22 Oct 2001 10:33:35 +0200
 Received: from surveyor.mars.org (localhost [127.0.0.1])
 	by surveyor.mars.org (8.9.3/8.9.3/Debian 8.9.3-21) with ESMTP id BAA07654;
 	Mon, 22 Oct 2001 01:32:07 -0700

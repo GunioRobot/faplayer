@@ -28,7 +28,7 @@
 - init
 {
     self = [super init];
-    
+
     return self;
 }
 
@@ -44,16 +44,16 @@
     if(_videoLayer != nil) {
         [_videoLayer removeFromSuperlayer];
     }
-    
+
     _videoLayer = [VLCVideoLayer layer];
     _videoLayer.frame = self.bounds;
     _videoLayer.autoresizingMask = kCALayerWidthSizable|kCALayerHeightSizable;
     [self addSublayer:_videoLayer];
-    
+
     if(_player != nil) {
         [_player release];
     }
-    
+
     _player = [[VLCMediaPlayer alloc] initWithVideoLayer:_videoLayer];
 #else
     if(_videoLayer == nil) {
@@ -63,14 +63,14 @@
         _videoLayer.fillScreen = YES;
         [self addSublayer:_videoLayer];
     }
-    
+
     if(_player == nil) {
         _player = [[VLCMediaPlayer alloc] initWithVideoLayer:_videoLayer];
     }
 #endif
-    
+
     NSLog(@"playing media: %@", media);
-    
+
     [_player setMedia:media];
 }
 
@@ -114,7 +114,7 @@ static float rates[NUM_RATES] = {-8.0, -4.0, -2.0, 1.0, 2.0, 4.0, 8.0};
 {
     float rate = _player.rate;
     BOOL foundRate = NO;
-    
+
     int index;
     for(index=0; index<NUM_RATES; index++) {
         if(rate == rates[index]) {
@@ -188,25 +188,25 @@ static float rates[NUM_RATES] = {-8.0, -4.0, -2.0, 1.0, 2.0, 4.0, 8.0};
         if(openglView != nil) {
             NSLog(@"Create pbuffer %@", NSStringFromRect([_videoView bounds]));
             CHECK_ERR(CGLCreatePBuffer(CGRectGetWidth(bounds), CGRectGetHeight(bounds), GL_TEXTURE_RECTANGLE_ARB, GL_RGB, 0, &_pBuffer));
-            
+
             CGLContextObj vlcContext = (CGLContextObj)[[openglView openGLContext] CGLContextObj];
-            
+
             CHECK_ERR(CGLLockContext(vlcContext));
             CHECK_ERR(CGLSetCurrentContext(vlcContext));
-            
+
             GLint screen;
             CHECK_ERR(CGLGetVirtualScreen(vlcContext, &screen));
-            
+
             CHECK_ERR(CGLSetPBuffer(vlcContext, _pBuffer, 0, 0, screen));
-            
+
             CHECK_ERR(CGLUnlockContext(vlcContext));
             CHECK_ERR(CGLSetCurrentContext(ctx));
         }
     }
-    
+
     if(_pBuffer != NULL) {
         glColor3f(1.0, 1.0, 1.0);
-        
+
         GLuint texture;
         glGenTextures(1, &texture);
         CHECK_GL_ERROR();
@@ -217,7 +217,7 @@ static float rates[NUM_RATES] = {-8.0, -4.0, -2.0, 1.0, 2.0, 4.0, 8.0};
         glTexParameterf(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         CHECK_GL_ERROR();
         CHECK_ERR(CGLTexImagePBuffer(ctx, _pBuffer, GL_FRONT));
-        
+
         glBegin(GL_QUADS);
         glTexCoord2f(CGRectGetMinX(bounds), CGRectGetMinY(bounds));
         glVertex2f(-1.0, -1.0);
@@ -229,12 +229,12 @@ static float rates[NUM_RATES] = {-8.0, -4.0, -2.0, 1.0, 2.0, 4.0, 8.0};
         glVertex2f(1.0, -1.0);
         glEnd();
         CHECK_GL_ERROR();
-        
+
         glDisable(GL_TEXTURE_RECTANGLE_ARB);
     }
     else {
         glColor3f(0.0, 0.0, 0.0);
-        
+
         glBegin(GL_QUADS);
         glVertex2f(-1.0, 1.0);
         glVertex2f(1.0, 1.0);

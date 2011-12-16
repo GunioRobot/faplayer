@@ -22,7 +22,7 @@
  *****************************************************************************/
 
 /**********************************************************************
- * 
+ *
  *********************************************************************/
 
 var mosaic_alpha    = 255;
@@ -70,10 +70,10 @@ function mosaic_size_change()
     mosaic_hborder  = check_and_replace_int( "mosaic_hborder", "10" );
     mosaic_rows     = check_and_replace_int( "mosaic_rows", "1" );
     mosaic_cols     = check_and_replace_int( "mosaic_cols", "1" );
-    
+
     cell_width  = Math.floor((mosaic_width-(mosaic_cols-1)*mosaic_hborder)/mosaic_cols);
     cell_height = Math.floor((mosaic_height-(mosaic_rows-1)*mosaic_vborder)/mosaic_rows);
-    
+
     var mlayout = document.getElementById( "mosaic_layout" );
 
     while( mlayout.hasChildNodes() )
@@ -86,7 +86,7 @@ function mosaic_size_change()
         var mdt = document.createElement( 'div' );
         mdt.setAttribute( 'id',    'mosaic_dt'  );
         setclass( mdt, 'mosaic_tbl' );
-        
+
         mdt.style.width  = mosaic_width   + "px";
         mdt.style.height = mosaic_height  + "px";
         mdt.style.top    = mosaic_yoffset + "px";
@@ -112,12 +112,12 @@ function mosaic_size_change()
                 setclass( mcell, 'mosaic_itm' );
                 mcell.style.width  = cell_width  + "px";
                 mcell.style.height = cell_height + "px";
-                
+
                 var id = x+'_'+y;
                 var melt = create_button( cells[id] ? cells[id] : '?', 'mosaic_elt_choose(\"'+id+'\");' );
                 melt.setAttribute( 'id', id );
                 melt.setAttribute( 'title', 'Click to choose stream' );
-                
+
                 mcell.appendChild( melt );
                 mrow.appendChild( mcell );
             }
@@ -140,16 +140,16 @@ function mosaic_add_input()
     var mlist = document.getElementById( "mosaic_list_content" );
     while( mlist.hasChildNodes() )
         mlist.removeChild( mlist.firstChild );
-    
+
     for( var name in streams )
     {
         var mrl = streams[name];
-        
+
         var minput = document.createElement( 'a' );
         minput.setAttribute( 'href', 'javascript:mosaic_elt_select(\''+name+'\');');
         minput.setAttribute( 'id', name );
         minput.setAttribute( 'value', mrl );
-        
+
         var minputtxt = document.createTextNode( name );
 
         minput.appendChild( minputtxt );

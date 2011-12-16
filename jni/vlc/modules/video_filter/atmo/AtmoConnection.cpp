@@ -17,7 +17,7 @@
 
 CAtmoConnection::CAtmoConnection(CAtmoConfig *cfg)
 {
-	 this->m_pAtmoConfig = cfg;	
+	 this->m_pAtmoConfig = cfg;
      m_ChannelAssignment = NULL;
      m_NumAssignedChannels = 0;
 

@@ -279,7 +279,7 @@ void DarwinInjector::genericResponseHandler1(int responseCode, char* responseStr
   fResultCode = responseCode;
   fResultString = responseString;
 
-  // Signal a break from the event loop (thereby returning from the blocking command):                                              
+  // Signal a break from the event loop (thereby returning from the blocking command):
   fWatchVariable = ~0;
 }
 

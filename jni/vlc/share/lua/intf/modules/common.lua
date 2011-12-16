@@ -71,7 +71,7 @@ end
 function print_callbacks()
     print "callbacks:"
     table_print(vlc.callbacks)
-end 
+end
 
 -- convert a duration (in seconds) to a string
 function durationtostring(duration)

@@ -2,7 +2,7 @@
 +++ plugins/sdl/vout_sdl.c	2001/12/04 13:29:29
 @@ -329,12 +329,16 @@
              break;
- 
+
          case SDL_MOUSEBUTTONUP:
 +#if 0
              switch( event.button.button )
@@ -15,6 +15,6 @@
 +            //intf_ProcessKey( p_main->p_intf, SDLK_q );
 +#endif
              break;
- 
+
          case SDL_MOUSEBUTTONDOWN:
 

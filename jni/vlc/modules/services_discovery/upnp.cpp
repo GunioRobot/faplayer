@@ -614,7 +614,7 @@ IXML_Document* MediaServer::_browseAction( const char* psz_object_id_,
 
     if ( i_res != UPNP_E_SUCCESS )
     {
-        msg_Dbg( _p_sd, "AddToAction 'BrowseFlag' failed: %s", 
+        msg_Dbg( _p_sd, "AddToAction 'BrowseFlag' failed: %s",
                 UpnpGetErrorMessage( i_res ) );
         goto browseActionCleanup;
     }

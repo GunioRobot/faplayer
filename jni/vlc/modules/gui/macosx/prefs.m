@@ -192,7 +192,7 @@ static VLCPrefs *_o_sharedMainInstance = nil;
 {
     [[o_basicFull_matrix cellAtRow:0 column:0] setState: NSOffState];
     [[o_basicFull_matrix cellAtRow:0 column:1] setState: NSOnState];
-    
+
     [o_prefs_window center];
     [o_prefs_window makeKeyAndOrderFront:self];
     [_rootTreeItem resetView];
@@ -384,7 +384,7 @@ static VLCPrefs *_o_sharedMainInstance = nil;
                     }
                 }
             }
-            
+
             if( module_is_main( p_module) && CONFIG_ITEM(configType) )
             {
                 if( categoryItem && [self isSubCategoryGeneral:lastsubcat] )
@@ -600,7 +600,7 @@ static VLCPrefs *_o_sharedMainInstance = nil;
     }
 
     assert(view);
-    
+
     int i_lastItem = 0;
     int i_yPos = -2;
     int i_max_label = 0;

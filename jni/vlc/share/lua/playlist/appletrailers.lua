@@ -59,7 +59,7 @@ function parse()
     local art_url = ''
 
     while true
-    do 
+    do
         line = vlc.readline()
         if not line then break end
 

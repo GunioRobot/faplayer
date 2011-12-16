@@ -30,7 +30,7 @@ This document describes only the newer VCD plugin.
 
 The next section is a general overview of Video CD's in general. If
 you are in a hurry to find out how to use this plugin or know this
-already, this section can be skipped. 
+already, this section can be skipped.
 
 After that we describe the terms and concepts used in the remainder
 Again, in a hurry, this section can be skipped or skimmed. If you come
@@ -41,11 +41,11 @@ The next section describes the MRL format that this plugin uses. If
 you want to know how to control where to start playing, read this.
 Even if you are familiar with vlc MRL's, you probably want to look
 at this section. Some of the units in a VCD are a little different
-than those in a DVD or audio CD. 
+than those in a DVD or audio CD.
 
 The next section gives key bindings that are used by this
 plugin. Again to be able to control the plugin, especially for
-playback control, you may need to read this section. 
+playback control, you may need to read this section.
 
 The next section describes the configuration parameters you can set
 for the plugin. Most of the default values I hope are what most
@@ -114,7 +114,7 @@ assign what action to use when these buttons are pressed. They buttons
 are:
 
  RETURN: Often used to return to the previous menu or previouly
- interruped video segment. 
+ interruped video segment.
 
  DEFAULT: Possibly take the default selection value. This function can
  only be assigned when the LID refers to in a "Program Selection List"
@@ -208,21 +208,21 @@ not adding it at all: the default entry type and number is used. Items
 come in 4 flavors: "Track," "Entry," "Playback," and "Segment." See
 the preceding section for an explaination of these terms. These units
 are indicated with the capital first letter of each type: T, E, P, S,
-s. 
+s.
 
---- In the future when we are able to control MRL display: 
+--- In the future when we are able to control MRL display:
 An uppercase S in the MRL display indicates a NTS segment while a
-lowercase S indicates a PAL segment. 
+lowercase S indicates a PAL segment.
 ----
 
 However when you enter a MRL, the case of these letters is
 insignificant.
 
 You can configure various things that affect MRLs are selected when
-there is some ambiguity in the MRL name. vcdx-PBC sets whether to 
+there is some ambiguity in the MRL name. vcdx-PBC sets whether to
 to use PBC in a MRL is none is given.  Another configuration
 setting, vcdx-device, determines what device to use if that part is
-not given. 
+not given.
 
 Some examples of MRLS are given below. In the examples, we assume the
 following configuration settings:
@@ -235,7 +235,7 @@ vcdx://                   - Play (navigate) default item (in this
                             case set to /dev/cdrom)
 vcdx://@                  - same as above
 vcdx:///dev/cdrom@        - same effect as above since the default device
-                            is set to /dev/cdrom. 
+                            is set to /dev/cdrom.
 vcdx:///dev/cdrom@E0      - same as above. But note that this is
                             because we have autoplay:entry which is
                             no longer the default value
@@ -316,7 +316,7 @@ device containing a Video CD in it.
 The default device in a MRL when none is listed. The default is
 determined by the appropriate name for the OS that you are running.
 
-- - 
+- -
 
 vcd-debug
 
@@ -332,14 +332,14 @@ The VCD plugin leaves a bit to be desired and has many bugs. I expect
 that there will not be covered below. But the below is a start.
 
 This gives higher-level troubleshooting. More detailed and
-lower-level information is given in the next section DEBUGGING. 
+lower-level information is given in the next section DEBUGGING.
 
 Problem: something doesn't work. Start at step -1.
 
 Problem: The program gets a SEGFAULT or gives core dump. Start at step
 0.
 
-Problem: I don't get anything playing. I can't even get information 
+Problem: I don't get anything playing. I can't even get information
 listed in "Media and Stream Information" or the playlist.
 Determination: start at step 1.
 
@@ -352,16 +352,16 @@ Determination: start at step 5.
 
    A lot of what is put here really is applicable to reporting
    problems and troubleshooting in vlc and the concepts really
-   apply to any sort of bug reporting. 
+   apply to any sort of bug reporting.
 
    When reporting a problem it's helpful to have facts:
 
      a) the version of vlc) you are using
 
-     b) the OS you are running on 
+     b) the OS you are running on
 
-     c) the version of libcdio and/or libcddb you are using 
-        versions of libcdio and libcddb can be obtained by running 
+     c) the version of libcdio and/or libcddb you are using
+        versions of libcdio and libcddb can be obtained by running
           pkg-config --modversion libcdio
           pkg-config --modversion libvcdinfo
 
@@ -369,16 +369,16 @@ Determination: start at step 5.
         if it is possible to reproduce the problem by giving a
         commandline that is desirable since it is probably the simplest
         way to convey exactly what was requested)
-   
+
         People often give (some part) of an error message neglecting
         to also include what was requested or entered that led to the
         output.
-  
+
      e) The setting for this plugin. That is the values of the
         variables that start cddax- listed above. On Unix this can
 	generally be found in ~/.vlc/vlcrc
-  
-  
+
+
      f) Exactly the messages that were what given. You can turn
         increase the verbosity level by setting "verbosity=2" in the
         vlc preferences files. On Unix the preferences file is
@@ -387,7 +387,7 @@ Determination: start at step 5.
 
 0. (The program gets a SEGFAULT or gives core dump.)
 
-   Get and send a stack trace. 
+   Get and send a stack trace.
 
    In addition to -1. Make sure the program has been compiled with
    debugging symbols put into the code. This is usually done by having
@@ -400,10 +400,10 @@ Determination: start at step 5.
      where
 
 
-1. (I don't get anything playing. I can't even get information 
+1. (I don't get anything playing. I can't even get information
     listed in "Media and Stream Information" or the playlist)
 
-   Do you even have the plugin loaded? 
+   Do you even have the plugin loaded?
 
    When you run the vlc GUI, under Settings/Preferences you should see
    a "plugins" expandable list and under that another "access" list do
@@ -422,7 +422,7 @@ Determination: start at step 5.
    of the libraries dependencies satisfied. Also you might be able
    check if there was an attempt to load it by tracking system
    calls. On Linux and other OS's) "strace" can be used to see if the
-   file gets accessed. On Solaris use "truss". 
+   file gets accessed. On Solaris use "truss".
 
    For example on Linux, amonst the many line of output when I run
    "strace -e trace=file vlc" I see this amongst lots of other
@@ -434,8 +434,8 @@ Determination: start at step 5.
 
    The parameters inside the calls may be different depending on where
    vlc is installed and what release is installed. If the the file is
-   found and "opened", 
-  
+   found and "opened",
+
    There may also be a message may under "setup/logs".
 
 2. (There plugin was loaded and preferences found).  In the "vcdx" tab
@@ -450,26 +450,26 @@ Determination: start at step 5.
    rather than /dev/cdrom.
 
 3. (Video CD Setup devices seems correct and there is a CD in the
-   drive).  
-   
+   drive).
+
    when you run
       vlc vcdx://
 
    you should see your CD disk light go on if you have one. And the CD
-   should be read. 
-   
+   should be read.
+
    a. If not something's wrong like step 2. Another tack may be to try
    to read a disk image of a Video CD and thus elimate any problems
    with hardware. You can get a test Video CD disk image to test here:
 
    http://www.vcdimager.org/pub/vcdimager/examples/test_svcd/test_svcd_pal.zip
- 
-   After unzipping this run there should be files test_svcd_pal.cue 
+
+   After unzipping this run there should be files test_svcd_pal.cue
    and test_svcd_pal.bin. Get out of xine and run from the directory
-   that contains those files: 
+   that contains those files:
      vcdx://test_svcd_pal.cue@E0
-   
-   If you see something playing then this is a hardware problem. 
+
+   If you see something playing then this is a hardware problem.
 
 -----------------------------------------------------------------
 Debugging
@@ -481,7 +481,7 @@ Before delving to things specific to this plugin, some preparation may
 be in order. You'll probably want to configure vlc with "--enable-debug".
 plugin with debug information. Instead of "make'ing" with "make", use
 "make debug" and instead of installing using "make install" use "make
-install-debug". 
+install-debug".
 
 I use gdb to debug. Debugging vlc with the entire suite of plugins
 under gdb is slow because it has to read in symbol tables from all the

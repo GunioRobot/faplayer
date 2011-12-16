@@ -583,14 +583,14 @@ void continueAfterDESCRIBE(RTSPClient*, int resultCode, char* resultString) {
 	     << "\" subsession (client ports " << subsession->clientPortNum()
 	     << "-" << subsession->clientPortNum()+1 << ")\n";
 	madeProgress = True;
-	
+
 	if (subsession->rtpSource() != NULL) {
 	  // Because we're saving the incoming data, rather than playing
 	  // it in real time, allow an especially large time threshold
 	  // (1 second) for reordering misordered incoming packets:
 	  unsigned const thresh = 1000000; // 1 second
 	  subsession->rtpSource()->setPacketReorderingThresholdTime(thresh);
-	  
+
 	  // Set the RTP source's OS socket buffer size as appropriate - either if we were explicitly asked (using -B),
 	  // or if the desired FileSink buffer size happens to be larger than the current OS socket buffer size.
 	  // (The latter case is a heuristic, on the assumption that if the user asked for a large FileSink buffer size,
@@ -1042,7 +1042,7 @@ void beginQOSMeasurement() {
 
 void printQOSData(int exitCode) {
   *env << "begin_QOS_statistics\n";
-  
+
   // Print out stats for each active subsession:
   qosMeasurementRecord* curQOSRecord = qosRecordHead;
   if (session != NULL) {
@@ -1051,19 +1051,19 @@ void printQOSData(int exitCode) {
     while ((subsession = iter.next()) != NULL) {
       RTPSource* src = subsession->rtpSource();
       if (src == NULL) continue;
-      
+
       *env << "subsession\t" << subsession->mediumName()
 	   << "/" << subsession->codecName() << "\n";
-      
+
       unsigned numPacketsReceived = 0, numPacketsExpected = 0;
-      
+
       if (curQOSRecord != NULL) {
 	numPacketsReceived = curQOSRecord->totNumPacketsReceived;
 	numPacketsExpected = curQOSRecord->totNumPacketsExpected;
       }
       *env << "num_packets_received\t" << numPacketsReceived << "\n";
       *env << "num_packets_lost\t" << int(numPacketsExpected - numPacketsReceived) << "\n";
-      
+
       if (curQOSRecord != NULL) {
 	unsigned secsDiff = curQOSRecord->measurementEndTime.tv_sec
 	  - curQOSRecord->measurementStartTime.tv_sec;
@@ -1071,11 +1071,11 @@ void printQOSData(int exitCode) {
 	  - curQOSRecord->measurementStartTime.tv_usec;
 	double measurementTime = secsDiff + usecsDiff/1000000.0;
 	*env << "elapsed_measurement_time\t" << measurementTime << "\n";
-	
+
 	*env << "kBytes_received_total\t" << curQOSRecord->kBytesTotal << "\n";
-	
+
 	*env << "measurement_sampling_interval_ms\t" << qosMeasurementIntervalMS << "\n";
-	
+
 	if (curQOSRecord->kbits_per_second_max == 0) {
 	  // special case: we didn't receive any data:
 	  *env <<
@@ -1088,7 +1088,7 @@ void printQOSData(int exitCode) {
 	       << (measurementTime == 0.0 ? 0.0 : 8*curQOSRecord->kBytesTotal/measurementTime) << "\n";
 	  *env << "kbits_per_second_max\t" << curQOSRecord->kbits_per_second_max << "\n";
 	}
-	
+
 	*env << "packet_loss_percentage_min\t" << 100*curQOSRecord->packet_loss_fraction_min << "\n";
 	double packetLossFraction = numPacketsExpected == 0 ? 1.0
 	  : 1.0 - numPacketsReceived/(double)numPacketsExpected;
@@ -1096,7 +1096,7 @@ void printQOSData(int exitCode) {
 	*env << "packet_loss_percentage_ave\t" << 100*packetLossFraction << "\n";
 	*env << "packet_loss_percentage_max\t"
 	     << (packetLossFraction == 1.0 ? 100.0 : 100*curQOSRecord->packet_loss_fraction_max) << "\n";
-	
+
 	RTPReceptionStatsDB::Iterator statsIter(src->receptionStatsDB());
 	// Assume that there's only one SSRC source (usually the case):
 	RTPReceptionStats* stats = statsIter.next(True);
@@ -1109,7 +1109,7 @@ void printQOSData(int exitCode) {
 	       << (totNumPacketsReceived == 0 ? 0.0 : totalGapsMS/totNumPacketsReceived) << "\n";
 	  *env << "inter_packet_gap_ms_max\t" << stats->maxInterPacketGapUS()/1000.0 << "\n";
 	}
-	
+
 	curQOSRecord = curQOSRecord->fNext;
       }
     }

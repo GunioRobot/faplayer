@@ -187,7 +187,7 @@ typedef ptrdiff_t  FT_PtrDist;
             shift_,                                    \
             delta_                                     \
          };
-                                          
+
 #define FT_DEFINE_RASTER_FUNCS( class_, glyph_format_,            \
                                 raster_new_, raster_reset_,       \
                                 raster_set_mode_, raster_render_, \

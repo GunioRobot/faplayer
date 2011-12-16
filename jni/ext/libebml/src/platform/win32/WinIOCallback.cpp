@@ -9,12 +9,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -49,7 +49,7 @@ START_LIBEBML_NAMESPACE
 WinIOCallback::WinIOCallback(const char* Path, const open_mode aMode, DWORD dwFlags)
 	:mFile(NULL), mOk(false)
 {
-	mOk = open(Path, aMode, dwFlags);	
+	mOk = open(Path, aMode, dwFlags);
 }
 
 WinIOCallback::WinIOCallback(const wchar_t* Path, const open_mode aMode, DWORD dwFlags)
@@ -63,7 +63,7 @@ WinIOCallback::~WinIOCallback()
 	close();
 }
 
-bool WinIOCallback::open(const char* Path, const open_mode aMode, DWORD dwFlags) 
+bool WinIOCallback::open(const char* Path, const open_mode aMode, DWORD dwFlags)
 {
 	assert(Path!=0);
 
@@ -104,7 +104,7 @@ bool WinIOCallback::open(const char* Path, const open_mode aMode, DWORD dwFlags)
 		// An error message about the file already existing is not really an error message :P
 		if (error_code != ERROR_ALREADY_EXISTS) {
 			FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, 0, error_code, 0, err_msg, 255, NULL);
-			EBML_TRACE("Failed to open file \"%hs\" in mode %d.", Path, aMode);						
+			EBML_TRACE("Failed to open file \"%hs\" in mode %d.", Path, aMode);
 
 			mLastErrorStr = err_msg;
 			return mOk = false;
@@ -117,7 +117,7 @@ bool WinIOCallback::open(const char* Path, const open_mode aMode, DWORD dwFlags)
 	return mOk = true;
 };
 
-bool WinIOCallback::open(const wchar_t* Path, const open_mode aMode, DWORD dwFlags) 
+bool WinIOCallback::open(const wchar_t* Path, const open_mode aMode, DWORD dwFlags)
 {
 	assert(Path!=0);
 
@@ -159,7 +159,7 @@ bool WinIOCallback::open(const wchar_t* Path, const open_mode aMode, DWORD dwFla
 		errCode = WideCharToMultiByte(CP_ACP, 0, Path, wcslen(Path), (char *)PathA.c_str(), bufferSize, NULL, NULL);
 		if (errCode == 0)
 			errCode = GetLastError();
-#ifdef _DEBUG		
+#ifdef _DEBUG
 		if (errCode == ERROR_INSUFFICIENT_BUFFER) OutputDebugString(TEXT("WinIOCallback::WideCharToMultiByte::ERROR_INSUFFICIENT_BUFFER"));
 		if (errCode == ERROR_INVALID_FLAGS) OutputDebugString(TEXT("WinIOCallback::WideCharToMultiByte::ERROR_INVALID_FLAGS"));
 		if (errCode == ERROR_INVALID_PARAMETER) OutputDebugString(TEXT("WinIOCallback::WideCharToMultiByte::ERROR_INVALID_PARAMETER"));
@@ -175,7 +175,7 @@ bool WinIOCallback::open(const wchar_t* Path, const open_mode aMode, DWORD dwFla
 		if (errCode != 0) {
 			mFile = CreateFileA(PathA.c_str(), AccessMode, ShareMode, NULL, Disposition, dwFlags, NULL);
 		} else {
-			mLastErrorStr = "Couldn't convert Unicode filename to ANSI.";			
+			mLastErrorStr = "Couldn't convert Unicode filename to ANSI.";
 			return mOk = false;
 		}
 	}
@@ -187,10 +187,10 @@ bool WinIOCallback::open(const wchar_t* Path, const open_mode aMode, DWORD dwFla
 		// An error message about the file already existing is not really an error message :P
 		if (error_code != ERROR_ALREADY_EXISTS) {
 			FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, 0, error_code, 0, err_msg, 255, NULL);
-			EBML_TRACE("Failed to open file \"%S\" in mode %d.", Path, aMode);			
+			EBML_TRACE("Failed to open file \"%S\" in mode %d.", Path, aMode);
 			mLastErrorStr = err_msg;
 			return mOk = false;
-		}		
+		}
 	}
 	mCurrentPosition = 0;
 
@@ -211,7 +211,7 @@ uint64 WinIOCallback::getFilePointer()
 	if (!mFile) {
 		return 0;
 	}
-	
+
 	return mCurrentPosition;
 #if 0
 	LONG High = 0;

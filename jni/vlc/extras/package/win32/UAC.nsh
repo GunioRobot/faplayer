@@ -82,7 +82,7 @@ ${AndIf} ${AtLeastWinVista}
 !insertmacro _UAC.InitStrings ${_modeprefix}
 !define _UAC.GOIECUniq L${__LINE__}
 UAC_Elevate_${_UAC.GOIECUniq}:
-UAC::RunElevated 
+UAC::RunElevated
 StrCmp 1223 $0 UAC_ElevationAborted_${_UAC.GOIECUniq} ; UAC dialog aborted by user?
 StrCmp 0 $0 0 UAC_Err_${_UAC.GOIECUniq} ; Error?
 StrCmp 1 $1 0 UAC_Success_${_UAC.GOIECUniq} ;Are we the real deal or just the wrapper?

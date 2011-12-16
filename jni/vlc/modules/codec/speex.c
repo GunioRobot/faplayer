@@ -225,13 +225,13 @@ static int OpenDecoder( vlc_object_t *p_this )
 
     /*
       Set callbacks
-      If the codec is spxr then this decoder is 
-      being invoked on a Speex stream arriving via RTP. 
+      If the codec is spxr then this decoder is
+      being invoked on a Speex stream arriving via RTP.
       A special decoder callback is used.
     */
     if (p_dec->fmt_in.i_original_fourcc == VLC_FOURCC('s', 'p', 'x', 'r'))
     {
-        msg_Dbg( p_dec, "Using RTP version of Speex decoder @ rate %d.", 
+        msg_Dbg( p_dec, "Using RTP version of Speex decoder @ rate %d.",
 	    p_dec->fmt_in.audio.i_rate );
         p_dec->pf_decode_audio = (aout_buffer_t *(*)(decoder_t *, block_t **))
             DecodeRtpSpeexPacket;
@@ -505,7 +505,7 @@ static void *ProcessPacket( decoder_t *p_dec, ogg_packet *p_oggpacket,
 	    i_bits_after = speex_bits_remaining( &p_sys->bits );
 
             i_bits_in_speex_frame = i_bits_before - i_bits_after;
-	    i_bytes_in_speex_frame = ( i_bits_in_speex_frame + 
+	    i_bytes_in_speex_frame = ( i_bits_in_speex_frame +
 	        (8 - (i_bits_in_speex_frame % 8)) )
                 / 8;
 
@@ -516,31 +516,31 @@ static void *ProcessPacket( decoder_t *p_dec, ogg_packet *p_oggpacket,
 	     * Copy the first frame in this packet to a new packet.
 	     */
 	    speex_bits_rewind( &p_sys->bits );
-	    speex_bits_write( &p_sys->bits, 
-	        (char*)p_new_block->p_buffer, 
+	    speex_bits_write( &p_sys->bits,
+	        (char*)p_new_block->p_buffer,
 		    (int)i_bytes_in_speex_frame );
 
 	    /*
 	     * Move the remaining part of the original packet (subsequent
-	     * frames, if there are any) into the beginning 
+	     * frames, if there are any) into the beginning
 	     * of the original packet so
-	     * they are preserved following the realloc. 
+	     * they are preserved following the realloc.
 	     * Note: Any bits that
 	     * remain in the initial packet
 	     * are "filler" if they do not constitute
-	     * an entire byte. 
+	     * an entire byte.
 	     */
 	    if ( i_bits_after > 7 )
 	    {
 	        /* round-down since we rounded-up earlier (to include
-		 * the speex terminator code. 
+		 * the speex terminator code.
 		 */
 	        i_bytes_in_speex_frame--;
-	        speex_bits_write( &p_sys->bits, 
-		        (char*)p_block->p_buffer, 
+	        speex_bits_write( &p_sys->bits,
+		        (char*)p_block->p_buffer,
 		        p_block->i_buffer - i_bytes_in_speex_frame );
-            p_block = block_Realloc( p_block, 
-	            0, 
+            p_block = block_Realloc( p_block,
+	            0,
 		        p_block->i_buffer-i_bytes_in_speex_frame );
 	        *pp_block = p_block;
 	    }
@@ -578,7 +578,7 @@ static aout_buffer_t *DecodeRtpSpeexPacket( decoder_t *p_dec, block_t **pp_block
     if ( !p_speex_bit_block || p_speex_bit_block->i_pts <= VLC_TS_INVALID )
         return NULL;
 
-    /* 
+    /*
       If the SpeexBits buffer size is 0 (a default value),
       we know that a proper initialization has not yet been done.
     */
@@ -602,19 +602,19 @@ static aout_buffer_t *DecodeRtpSpeexPacket( decoder_t *p_dec, block_t **pp_block
 
         /*
 	  Assume that variable bit rate is enabled. Also assume
-	  that there is only one frame per packet. 
+	  that there is only one frame per packet.
 	*/
 	p_sys->p_header->vbr = 1;
 	p_sys->p_header->frames_per_packet = 1;
 
         p_dec->fmt_out.audio.i_channels = p_sys->p_header->nb_channels;
-	p_dec->fmt_out.audio.i_physical_channels = 
-	p_dec->fmt_out.audio.i_original_channels = 
+	p_dec->fmt_out.audio.i_physical_channels =
+	p_dec->fmt_out.audio.i_original_channels =
 	    pi_channels_maps[p_sys->p_header->nb_channels];
         p_dec->fmt_out.audio.i_rate = p_sys->p_header->rate;
 
-        if ( speex_mode_query( &speex_nb_mode, 
-	    SPEEX_MODE_FRAME_SIZE, 
+        if ( speex_mode_query( &speex_nb_mode,
+	    SPEEX_MODE_FRAME_SIZE,
 	    &i_speex_frame_size ) )
 	{
 	    msg_Err( p_dec, "Could not determine the frame size." );
@@ -627,8 +627,8 @@ static aout_buffer_t *DecodeRtpSpeexPacket( decoder_t *p_dec, block_t **pp_block
 	date_Init(&p_sys->end_date, p_sys->p_header->rate, 1);
     }
 
-    /* 
-      If the SpeexBits are initialized but there is 
+    /*
+      If the SpeexBits are initialized but there is
       still no header, an error must be thrown.
     */
     if ( !p_sys->p_header )
@@ -643,9 +643,9 @@ static aout_buffer_t *DecodeRtpSpeexPacket( decoder_t *p_dec, block_t **pp_block
 
     /*
       Ask for a new audio output buffer and make sure
-      we get one. 
+      we get one.
     */
-    p_aout_buffer = decoder_NewAudioBuffer( p_dec, 
+    p_aout_buffer = decoder_NewAudioBuffer( p_dec,
         p_sys->p_header->frame_size );
     if ( !p_aout_buffer || p_aout_buffer->i_buffer == 0 )
     {
@@ -656,15 +656,15 @@ static aout_buffer_t *DecodeRtpSpeexPacket( decoder_t *p_dec, block_t **pp_block
     /*
       Read the Speex payload into the SpeexBits buffer.
     */
-    speex_bits_read_from( &p_sys->bits, 
-        (char*)p_speex_bit_block->p_buffer, 
+    speex_bits_read_from( &p_sys->bits,
+        (char*)p_speex_bit_block->p_buffer,
         p_speex_bit_block->i_buffer );
-    
-    /* 
-      Decode the input and ensure that no errors 
+
+    /*
+      Decode the input and ensure that no errors
       were encountered.
     */
-    i_decode_ret = speex_decode_int( p_sys->p_state, &p_sys->bits, 
+    i_decode_ret = speex_decode_int( p_sys->p_state, &p_sys->bits,
             (int16_t*)p_aout_buffer->p_buffer );
     if ( i_decode_ret < 0 )
     {
@@ -672,14 +672,14 @@ static aout_buffer_t *DecodeRtpSpeexPacket( decoder_t *p_dec, block_t **pp_block
 	return NULL;
     }
 
-    /* 
-      Handle date management on the audio output buffer. 
+    /*
+      Handle date management on the audio output buffer.
     */
     p_aout_buffer->i_pts = date_Get( &p_sys->end_date );
     p_aout_buffer->i_length = date_Increment( &p_sys->end_date,
         p_sys->p_header->frame_size ) - p_aout_buffer->i_pts;
-    
-    
+
+
     p_sys->i_frame_in_packet++;
     block_Release( p_speex_bit_block );
 

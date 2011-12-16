@@ -646,7 +646,7 @@ void IVTCClearState( filter_t *p_filter );
  *
  * In this emergency mode, we simply output the least interlaced frame out of
  * the combinations TNBN, TNBC and TCBN (where only one of the last two is
- * tested, based on the stream TFF/BFF information). In this mode, we do not 
+ * tested, based on the stream TFF/BFF information). In this mode, we do not
  * touch the timestamps, and just pass all five frames from each group right
  * through. This introduces some stutter, but in practice it is often not
  * noticeable. This is because the kind of material that is likely to trip up

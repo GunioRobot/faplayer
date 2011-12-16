@@ -219,7 +219,7 @@ int MPEG2TransportStreamIndexFile::mpegVersion() {
   if (fMPEGVersion != 0) return fMPEGVersion; // we already know it
 
   // Read the first index record, and figure out the MPEG version from its type:
-  if (!readOneIndexRecord(0)) return 0; // unknown; perhaps the indecx file is empty?	
+  if (!readOneIndexRecord(0)) return 0; // unknown; perhaps the indecx file is empty?
 
   setMPEGVersionFromRecordType(recordTypeFromBuf());
   return fMPEGVersion;
@@ -283,7 +283,7 @@ unsigned long MPEG2TransportStreamIndexFile::tsPacketNumFromBuf() {
 
 void MPEG2TransportStreamIndexFile::setMPEGVersionFromRecordType(u_int8_t recordType) {
   if (fMPEGVersion != 0) return; // we already know it
- 
+
   u_int8_t const recordTypeWithoutStartBit = recordType&~0x80;
   if (recordTypeWithoutStartBit >= 1 && recordTypeWithoutStartBit <= 4) fMPEGVersion = 2;
   else if (recordTypeWithoutStartBit >= 5 && recordTypeWithoutStartBit <= 10) fMPEGVersion = 5; // represents H.264
@@ -299,7 +299,7 @@ Boolean MPEG2TransportStreamIndexFile::rewindToCleanPoint(unsigned long&ixFound)
     setMPEGVersionFromRecordType(recordType);
 
     // A 'clean point' is the start of a 'frame' from which a decoder can cleanly resume handling the stream:
-    // For H.264, this is a SPS.  For MPEG-2, this is a Video Sequence Header, or a GOP. 
+    // For H.264, this is a SPS.  For MPEG-2, this is a Video Sequence Header, or a GOP.
 
     if ((recordType&0x80) != 0) { // This is the start of a 'frame'
       recordType &=~ 0x80; // remove the 'start of frame' bit

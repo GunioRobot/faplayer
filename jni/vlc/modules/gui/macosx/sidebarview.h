@@ -24,7 +24,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface sidebarview : NSSplitView 
+@interface sidebarview : NSSplitView
 {
 	long _mainSubviewIndex;
 }

@@ -48,7 +48,7 @@ typedef struct {
     float       multiplier;
 } aout_mixer_input_t;
 
-/** 
+/**
  * audio output mixer
  */
 struct aout_mixer_t {

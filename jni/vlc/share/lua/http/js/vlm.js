@@ -169,7 +169,7 @@ function update_vlm_add_broadcast()
         {
             cmd.value += " enabled";
         }
-        
+
         if( checked( 'vlm_broadcast_loop' ) )
         {
             cmd.value += " loop";
@@ -204,7 +204,7 @@ function update_vlm_add_vod()
         {
             cmd.value += " enabled";
         }
-        
+
         if( value( 'vlm_vod_input' ) )
         {
             cmd.value += " input " + sanitize_input( value( 'vlm_vod_input' ) );
@@ -265,7 +265,7 @@ function update_vlm_add_schedule()
                 cmd.value += " repeat " + (value( 'vlm_schedule_repeat_times' ) - 1 );
             }
         }
-            
+
     }
     else
     {
@@ -372,7 +372,7 @@ function parse_vlm_elements()
                     var nbname = document.createElement( 'b' );
                     nbname.appendChild( document.createTextNode( elt.getAttribute( 'name' ) ) );
                     nb.appendChild( nbname );
-                    
+
                     if( elt.getAttribute( 'enabled' ) == 'yes' )
                     {
                         nb.appendChild( document.createTextNode( " enabled " ) );
@@ -383,7 +383,7 @@ function parse_vlm_elements()
                         nb.appendChild( document.createTextNode( " disabled " ) );
                         nb.appendChild( create_button( "Enable", 'vlm_enable("'+elt.getAttribute( 'name' ) + '");' ) );
                     }
-                    
+
                     if( elt.nodeName == "broadcast" )
                     {
                         if( elt.getAttribute( 'loop' ) == 'yes' )
@@ -396,7 +396,7 @@ function parse_vlm_elements()
                         {
                             nb.appendChild( document.createTextNode( " play once " ) );
                             nb.appendChild( create_button( 'Loop', 'vlm_loop("'+elt.getAttribute( 'name' ) + '");' ) );
-                            
+
                         }
 
                         if( elt.getAttribute( 'enabled' ) == 'yes' )
@@ -411,7 +411,7 @@ function parse_vlm_elements()
                         nb.appendChild( document.createTextNode( " " ) );
                         nb.appendChild( create_button( 'Stop', 'vlm_stop("'+elt.getAttribute('name')+'");' ) );
                     }
-                    
+
                     nb.appendChild( document.createTextNode( " " ) );
                     nb.appendChild( create_button( 'Delete', 'vlm_delete("'+elt.getAttribute( 'name' ) + '");' ) );
 
@@ -431,7 +431,7 @@ function parse_vlm_elements()
                     item.appendChild( create_button( 'Edit', 'vlm_input_edit("vlm_elt_'+elt.getAttribute('name')+'_input");') );
                     item.appendChild( document.createTextNode( ' ' ) );
                     item.appendChild( create_button( 'Add input', 'vlm_add_input("'+elt.getAttribute('name')+'",document.getElementById("vlm_elt_'+elt.getAttribute('name')+'_input").value );' ) );
-                    
+
                     var inputs = elt.getElementsByTagName( 'input' );
                     if( inputs.length > 0 )
                     {
@@ -447,7 +447,7 @@ function parse_vlm_elements()
                         }
                     }
                     /* end of input list */
-                    
+
                     /* output */
                     var item = document.createElement( "li" );
                     outputelt = elt.getElementsByTagName( 'output' )[0];
@@ -488,7 +488,7 @@ function parse_vlm_elements()
                     item.appendChild( text );
                     item.appendChild( document.createTextNode( ' ' ) );
                     item.appendChild( create_button( 'Add option', 'vlm_option("'+elt.getAttribute('name')+'",document.getElementById("vlm_elt_'+elt.getAttribute('name')+'_option").value );' ) );
-                    
+
                     var options = elt.getElementsByTagName( 'option' );
                     if( options.length > 0 )
                     {
@@ -510,7 +510,7 @@ function parse_vlm_elements()
                         var item = document.createElement("li");
                         var ilist = document.createElement("ul");
                         list.appendChild( item );
-                        item.appendChild(document.createTextNode("Instances:")); 
+                        item.appendChild(document.createTextNode("Instances:"));
                         item.appendChild( ilist );
                         for( i = 0; i < instances.length; i++ )
                         {
@@ -524,16 +524,16 @@ function parse_vlm_elements()
                             var ichapter = instances[i].getAttribute( 'chapter' );
                             var iseekable = instances[i].getAttribute( 'seekable' );
                             var iplaylistindex = instances[i].getAttribute( 'playlistindex' );
-                            
+
                             var item = document.createElement( "li" );
                             item.appendChild( document.createTextNode( iname + ": " + istate + " (" + iplaylistindex + ") " + (iposition.toFixed(2)) + "%" + " " + format_time( itime ) + "/" + format_time( ilength ) ) );
                             ilist.appendChild( item );
                         }
                     }
                     /* end of instances list */
-                    
+
                     nb.appendChild( list );
-                    
+
                 }
                 else if( elt.nodeName == "schedule" )
                 {
@@ -544,7 +544,7 @@ function parse_vlm_elements()
                     var nbname = document.createElement( 'b' );
                     nbname.appendChild( document.createTextNode( elt.getAttribute( 'name' ) ) );
                     nb.appendChild( nbname );
-                    
+
                     if( elt.getAttribute( 'enabled' ) == 'yes' )
                     {
                         nb.appendChild( document.createTextNode( " enabled " ) );
@@ -568,7 +568,7 @@ function parse_vlm_elements()
                     var item = document.createElement( 'li' );
                     item.appendChild( document.createTextNode( "Period (in seconds): " + elt.getAttribute( 'period' ) ) );
                     list.appendChild( item );
-                    
+
                     var item = document.createElement( 'li' );
                     if( elt.getAttribute( 'repeat' ) == -1 )
                     {
@@ -579,7 +579,7 @@ function parse_vlm_elements()
                         item.appendChild( document.createTextNode( "Number of repeats left: " + elt.getAttribute( 'repeat' ) ) );
                     }
                     list.appendChild( item );
-                    
+
                     var commands = elt.getElementsByTagName( 'command' );
                     for( i = 0; i < commands.length; i++ )
                     {
@@ -587,7 +587,7 @@ function parse_vlm_elements()
                         item.appendChild( document.createTextNode( "Command: " + commands[i].firstChild.data + " " ) );
                         list.appendChild( item );
                     }
-                    
+
                     var item = document.createElement( 'li' );
                     var sel = document.createElement( 'select' );
                     sel.setAttribute( 'id', 'vlm_elt_'+elt.getAttribute('name')+'_action' );
@@ -620,12 +620,12 @@ function parse_vlm_elements()
                     item.appendChild( text );
                     item.appendChild( document.createTextNode( " " ) );
                     item.appendChild( create_button( "Append command", 'vlm_schedule_append("' + elt.getAttribute( 'name' ) + '");') );
-                    
+
                     list.appendChild( item );
 
                     nb.appendChild( list );
                     vlm_schedule_type_change( elt.getAttribute('name') );
-                    
+
                 }
                 elt = elt.nextSibling;
             }
@@ -738,7 +738,7 @@ function vlm_schedule_append( name )
 
     var opt = document.getElementById( 'vlm_elt_' + name + '_opt' ).value;
     if( opt == "(options)" ) opt = "";
-        
+
     if( act == '' )
     {
         document.getElementById( 'vlm_command' ).value += opt;

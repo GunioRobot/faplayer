@@ -44,8 +44,8 @@ typedef struct {
 #endif
 
 #endif
-#define VFWAPI	
-#define VFWAPIV	
+#define VFWAPI
+#define VFWAPIV
 #ifndef __WINE_WINDEF_H
 typedef long (__stdcall__ *DRIVERPROC)(long,HDRVR,unsigned int,long,long);
 #endif
@@ -232,14 +232,14 @@ long VFWAPIV ICCompress(
 	ICSendMessage(					\
 	    hic, ICM_GETDEFAULTKEYFRAMERATE,		\
 	    (long)(void*)(lpint), 			\
-	    0	)		
+	    0	)
 
 #define ICGetDefaultQuality(hic,lpint) 			\
 	ICSendMessage(					\
 	    hic, ICM_GETDEFAULTQUALITY,			\
 	    (long)(void*)(lpint), 			\
-	    0	)		
-	    	
+	    0	)
+
 
 #define ICCompressBegin(hic, lpbiInput, lpbiOutput) 			\
     ICSendMessage(							\
@@ -573,7 +573,7 @@ typedef struct _AVIFILEINFOW {
     long               dwSuggestedBufferSize;
     long               dwWidth;
     long               dwHeight;
-    long               dwScale;        
+    long               dwScale;
     long               dwRate;
     long               dwLength;
     long               dwEditCount;
@@ -588,7 +588,7 @@ typedef struct _AVIFILEINFOA {
     long               dwSuggestedBufferSize;
     long               dwWidth;
     long               dwHeight;
-    long               dwScale;        
+    long               dwScale;
     long               dwRate;
     long               dwLength;
     long               dwEditCount;

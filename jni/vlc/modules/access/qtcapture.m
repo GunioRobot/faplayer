@@ -149,7 +149,7 @@ vlc_module_end ()
                 memcpy( buffer, pixels, CVPixelBufferGetBytesPerRow(imageBuffer) * CVPixelBufferGetHeight(imageBuffer));
             CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
         }
-            
+
     }
     CVBufferRelease(imageBuffer);
 

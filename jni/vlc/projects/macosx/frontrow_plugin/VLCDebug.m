@@ -32,7 +32,7 @@ static VLCFakeObject * sharedFakeObject = nil;
     if(sharedFakeObject == nil) {
         sharedFakeObject = [[VLCFakeObject alloc] init];
     }
-    
+
     return sharedFakeObject;
 }
 

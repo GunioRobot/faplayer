@@ -87,7 +87,7 @@ BuildRequires: libstdc++-devel libsysfs-devel libtheora-devel libtiff-devel
 BuildRequires: libtinfo-devel libvcd-devel libvorbis-devel libxml2-devel
 BuildRequires: libxosd-devel wxGTK2u-devel
 BuildRequires: libnspr-devel libnss-devel libgoom-devel
-BuildRequires: libhal-devel libx264-devel subversion vim-devel 
+BuildRequires: libhal-devel libx264-devel subversion vim-devel
 BuildRequires: jackit-devel liblame-devel xvid-devel zlib-devel
 BuildRequires: libavahi-devel
 BuildRequires: libnotify-devel libdbus-glib-devel
@@ -123,7 +123,7 @@ BuildRequires: libsmbclient-devel
 BuildPreReq: libdirac-devel = %dirac_ver
 %endif
 
-BuildRequires: libX11-devel libXv-devel libmesa-devel libXext-devel 
+BuildRequires: libX11-devel libXv-devel libmesa-devel libXext-devel
 BuildRequires: libXt-devel
 
 BuildRequires: libqt4-devel liblua5-devel
@@ -349,7 +349,7 @@ Group: Video
 Requires: lib%name = %version-%release
 
 %description plugin-esd
-This package adds support for Enlightened Sound Daemon to VLC Media Player. 
+This package adds support for Enlightened Sound Daemon to VLC Media Player.
 To activate it, use the `--aout esd' flag or select the `esd' aout plugin
 from the preferences menu.
 
@@ -394,7 +394,7 @@ Requires: lib%name = %version-%release
 Requires: fonts-ttf-dejavu
 
 %description plugin-freetype
-This package contains freetype subtitles and OSD text output plugin 
+This package contains freetype subtitles and OSD text output plugin
 to VLC Media Player.
 
 %if_enabled ggi
@@ -404,7 +404,7 @@ Group: Video
 Requires: lib%name = %version-%release
 
 %description plugin-ggi
-This is a GGI plugin for VLC Media Player.  To activate it, use the 
+This is a GGI plugin for VLC Media Player.  To activate it, use the
 `--vout ggi' flag or select the `ggi' vout plugin from the preferences menu.
 %endif
 
@@ -630,7 +630,7 @@ Group: Video
 Requires: lib%name = %version-%release
 
 %description plugin-sdl
-This package adds support for Simple DirectMedia Layer library to 
+This package adds support for Simple DirectMedia Layer library to
 VLC Media Player. To activate it, use the `--vout sdl' or
 `--aout sdl' flags or select the `sdl' vout or aout plugin from the
 preferences menu.
@@ -649,7 +649,7 @@ Group: Video
 Requires: lib%name = %version-%release
 
 %description plugin-shout
-This package adds support for SHOUT output access/services 
+This package adds support for SHOUT output access/services
 discovery to VLC Media Player.
 
 %if_enabled smb
@@ -832,8 +832,8 @@ Obsoletes: %name-common < %version-%release
 
 %description normal
 This is a virtual 'common' package with most useable plugins of VLC Media Player.
-It comes with wxWidgets interface, alsa audio output, full DVD read 
-support, all of the ffmpeg capabilities to read and decode files 
+It comes with wxWidgets interface, alsa audio output, full DVD read
+support, all of the ffmpeg capabilities to read and decode files
 and Xvideo/X11 video output plugins.
 
 %define _vlc_pluginsdir %_libdir/%name
@@ -959,7 +959,7 @@ mkdir -p %buildroot%_libdir
 install -pD -m644 doc/vlc.1 %buildroot/%_man1dir/vlc.1
 
 # freedesktop menu
-mkdir -p %buildroot%_datadir/applications 
+mkdir -p %buildroot%_datadir/applications
 install -pm644 share/applications/vlc.desktop %buildroot%_datadir/applications/vlc.desktop
 
 # icons
@@ -1189,7 +1189,7 @@ strfile %buildroot%_gamesdatadir/fortune/vlc %buildroot%_gamesdatadir/fortune/vl
 %_vlc_pluginsdir/video_chroma/libi420_ymga_mmx_plugin.so*
 %_vlc_pluginsdir/video_chroma/libi420_yuy2_mmx_plugin.so*
 %_vlc_pluginsdir/video_chroma/libi422_yuy2_mmx_plugin.so*
-						
+
 %dir %_vlc_pluginsdir/video_filter
 %_vlc_pluginsdir/video_filter/libadjust_plugin.so*
 %_vlc_pluginsdir/video_filter/libclone_plugin.so*
@@ -1660,7 +1660,7 @@ strfile %buildroot%_gamesdatadir/fortune/vlc %buildroot%_gamesdatadir/fortune/vl
 
 * Tue May 30 2006 Pavlov Konstantin <thresh@altlinux.ru> 0.8.6-alt0.15765
 - 15765.
-- Added libqt4-devel to buildreq, enabling by default, goes to separate 
+- Added libqt4-devel to buildreq, enabling by default, goes to separate
   interface package, added patch to build qt4 interface.
 - Lightened buildreq dependancy to liblive-devel.
 

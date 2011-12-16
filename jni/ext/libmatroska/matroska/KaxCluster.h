@@ -9,12 +9,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -81,7 +81,7 @@ DECLARE_MKX_MASTER_CONS(KaxCluster)
 		uint64 GlobalTimecode() const;
 
 		KaxBlockGroup & GetNewBlock();
-		
+
 		/*!
 			\brief release all the frames of all Blocks
 			\note this is a convenience to be able to keep Clusters+Blocks in memory (for future reference) withouht being a memory hog
@@ -96,7 +96,7 @@ DECLARE_MKX_MASTER_CONS(KaxCluster)
 		void SetParent(const KaxSegment & aParentSegment) {ParentSegment = &aParentSegment;}
 
 		void SetPreviousTimecode(uint64 aPreviousTimecode, int64 aTimecodeScale) {
-			bPreviousTimecodeIsSet = true; 
+			bPreviousTimecodeIsSet = true;
 			PreviousTimecode = aPreviousTimecode;
 			SetGlobalTimecodeScale(aTimecodeScale);
 		}
@@ -120,7 +120,7 @@ DECLARE_MKX_MASTER_CONS(KaxCluster)
 			bTimecodeScaleIsSet = true;
 		}
 		uint64 GlobalTimecodeScale() const {
-			assert(bTimecodeScaleIsSet); 
+			assert(bTimecodeScaleIsSet);
 			return TimecodeScale;
 		}
 

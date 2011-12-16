@@ -24,7 +24,7 @@
 }
 - (void)drawRect:(NSRect)rect
 {
-    
+
     NSColor * topGradient = [NSColor colorWithCalibratedWhite:.12f alpha:1.0];
     NSColor * bottomGradient   = [NSColor colorWithCalibratedWhite:0.55f alpha:0.9];
 	NSGradient * gradient = [[NSGradient alloc] initWithColorsAndLocations:bottomGradient, 0.f, bottomGradient, 0.1f, topGradient, 1.f, nil];

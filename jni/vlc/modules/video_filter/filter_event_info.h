@@ -33,10 +33,10 @@ typedef struct video_filter_region_info_t
                   rectangle corner[s] */
     int i_width; /* width of the rectangle */
     int i_height; /* height of the rectangle */
- 
+
     int i_id;
     int i_type;
- 
+
     char *p_description;
     float *pf_param;
     int i_param_size;

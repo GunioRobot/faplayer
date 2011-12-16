@@ -23,7 +23,7 @@
 -- Probe function.
 function probe()
     return vlc.access == "http"
-        and string.match( vlc.path, "megavideo.com" ) 
+        and string.match( vlc.path, "megavideo.com" )
 end
 
 -- Parse function.
@@ -37,7 +37,7 @@ function parse()
     end
 
     while true
-    do 
+    do
         line = vlc.readline()
         if not line then break end
 

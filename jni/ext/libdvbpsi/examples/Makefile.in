@@ -279,22 +279,22 @@ clean-noinstPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
-decode_bat$(EXEEXT): $(decode_bat_OBJECTS) $(decode_bat_DEPENDENCIES) 
+decode_bat$(EXEEXT): $(decode_bat_OBJECTS) $(decode_bat_DEPENDENCIES)
 	@rm -f decode_bat$(EXEEXT)
 	$(decode_bat_LINK) $(decode_bat_OBJECTS) $(decode_bat_LDADD) $(LIBS)
-decode_mpeg$(EXEEXT): $(decode_mpeg_OBJECTS) $(decode_mpeg_DEPENDENCIES) 
+decode_mpeg$(EXEEXT): $(decode_mpeg_OBJECTS) $(decode_mpeg_DEPENDENCIES)
 	@rm -f decode_mpeg$(EXEEXT)
 	$(decode_mpeg_LINK) $(decode_mpeg_OBJECTS) $(decode_mpeg_LDADD) $(LIBS)
-decode_pat$(EXEEXT): $(decode_pat_OBJECTS) $(decode_pat_DEPENDENCIES) 
+decode_pat$(EXEEXT): $(decode_pat_OBJECTS) $(decode_pat_DEPENDENCIES)
 	@rm -f decode_pat$(EXEEXT)
 	$(decode_pat_LINK) $(decode_pat_OBJECTS) $(decode_pat_LDADD) $(LIBS)
-decode_pmt$(EXEEXT): $(decode_pmt_OBJECTS) $(decode_pmt_DEPENDENCIES) 
+decode_pmt$(EXEEXT): $(decode_pmt_OBJECTS) $(decode_pmt_DEPENDENCIES)
 	@rm -f decode_pmt$(EXEEXT)
 	$(decode_pmt_LINK) $(decode_pmt_OBJECTS) $(decode_pmt_LDADD) $(LIBS)
-decode_sdt$(EXEEXT): $(decode_sdt_OBJECTS) $(decode_sdt_DEPENDENCIES) 
+decode_sdt$(EXEEXT): $(decode_sdt_OBJECTS) $(decode_sdt_DEPENDENCIES)
 	@rm -f decode_sdt$(EXEEXT)
 	$(decode_sdt_LINK) $(decode_sdt_OBJECTS) $(decode_sdt_LDADD) $(LIBS)
-get_pcr_pid$(EXEEXT): $(get_pcr_pid_OBJECTS) $(get_pcr_pid_DEPENDENCIES) 
+get_pcr_pid$(EXEEXT): $(get_pcr_pid_OBJECTS) $(get_pcr_pid_DEPENDENCIES)
 	@rm -f get_pcr_pid$(EXEEXT)
 	$(get_pcr_pid_LINK) $(get_pcr_pid_OBJECTS) $(get_pcr_pid_LDADD) $(LIBS)
 

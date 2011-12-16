@@ -3,14 +3,14 @@
  * Copyright (c) 2009 Apple Inc. All rights reserved.
  *
  * @APPLE_LICENSE_HEADER_START@
- * 
+ *
  * This file contains Original Code and/or Modifications of Original Code
  * as defined in and that are subject to the Apple Public Source License
  * Version 2.0 (the 'License'). You may not use this file except in
  * compliance with the License. Please obtain a copy of the License at
  * http://www.opensource.apple.com/apsl/ and read it before using this
  * file.
- * 
+ *
  * The Original Code and all software distributed under the License are
  * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER
  * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
@@ -18,7 +18,7 @@
  * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.
  * Please see the License for the specific language governing rights and
  * limitations under the License.
- * 
+ *
  * @APPLE_LICENSE_HEADER_END@
  */
 
@@ -60,7 +60,7 @@ bzero:
  * at destination.
  *
  * Notes on register usage:
- * 
+ *
  * Throughout this function, registers have nearly constant usage; the pattern
  * is:
  *
@@ -85,16 +85,16 @@ memset:
     mov       ip,      r0           // copy destination pointer.
     subs      r2,           #0x8    // if length - 8 is negative (i.e. length
     and       r1,           #0xff   // is less than 8), jump to cleanup path.
-    blt       L_scalarCleanup       // 
-    
+    blt       L_scalarCleanup       //
+
     tst       ip,           #0x7    // if the destination is doubleword
     beq       L_vectorCopy          // aligned, jump to fast path.
-    
+
 0:  strb      r1,     [ip], #1      // store one byte at a time until
     sub       r2,           #1      // destination pointer is 8 byte aligned.
     tst       ip,           #7      //
     bne       0b                    //
-    
+
     cmp       r2,           #0x0    // if length - 8 is negative,
     blt       L_scalarCleanup       // jump to the cleanup code
 
@@ -103,15 +103,15 @@ L_vectorCopy:
     subs      r2,           #0x38   // q0 and q1, and check if length - 64
     vmov      q1,      q0           // is negative; if so, jump to the
     blt       L_vectorCleanup       // cleanup code.
-    
+
     tst       ip,           #0x38   // if the destination is cacheline
     beq       L_cachelineAligned    // aligned, jump to the fast path.
 
 0:  vst1.64  {d0},    [ip, :64]!    // store one double word at a time until
     sub       r2,           #8      // the destination is 64-byte aligned
-    tst       ip,           #0x38   // 
+    tst       ip,           #0x38   //
     bne       0b
-    
+
     cmp       r2,           #0x0    // if length - 64 is negative,
     blt       L_vectorCleanup       // jump to the cleanup code
 
@@ -124,19 +124,19 @@ L_cachelineAligned:
     subs      r2,           #0x40   // decrement length by 64
     vst1.64  {q0,q1}, [ip, :256]!   // store 32 bytes
     bge       0b                    // if length - 64 >= 0, continue
-    
+
 L_vectorCleanup:
     adds      r2,           #0x38   // if (length - 8) < 0, goto scalar cleanup
     blt       L_scalarCleanup       //
-    
+
 0:  subs      r2,           #8      // store one double word at a time until
     vst1.64  {d0},    [ip, :64]!    // (length - 8) < 0.
     bge       0b
-    
+
 L_scalarCleanup:
     adds      r2,           #8      // restore length
     beq       1f                    // early out if zero.
-    
+
 0:  strb      r1,     [ip], #1      // store one byte at a time until length
     subs      r2,           #1      // is zero.
     bne       0b                    //

@@ -250,24 +250,24 @@ void RTPReceptionStats
   unsigned newSeqNum = 0;
   if (seqNumLT((u_int16_t)oldSeqNum, seqNum)) {
     // This packet was not an old packet received out of order, so check it:
-    
+
     if (seqNumDifference >= 0x8000) {
       // The sequence number wrapped around, so start a new cycle:
       seqNumCycle += 0x10000;
     }
-    
+
     newSeqNum = seqNumCycle|seqNum;
     if (newSeqNum > fHighestExtSeqNumReceived) {
       fHighestExtSeqNumReceived = newSeqNum;
     }
   } else if (fTotNumPacketsReceived > 1) {
     // This packet was an old packet received out of order
-    
+
     if ((int)seqNumDifference >= 0x8000) {
       // The sequence number wrapped around, so switch to an old cycle:
       seqNumCycle -= 0x10000;
     }
-    
+
     newSeqNum = seqNumCycle|seqNum;
     if (newSeqNum < fBaseExtSeqNumReceived) {
       fBaseExtSeqNumReceived = newSeqNum;
@@ -281,7 +281,7 @@ void RTPReceptionStats
       || fLastPacketReceptionTime.tv_usec != 0) {
     unsigned gap
       = (timeNow.tv_sec - fLastPacketReceptionTime.tv_sec)*MILLION
-      + timeNow.tv_usec - fLastPacketReceptionTime.tv_usec; 
+      + timeNow.tv_usec - fLastPacketReceptionTime.tv_usec;
     if (gap > fMaxInterPacketGapUS) {
       fMaxInterPacketGapUS = gap;
     }

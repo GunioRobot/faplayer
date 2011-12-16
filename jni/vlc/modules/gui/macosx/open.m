@@ -86,7 +86,7 @@ static VLCOpen *_o_sharedMainInstance = nil;
         _o_sharedMainInstance = [super init];
         p_intf = VLCIntf;
     }
- 
+
     return _o_sharedMainInstance;
 }
 
@@ -358,7 +358,7 @@ static VLCOpen *_o_sharedMainInstance = nil;
 
     [o_tabview selectTabViewItemAtIndex: i_type];
     [o_file_sub_ckbox setState: NSOffState];
- 
+
     i_result = [NSApp runModalForWindow: o_panel];
     [o_panel close];
 
@@ -601,7 +601,7 @@ static VLCOpen *_o_sharedMainInstance = nil;
 - (IBAction)openFileBrowse:(id)sender
 {
     NSOpenPanel *o_open_panel = [NSOpenPanel openPanel];
- 
+
     [o_open_panel setAllowsMultipleSelection: NO];
     [o_open_panel setCanChooseDirectories: YES];
     [o_open_panel setTitle: _NS("Open File")];
@@ -1035,7 +1035,7 @@ static VLCOpen *_o_sharedMainInstance = nil;
         if( [[[o_net_mode selectedCell] title] isEqualToString: _NS("Unicast")] )
         {
             int i_port = [o_net_udp_port intValue];
-            
+
             if( [[o_net_udp_protocol_mat selectedCell] tag] == 0 )
                 o_mrl_string = [NSString stringWithString: @"udp://"];
             else
@@ -1051,7 +1051,7 @@ static VLCOpen *_o_sharedMainInstance = nil;
         {
             NSString *o_addr = [o_net_udpm_addr stringValue];
             int i_port = [o_net_udpm_port intValue];
-            
+
             if( [[o_net_udp_protocol_mat selectedCell] tag] == 0 )
                 o_mrl_string = [NSString stringWithFormat: @"udp://@%@", o_addr];
             else
@@ -1069,18 +1069,18 @@ static VLCOpen *_o_sharedMainInstance = nil;
         [NSApp endSheet: o_net_udp_panel];
     }
 }
-    
+
 - (void)openFile
 {
     NSOpenPanel *o_open_panel = [NSOpenPanel openPanel];
     int i;
     b_autoplay = config_GetInt( VLCIntf, "macosx-autoplay" );
- 
+
     [o_open_panel setAllowsMultipleSelection: YES];
     [o_open_panel setCanChooseDirectories: YES];
     [o_open_panel setTitle: _NS("Open File")];
     [o_open_panel setPrompt: _NS("Open")];
- 
+
     if( [o_open_panel runModal] == NSOKButton )
     {
         NSArray *o_array = [NSArray array];
@@ -1144,7 +1144,7 @@ static VLCOpen *_o_sharedMainInstance = nil;
         else
             [self showCaptureView: o_eyetv_notLaunched_view];
         [self setMRL: @""];
-    } 
+    }
     else if( [[[o_capture_mode_pop selectedItem] title] isEqualToString: _NS("Screen")] )
     {
         [self showCaptureView: o_screen_view];
@@ -1245,7 +1245,7 @@ static VLCOpen *_o_sharedMainInstance = nil;
         msg_Dbg( VLCIntf, "eyetv was launched, no device yet" );
         setEyeTVUnconnected;
     }
-}    
+}
 
 /* little helper method, since this code needs to be run by multiple objects */
 - (void)setupChannelInfo
@@ -1256,7 +1256,7 @@ static VLCOpen *_o_sharedMainInstance = nil;
     [o_eyetv_chn_bgbar animate: self];
     [o_eyetv_chn_status_txt setStringValue: _NS("Retrieving Channel Info...")];
     [o_eyetv_chn_status_txt setHidden: NO];
- 
+
     /* retrieve info */
     NSEnumerator *channels = [[[VLCMain sharedInstance] eyeTVController] allChannels];
     int x = -2;
@@ -1266,7 +1266,7 @@ static VLCOpen *_o_sharedMainInstance = nil;
     [[[o_eyetv_channels_pop menu] addItemWithTitle: _NS("S-Video input")
                                                action: nil
                                         keyEquivalent: @""] setTag:x++];
-    if( channels ) 
+    if( channels )
     {
         NSString *channel;
         [[o_eyetv_channels_pop menu] addItem: [NSMenuItem separatorItem]];
@@ -1281,7 +1281,7 @@ static VLCOpen *_o_sharedMainInstance = nil;
         /* make Tuner the default */
         [o_eyetv_channels_pop selectItemWithTag:[[[VLCMain sharedInstance] eyeTVController] currentChannel]];
     }
- 
+
     /* clean up GUI */
     [o_eyetv_chn_bgbar setHidden: YES];
     [o_eyetv_chn_status_txt setHidden: YES];
@@ -1320,11 +1320,11 @@ static VLCOpen *_o_sharedMainInstance = nil;
     [o_file_sub_sheet orderOut:sender];
     [NSApp endSheet: o_file_sub_sheet];
 }
-    
+
 - (IBAction)subFileBrowse:(id)sender
 {
     NSOpenPanel *o_open_panel = [NSOpenPanel openPanel];
- 
+
     [o_open_panel setAllowsMultipleSelection: NO];
     [o_open_panel setTitle: _NS("Open File")];
     [o_open_panel setPrompt: _NS("Open")];

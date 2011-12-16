@@ -55,7 +55,7 @@ static VLCCoreDialogProvider *_o_sharedInstance = nil;
         o_error_panel = [[VLCErrorPanel alloc] init];
         b_progress_cancelled = NO;
     }
-    
+
     return _o_sharedInstance;
 }
 
@@ -68,7 +68,7 @@ static VLCCoreDialogProvider *_o_sharedInstance = nil;
     [o_prog_cancel_btn setTitle: _NS("Cancel")];
     [o_prog_bar setUsesThreadedAnimation: YES];
 
-}    
+}
 
 -(void)performDialogEvent: (NSNotification *)o_notification
 {
@@ -113,7 +113,7 @@ static VLCCoreDialogProvider *_o_sharedInstance = nil;
     NSAlert *o_alert;
     NSString *o_yes, *o_no, *o_cancel;
     NSInteger i_returnValue = 0;
-    
+
     if( p_dialog->yes != NULL )
         o_yes = [NSString stringWithUTF8String: p_dialog->yes];
     if( p_dialog->no != NULL )
@@ -239,7 +239,7 @@ static VLCCoreDialogProvider *_o_sharedInstance = nil;
     if( !b_nib_loaded )
     {
         b_nib_loaded = [NSBundle loadNibNamed:@"ErrorPanel" owner:self];
-    
+
         /* init strings */
         [o_window setTitle: _NS("Errors and Warnings")];
         [o_cleanup_button setTitle: _NS("Clean up")];

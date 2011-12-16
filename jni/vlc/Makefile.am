@@ -83,7 +83,7 @@ endif
 
 BUILT_SOURCES = $(BUILT_SOURCES_distclean) $(BUILT_SOURCES_clean)
 
-SUFFIXES = 
+SUFFIXES =
 
 DISTCHECK_CONFIGURE_FLAGS = \
 	--enable-fast-install \
@@ -563,7 +563,7 @@ VLC-release.app: vlc
 	find $(top_builddir)/VLC-release.app -type d -exec chmod ugo+rx '{}' \;
 	find $(top_builddir)/VLC-release.app -type f -exec chmod ugo+r '{}' \;
 
-# This is just for development purposes. 
+# This is just for development purposes.
 # The resulting VLC.app will only run in this tree.
 VLC.app: vlc $(top_builddir)/src/.libs/libvlccore.dylib $(top_builddir)/src/.libs/libvlc.dylib
 	$(AM_V_GEN)(cd src && make install $(silentstd))
@@ -900,7 +900,7 @@ package-macosx: VLC-release.app ChangeLog
 	echo "Create package directory: vlc-$(VERSION)/";
 	mkdir -p "$(top_builddir)/vlc-$(VERSION)/";
 
-# Copy relevant files 
+# Copy relevant files
 	@if test -e "$(top_builddir)/VLC-release.app/"; then \
 	  cp -R "$(top_builddir)/VLC-release.app" "$(top_builddir)/vlc-$(VERSION)/VLC.app"; \
 	else \
@@ -925,7 +925,7 @@ package-macosx: VLC-release.app ChangeLog
 	echo "Disk image creation completed:"
 	ls -la "$(top_builddir)/vlc-$(VERSION).dmg" ; echo
 
-# Create disk image 
+# Create disk image
 #	echo "Creating disk image"
 #	rm -f "$(top_builddir)/vlc-$(VERSION).dmg"
 #	hdiutil create -verbose -srcfolder "$(top_builddir)/vlc-$(VERSION)" \

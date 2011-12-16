@@ -61,7 +61,7 @@ dvbpsi_descriptor_t * dvbpsi_GenStuffingDataDr(
                                         dvbpsi_stuffing_dr_t * p_decoded,
                                         int b_duplicate);
 
-The patch fixes this (and also two wrong function names within 
+The patch fixes this (and also two wrong function names within
 comments).
 
 ------------------------------------------------------------------------
@@ -117,7 +117,7 @@ r137 | massiot | 2007-01-19 18:33:26 +0100 (Fri, 19 Jan 2007) | 3 lines
 ------------------------------------------------------------------------
 r136 | massiot | 2007-01-19 18:32:37 +0100 (Fri, 19 Jan 2007) | 3 lines
 
- * src/descriptors/dr_56.c: Fixed bad declaration and typo in descriptor 
+ * src/descriptors/dr_56.c: Fixed bad declaration and typo in descriptor
    56 (teletext).
 
 ------------------------------------------------------------------------

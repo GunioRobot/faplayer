@@ -31,7 +31,7 @@ Release:	%{release_tag}%{?dist}.2
 License:	GPL
 Group:		Applications/Multimedia
 URL:		http://www.videolan.org/
-%if %vlc_svn	
+%if %vlc_svn
 Source0:        http://nightlies.videolan.org/build/source/vlc-snapshot-%{vlc_date}.tar.bz2
 %else
 Source0:	http://download.videolan.org/pub/videolan/vlc/%{version}/vlc-%{version}.tar.bz2
@@ -90,7 +90,7 @@ BuildRequires:	libcdio-devel >= 0.77-3
 # kwizart this is the same issue with cdio and cddax svcdx configure options.
 # http://bugzilla.livna.org/show_bug.cgi?id=1342 or see
 # http://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=221359
-BuildConflicts:	libcdio-devel = 0.78.2	
+BuildConflicts:	libcdio-devel = 0.78.2
 BuildRequires:	libdca-devel
 BuildRequires:	libdv-devel
 BuildRequires:	libdvbpsi-devel
@@ -115,7 +115,7 @@ BuildRequires:  libupnp-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:  libxml2-devel
 BuildRequires:	lirc-devel
-%if %with_static_live555 
+%if %with_static_live555
 BuildConflicts: live-devel
 %else
 BuildRequires:	live-devel >= 0-0.11.2006.08.07
@@ -149,13 +149,13 @@ BuildRequires:  libXxf86vm-devel
 
 %if "%fedora" > "6"
 BuildRequires: libsmbclient-devel
-%else 
+%else
 BuildRequires: samba-common
 %endif
 
 %if %with_mozilla
 BuildRequires:	firefox-devel >= 1.5.0.0
-## Will be later replaced by 
+## Will be later replaced by
 #BuildRequires:  xulrunner-devel
 ##
 BuildRequires:	nspr-devel
@@ -232,18 +232,18 @@ IPv4 or IPv6 on a high-bandwidth network.
 
 %package -n python-vlc
 Summary:	VLC Media Player binding for Python
-Group:		Applications/Multimedia	
+Group:		Applications/Multimedia
 Requires:	%{name} = %{version}-%{release}
 Requires:       pyorbit
 
 %description -n python-vlc
-VLC Media Player binding for Python 
+VLC Media Player binding for Python
 
 
 %if %with_mozilla
 %package -n mozilla-vlc
 Summary:	VLC Media Player plugin for Mozilla compatible web browsers
-Group:		Applications/Multimedia	
+Group:		Applications/Multimedia
 Requires:	%{name} = %{version}-%{release}
 Requires:	%{_libdir}/mozilla/plugins
 Provides:	videolan-client-mozilla = %{version}-%{release}
@@ -263,7 +263,7 @@ IPv4 or IPv6 on a high-bandwidth network.
 %if %with_java_vlc
 %package -n java-vlc
 Summary:	VLC Media Player binding for Java
-Group:		Applications/Multimedia	
+Group:		Applications/Multimedia
 Requires:	%{name} = %{version}-%{release}
 
 %description -n java-vlc
@@ -301,7 +301,7 @@ modules/misc/freetype.c
 # Fix perms issues
 chmod 644 mozilla/control/*
 chmod 644 src/control/log.c
-sed -i 's/\r//'  mozilla/control/* 
+sed -i 's/\r//'  mozilla/control/*
 
 sh bootstrap
 
@@ -368,7 +368,7 @@ export JAVA_HOME=%{_prefix}/lib/jvm/java
 	--enable-shout				\
 	--enable-release			\
 	--enable-live555 			\
-%if %with_static_live555 
+%if %with_static_live555
 	--with-live555-tree=live		\
 %endif
 %if %rpmfusion
@@ -376,7 +376,7 @@ export JAVA_HOME=%{_prefix}/lib/jvm/java
 	--enable-dv				\
 %endif
 	--enable-ffmpeg --with-ffmpeg-mp3lame --with-ffmpeg-faac \
-%if %with_static_ffmpeg 
+%if %with_static_ffmpeg
  	--with-ffmpeg-tree=ffmpeg-%{ffmpeg_date} \
 %endif
 	--disable-libtool 			\
@@ -402,9 +402,9 @@ export JAVA_HOME=%{_prefix}/lib/jvm/java
 	--enable-speex				\
 	--enable-tarkin				\
 	--enable-theora				\
-%if %with_dirac 
+%if %with_dirac
 	--enable-dirac				\
-%endif 
+%endif
 	--enable-svg				\
 	--enable-snapshot			\
 %ifarch %{ix86} x86_64
@@ -433,7 +433,7 @@ export JAVA_HOME=%{_prefix}/lib/jvm/java
 	--enable-loader				\
 %endif
 	--without-contrib			\
-%if %with_mozilla 
+%if %with_mozilla
 	--enable-mozilla			\
 %endif
 	--with-x264-tree=%{_includedir}		\
@@ -476,7 +476,7 @@ sed -i -e 's|python $(srcdir)/setup.py install|python $(srcdir)/setup.py install
 sed -i -e 's|cflags="${cflags} -I/usr/include/ffmpeg"|cflags="${cflags} -I%{_includedir}/ffmpeg -I%{_includedir}/postproc/"|' vlc-config
 
 %if %with_mozilla
-	make %{?_smp_mflags} XPIDL_INCL="-I%{_datadir}/idl/firefox-$MOZVER/" 
+	make %{?_smp_mflags} XPIDL_INCL="-I%{_datadir}/idl/firefox-$MOZVER/"
 %else
 	make %{?_smp_mflags}
 %endif
@@ -488,7 +488,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 mv $RPM_BUILD_ROOT%{_datadir}/doc/vlc __doc
 
-%if %with_mozilla 
+%if %with_mozilla
 chmod +x $RPM_BUILD_ROOT%{_libdir}/mozilla/plugins/libvlcplugin.so
 %endif
 
@@ -648,7 +648,7 @@ rm -rf $RPM_BUILD_ROOT __doc
 * Sat Apr 21 2007 kwizart < kwizart at gmail.com > - 0.8.6b-1
 - Update to Final 8.6b
 - Enable Dirac codec
-- Fix mozilla-vlc libXt.so loading 
+- Fix mozilla-vlc libXt.so loading
   (removing mozilla-sdk since using firefox sdk >= 1.5)
 - Fix SeLinux context for dmo plugin. Was:
   https://bugzilla.livna.org/show_bug.cgi?id=1404
@@ -691,7 +691,7 @@ rm -rf $RPM_BUILD_ROOT __doc
 - Fix .py? presence and perm (644)
 - Remove .la after make install
 - Add --disable-pth (broken for release and svn)
-  
+
 * Sat Mar 24 2007 kwizart < kwizart at gmail.com > - 0.8.6a-4.5
 - Test dirac (disabled mozilla )
 - Test Updated static live555 to 2007.02.22
@@ -701,12 +701,12 @@ rm -rf $RPM_BUILD_ROOT __doc
 - WIP changes - ld.conf is unuseful...
 
 * Wed Mar 21 2007 kwizart < kwizart at gmail.com > - 0.8.6a-4.3
-- Revert back to the static vlc version 
+- Revert back to the static vlc version
  ( will explore this with ld.conf later )
 
 * Wed Mar 21 2007 kwizart < kwizart at gmail.com > - 0.8.6a-4.2
 - Fix .desktop file
-- Disable broken libtool 
+- Disable broken libtool
 - Quick fixes for svn/cache prepare
 - Patch format_c
 - Fix rpmlint error with python-vlc
@@ -785,7 +785,7 @@ rm -rf $RPM_BUILD_ROOT __doc
 * Wed Jan  3 2007 kwizart < kwizart at gmail.com > - 0.8.6-2
  with help from Rathan
 - Enabled --enable-shout
-- Enabled --enable-quicktime (x86 only !) 
+- Enabled --enable-quicktime (x86 only !)
 - Enabled --enable-loader (x86 only !)
 - Enabled --with-wine-sdk-path (x86 only !)
 - Enabled --enable-corba
@@ -827,7 +827,7 @@ rm -rf $RPM_BUILD_ROOT __doc
 - BuildReq:libtool
 
 * Sun Sep 24 2006 Dams <anvil[AT]livna.org> - 0.8.5-4
-- Fixed the mozilla plugin damn build 
+- Fixed the mozilla plugin damn build
 
 * Sat Sep  9 2006 Dams <anvil[AT]livna.org> - 0.8.5-3
 - sysfsutils-devel -> libsysfs-devel
@@ -850,7 +850,7 @@ rm -rf $RPM_BUILD_ROOT __doc
 - Specfile cleanups.
 
 * Fri Mar 24 2006 Thorsten Leemhuis <fedora[AT]leemhuis.info> 0.8.4-9.a
-- rebuild 
+- rebuild
 
 * Tue Mar 21 2006 Andreas Bierfert <andreas.bierfert[AT]lowlatency.de>
 0.8.4-8.a
@@ -936,7 +936,7 @@ rm -rf $RPM_BUILD_ROOT __doc
 
 * Wed Jun 30 2004 Dams <anvil[AT]livna.org> 0:0.7.2-0.lvn.3
 - speex now conditional and default disabled since vlc requires
-  development version. 
+  development version.
 
 * Wed Jun 30 2004 Dams <anvil[AT]livna.org> 0:0.7.2-0.lvn.2
 - Optional Fribidi and libtheora support (default disabled)
@@ -961,7 +961,7 @@ rm -rf $RPM_BUILD_ROOT __doc
 - Conditional ffmpeg build option (default enabled)
 
 * Fri Sep  5 2003 Dams <anvil[AT]livna.org> 0:0.6.2-0.fdr.6
-- pth support now default disabled 
+- pth support now default disabled
 
 * Fri Sep  5 2003 Dams <anvil[AT]livna.org> 0:0.6.2-0.fdr.5
 - slp support can now be not-build with '--without slp'
@@ -973,7 +973,7 @@ rm -rf $RPM_BUILD_ROOT __doc
 - Removed useless explicit 'Requires:' in subpackages declarations
 
 * Tue Sep  2 2003 Dams <anvil[AT]livna.org> 0:0.6.2-0.fdr.3
-- Added builddep for libpng-devel and openslp-devel 
+- Added builddep for libpng-devel and openslp-devel
 - Added gnome (default:enabled) and ncurses (default:disabled)
   subpackages
 - Removed macros (mkdir/install/perl)
@@ -990,10 +990,10 @@ rm -rf $RPM_BUILD_ROOT __doc
 - Hopefully fixed 'if' conditions for optional buildrequires
 
 * Tue Jul  8 2003 Dams <anvil[AT]livna.org> 0:0.6.0-0.fdr.3
-- Providing vlc 
+- Providing vlc
 
 * Tue Jul  8 2003 Dams <anvil[AT]livna.org> 0:0.6.0-0.fdr.2
 - Moved desktop entry from devel to main package (stupid me)
 
-* Mon Apr 28 2003 Dams <anvil[AT]livna.org> 
+* Mon Apr 28 2003 Dams <anvil[AT]livna.org>
 - Initial build.

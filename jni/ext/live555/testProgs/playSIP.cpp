@@ -37,7 +37,7 @@ Medium* createClient(UsageEnvironment& env, char const* /*url*/, int verbosityLe
   return ourSIPClient = SIPClient::createNew(env, desiredAudioRTPPayloadFormat, mimeSubtype, verbosityLevel, applicationName);
 }
 
-void getOptions(RTSPClient::responseHandler* afterFunc) { 
+void getOptions(RTSPClient::responseHandler* afterFunc) {
   ourSIPClient->envir().setResultMsg("NOT SUPPORTED IN CLIENT");
   afterFunc(NULL, -1, strDup(ourSIPClient->envir().getResultMsg()));
 }

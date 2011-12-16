@@ -26,7 +26,7 @@
     (c-cleanup-list                . (scope-operator
                                       empty-defun-braces
                                       defun-close-semi))
-    
+
     (c-offsets-alist     . ((string . -1000)
 			    (c . c-lineup-C-comments)
 			    (defun-open . 0)

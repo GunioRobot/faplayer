@@ -20,7 +20,7 @@ and fetching a pre-compiled binary package. Either type 'make src'
 or 'make bin' (also from the contrib directory).
 
 Once the contribs are built, you can start building VLC.
-See: http://developers.videolan.org/vlc/osx-compile.html 
+See: http://developers.videolan.org/vlc/osx-compile.html
 or INSTALL.win32 for more details on that.
 
 Happy hacking.

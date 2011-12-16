@@ -9,12 +9,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -225,7 +225,7 @@ int main(int argc, char **argv)
 						} else {
 							ElementLevel2->SkipData(aStream, ElementLevel2->Generic().Context);
 							delete ElementLevel2;
-					
+
 							ElementLevel2 = aStream.FindNextElement(ElementLevel1->Generic().Context, UpperElementLevel, 0, bAllowDummy);
 						}
 					}
@@ -314,7 +314,7 @@ int main(int argc, char **argv)
 					} else {
 						printf("  * Some mandatory elements ar missing !!! *\n");
 					}
-					
+
 					// display the elements read
 					unsigned int Index0;
 					for (Index0 = 0; Index0<SegmentCluster->ListSize() ;Index0++) {
@@ -659,7 +659,7 @@ int main(int argc, char **argv)
 												if (Comment[Index3]->Generic().GlobalId == KaxTagMultiCommentName::ClassInfos.GlobalId) {
 													KaxTagMultiCommentName & CommentName = *static_cast<KaxTagMultiCommentName *>(Comment[Index3]);
 													printf("      Comment Name \"%s\"\n", std::string(CommentName).c_str());
-												}	
+												}
 											}
 //										} else if (Targets[Index2]->Generic().GlobalId == DummyRawElement::ClassInfos.GlobalId) {
 #endif
@@ -685,7 +685,7 @@ int main(int argc, char **argv)
 											printf("     Bibliography\n");
 										} else if (General[Index2]->Generic().GlobalId == KaxTagLanguage::ClassInfos.GlobalId) {
 											printf("     Language\n");
-										}	
+										}
 									}
 								} else if (TagElt[Index1]->Generic().GlobalId == KaxTagMultiCommercial::ClassInfos.GlobalId) {
 									printf("    MultiCommercial\n");
@@ -708,11 +708,11 @@ int main(int argc, char **argv)
 															printf("       Currency\n");
 														} else if (Prices[Index4]->Generic().GlobalId == KaxTagMultiPriceAmount::ClassInfos.GlobalId) {
 															printf("       Amount\n");
-														}	
+														}
 													}
-												}	
+												}
 											}
-										}	
+										}
 									}
 								} else if (TagElt[Index1]->Generic().GlobalId == KaxTagMultiDate::ClassInfos.GlobalId) {
 									printf("    MultiDate\n");
@@ -724,7 +724,7 @@ int main(int argc, char **argv)
 										if (Comment[Index2]->Generic().GlobalId == KaxTagMultiCommentName::ClassInfos.GlobalId) {
 											KaxTagMultiCommentName & CommentName = *static_cast<KaxTagMultiCommentName *>(Comment[Index2]);
 											printf("     Comment Name \"%s\"\n", std::string(CommentName).c_str());
-										}	
+										}
 									}
 #endif
 								}
@@ -749,7 +749,7 @@ int main(int argc, char **argv)
 				} else {
 					ElementLevel1->SkipData(aStream, ElementLevel1->Generic().Context);
 					delete ElementLevel1;
-			
+
 					ElementLevel1 = aStream.FindNextElement(ElementLevel0->Generic().Context, UpperElementLevel, 0, bAllowDummy);
 				}
 			}

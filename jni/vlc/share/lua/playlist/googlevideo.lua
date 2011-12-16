@@ -26,7 +26,7 @@ end
 -- Probe function.
 function probe()
     return vlc.access == "http"
-        and string.match( vlc.path, "video.google.com" ) 
+        and string.match( vlc.path, "video.google.com" )
         and ( string.match( vlc.path, "videoplay" )
             or string.match( vlc.path, "videofeed" ) )
 end
@@ -37,7 +37,7 @@ end
 
 -- Parse function.
 function parse()
-    local docid = get_url_param( vlc.path, "docid" ) 
+    local docid = get_url_param( vlc.path, "docid" )
     if string.match( vlc.path, "videoplay" ) then
         return { { path = "http://video.google.com/videofeed?docid=" .. docid } }
     elseif string.match( vlc.path, "videofeed" ) then

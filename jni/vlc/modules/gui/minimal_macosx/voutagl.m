@@ -70,7 +70,7 @@ int aglInit( vout_thread_t * p_vout )
         msg_Err( p_vout, "No screen renderer available for required attributes." );
         return VLC_EGENERIC;
     }
- 
+
     p_vout->p_sys->agl_ctx = aglCreateContext(pixFormat, NULL);
     aglDestroyPixelFormat(pixFormat);
     if( NULL == p_vout->p_sys->agl_ctx )
@@ -239,10 +239,10 @@ int aglManage( vout_thread_t * p_vout )
         else
         {
             Rect deviceRect;
- 
+
             GDHandle deviceHdl = GetMainDevice();
             deviceRect = (*deviceHdl)->gdRect;
- 
+
             if( !p_vout->p_sys->theWindow )
             {
                 /* Create a window */
@@ -252,7 +252,7 @@ int aglManage( vout_thread_t * p_vout )
                             | kWindowStandardHandlerAttribute
                             | kWindowLiveResizeAttribute
                             | kWindowNoShadowAttribute;
- 
+
                 windowAttrs &= (~kWindowResizableAttribute);
 
                 CreateNewWindow(kDocumentWindowClass, windowAttrs, &deviceRect, &p_vout->p_sys->theWindow);
@@ -262,14 +262,14 @@ int aglManage( vout_thread_t * p_vout )
                     SetWindowGroup(p_vout->p_sys->theWindow, p_vout->p_sys->winGroup);
                     SetWindowGroupParent( p_vout->p_sys->winGroup, GetWindowGroupOfClass(kDocumentWindowClass) ) ;
                 }
- 
+
                 // Window title
                 CFStringRef titleKey    = CFSTR("Fullscreen VLC media plugin");
                 CFStringRef windowTitle = CFCopyLocalizedString(titleKey, NULL);
                 SetWindowTitleWithCFString(p_vout->p_sys->theWindow, windowTitle);
                 CFRelease(titleKey);
                 CFRelease(windowTitle);
- 
+
                 //Install event handler
                 static const EventTypeSpec win_events[] = {
                     { kEventClassMouse, kEventMouseDown },
@@ -321,7 +321,7 @@ int aglControl( vout_thread_t *p_vout, int i_query, va_list args )
             clipBounds.left = va_arg( args, int);
             clipBounds.bottom = va_arg( args, int);
             clipBounds.right = va_arg( args, int);
- 
+
             if( !p_vout->b_fullscreen )
             {
                 /*
@@ -439,7 +439,7 @@ static pascal OSStatus WindowEventHandler(EventHandlerCallRef nextHandler, Event
     {
         HICommand theHICommand;
         GetEventParameter( event, kEventParamDirectObject, typeHICommand, NULL, sizeof( HICommand ), NULL, &theHICommand );
- 
+
         switch ( theHICommand.commandID )
         {
             default:
@@ -450,7 +450,7 @@ static pascal OSStatus WindowEventHandler(EventHandlerCallRef nextHandler, Event
     {
         WindowRef     window;
         Rect          rectPort = {0,0,0,0};
- 
+
         GetEventParameter(event, kEventParamDirectObject, typeWindowRef, NULL, sizeof(WindowRef), NULL, &window);
 
         if(window)
@@ -464,7 +464,7 @@ static pascal OSStatus WindowEventHandler(EventHandlerCallRef nextHandler, Event
             case kEventWindowZoomed:
             case kEventWindowBoundsChanged:
                 break;
- 
+
             default:
                 result = eventNotHandledErr;
         }
@@ -476,7 +476,7 @@ static pascal OSStatus WindowEventHandler(EventHandlerCallRef nextHandler, Event
             case kEventMouseDown:
             {
                 UInt16     button;
- 
+
                 GetEventParameter(event, kEventParamMouseButton, typeMouseButton, NULL, sizeof(button), NULL, &button);
                 switch (button)
                 {
@@ -516,7 +516,7 @@ static pascal OSStatus WindowEventHandler(EventHandlerCallRef nextHandler, Event
             case kEventMouseUp:
             {
                 UInt16     button;
- 
+
                 GetEventParameter(event, kEventParamMouseButton, typeMouseButton, NULL, sizeof(button), NULL, &button);
                 switch (button)
                 {
@@ -582,13 +582,13 @@ static pascal OSStatus WindowEventHandler(EventHandlerCallRef nextHandler, Event
                 vout_PlacePicture(p_vout, i_width, i_height, &i_x, &i_y, &i_width, &i_height);
 
                 GetEventParameter(event, kEventParamWindowMouseLocation, typeQDPoint, NULL, sizeof(Point), NULL, &ml);
- 
+
                 x = (((int)ml.h) - i_x) * p_vout->render.i_width / i_width;
                 y = (((int)ml.v) - i_y) * p_vout->render.i_height / i_height;
                 var_SetCoords( p_vout, "mouse-moved", x, y );
                 break;
             }
- 
+
             default:
                 result = eventNotHandledErr;
         }

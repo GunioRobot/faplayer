@@ -25,7 +25,7 @@ Medium* createClient(UsageEnvironment& env, char const* url, int verbosityLevel,
   return ourRTSPClient = RTSPClient::createNew(env, url, verbosityLevel, applicationName, tunnelOverHTTPPortNum);
 }
 
-void getOptions(RTSPClient::responseHandler* afterFunc) { 
+void getOptions(RTSPClient::responseHandler* afterFunc) {
   ourRTSPClient->sendOptionsCommand(afterFunc, ourAuthenticator);
 }
 

@@ -258,16 +258,16 @@ clean-noinstPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
-gen_crc$(EXEEXT): $(gen_crc_OBJECTS) $(gen_crc_DEPENDENCIES) 
+gen_crc$(EXEEXT): $(gen_crc_OBJECTS) $(gen_crc_DEPENDENCIES)
 	@rm -f gen_crc$(EXEEXT)
 	$(LINK) $(gen_crc_OBJECTS) $(gen_crc_LDADD) $(LIBS)
-gen_pat$(EXEEXT): $(gen_pat_OBJECTS) $(gen_pat_DEPENDENCIES) 
+gen_pat$(EXEEXT): $(gen_pat_OBJECTS) $(gen_pat_DEPENDENCIES)
 	@rm -f gen_pat$(EXEEXT)
 	$(gen_pat_LINK) $(gen_pat_OBJECTS) $(gen_pat_LDADD) $(LIBS)
-gen_pmt$(EXEEXT): $(gen_pmt_OBJECTS) $(gen_pmt_DEPENDENCIES) 
+gen_pmt$(EXEEXT): $(gen_pmt_OBJECTS) $(gen_pmt_DEPENDENCIES)
 	@rm -f gen_pmt$(EXEEXT)
 	$(gen_pmt_LINK) $(gen_pmt_OBJECTS) $(gen_pmt_LDADD) $(LIBS)
-test_dr$(EXEEXT): $(test_dr_OBJECTS) $(test_dr_DEPENDENCIES) 
+test_dr$(EXEEXT): $(test_dr_OBJECTS) $(test_dr_DEPENDENCIES)
 	@rm -f test_dr$(EXEEXT)
 	$(test_dr_LINK) $(test_dr_OBJECTS) $(test_dr_LDADD) $(LIBS)
 

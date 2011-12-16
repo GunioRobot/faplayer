@@ -32,7 +32,7 @@ var albumart_id = -1;
 /**********************************************************************
  * Slider functions
  *********************************************************************/
- 
+
 var slider_mouse_down = 0;
 var slider_dx = 0;
 
@@ -275,7 +275,7 @@ function toggle_btn_text()
 }
 
 function clear_children( elt )
-{   
+{
     if( elt )
         while( elt.hasChildNodes() )
             elt.removeChild( elt.firstChild );
@@ -510,11 +510,11 @@ function parse_status()
             set_text( 'time', format_time( new_time ) );
             set_text( 'length', format_time( length ) );
             var audio_delay = (parseFloat(req.responseXML.documentElement.getElementsByTagName( 'audiodelay' )[0].firstChild.data).toFixed(2))*1000;
-            set_text( 'a_del', audio_delay ); 
+            set_text( 'a_del', audio_delay );
             var play_rate = (parseFloat(req.responseXML.documentElement.getElementsByTagName( 'rate' )[0].firstChild.data).toFixed(2));
-            set_text( 'p_rate', play_rate ); 
+            set_text( 'p_rate', play_rate );
             var subs_delay = (parseFloat(req.responseXML.documentElement.getElementsByTagName( 'subtitledelay' )[0].firstChild.data).toFixed(2))*1000;
-            set_text( 's_del', subs_delay ); 
+            set_text( 's_del', subs_delay );
             if( status.getElementsByTagName( 'volume' ).length != 0 )
                 set_text( 'volume', Math.floor(status.getElementsByTagName( 'volume' )[0].firstChild.data/5.12)+'%' );
             var statetag = status.getElementsByTagName( 'state' );
@@ -549,7 +549,7 @@ function parse_status()
                 setclass( document.getElementById( 'btn_shuffle'), 'on' );
             else
                 setclass( document.getElementById( 'btn_shuffle'), 'off' );
-               
+
             var looptag = status.getElementsByTagName( 'loop' );
             if( looptag.length > 0 ? looptag[0].firstChild.data == "1" : 0)
                 setclass( document.getElementById( 'btn_loop'), 'on' );
@@ -590,7 +590,7 @@ function parse_status()
             var infotree = document.getElementById('infotree' );
             clear_children( infotree );
             infotree.appendChild( tree );
-            
+
         }
         else
         {
@@ -611,7 +611,7 @@ function parse_playlist()
             var pos = document.createElement( "div" );
             var pos_top = pos;
             var elt = answer.firstChild;
-            
+
             pl_cur_id = 0;  /* changed to the current id is there actually
                              * is a current id */
             while( elt )
@@ -845,7 +845,7 @@ function update_input_net()
 {
     var mrl = document.getElementById( 'input_mrl' );
     var type = radio_value( "input_net_type" );
-    
+
     check_and_replace_int( 'input_net_udp_port', 1234 );
     check_and_replace_int( 'input_net_udpmcast_port', 1234 );
 
@@ -982,7 +982,7 @@ function update_sout()
             alot = true;
         }
         option += value( 'sout_transcode_extra' );
-            
+
         option += "}";
 
     }

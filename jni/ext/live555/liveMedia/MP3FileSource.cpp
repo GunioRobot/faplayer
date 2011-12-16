@@ -84,7 +84,7 @@ void MP3FileSource::seekWithinFile(double seekNPT, double streamDuration) {
   if (streamDuration < 0.0) {
     streamDuration = 0.0;
   } else if (seekNPT + streamDuration > fileDuration) {
-    streamDuration = fileDuration - seekNPT; 
+    streamDuration = fileDuration - seekNPT;
   }
 
   float seekFraction = (float)seekNPT/fileDuration;

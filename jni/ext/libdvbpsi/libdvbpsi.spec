@@ -51,7 +51,7 @@ the %name package installed.
 
 %build
 %configure2_5x --enable-release
-%make 
+%make
 
 %install
 rm -rf %buildroot

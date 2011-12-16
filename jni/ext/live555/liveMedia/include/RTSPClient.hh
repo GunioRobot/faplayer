@@ -296,7 +296,7 @@ public:
                     Boolean allowKasennaProtocol = False, int timeout = -1);
   char* describeWithPassword(char const* url,
 			     char const* username, char const* password,
-			     Boolean allowKasennaProtocol = False, 
+			     Boolean allowKasennaProtocol = False,
 			     int timeout = -1);
   char* sendOptionsCmd(char const* url,
 		       char* username = NULL, char* password = NULL,

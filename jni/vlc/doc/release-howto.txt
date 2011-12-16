@@ -69,7 +69,7 @@
 
  * Mirrors (if necessary)
   - Forwarn the mirror admins
-  - Update the list of files for the mirror check 
+  - Update the list of files for the mirror check
      (/var/www/local/mirrors.v.o/files)
   - Disable mirrors which haven't synced yet and possibly ganesh if there are
     enough other mirrors (see http://mirrors.videolan.org/release.html)

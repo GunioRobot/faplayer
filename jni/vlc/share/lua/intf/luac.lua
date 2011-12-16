@@ -21,7 +21,7 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
 --]==========================================================================]
 
-usage = 
+usage =
 [[
 To compile a lua script to bytecode (luac) run:
   vlc -I lua --lua-intf --lua-config 'luac={input="file.lua",output="file.luac"}'

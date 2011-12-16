@@ -11,12 +11,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -56,16 +56,16 @@ class EBML_DLL_API EbmlFloat : public EbmlElement {
 		EbmlFloat(const double DefaultValue, const Precision prec = FLOAT_32);
 		EbmlFloat(const EbmlFloat & ElementToClone);
 
-		virtual bool ValidateSize() const 
+		virtual bool ValidateSize() const
 		{
 			return (GetSize() == 4 || GetSize() == 8);
 		}
-	
+
 		filepos_t RenderData(IOCallback & output, bool bForceRender, bool bWithDefault = false);
 		filepos_t ReadData(IOCallback & input, ScopeMode ReadFully = SCOPE_ALL_DATA);
 		filepos_t UpdateSize(bool bWithDefault = false, bool bForceRender = false);
 
-		void SetPrecision(const EbmlFloat::Precision prec = FLOAT_32) 
+		void SetPrecision(const EbmlFloat::Precision prec = FLOAT_32)
 		{
 			if (prec == FLOAT_64)
 				SetSize_(8);
@@ -73,23 +73,23 @@ class EBML_DLL_API EbmlFloat : public EbmlElement {
 				SetSize_(4); // default size
 		}
 
-	
+
 //		EbmlFloat & operator=(const float NewValue) { Value = NewValue; return *this;}
 		EbmlFloat & operator=(const double NewValue) { Value = NewValue; SetValueIsSet(); return *this;}
 
 		virtual bool IsSmallerThan(const EbmlElement *Cmp) const;
-		
+
 		operator const float() const;
 		operator const double() const;
 
 		void SetDefaultValue(double);
-    
+
 		const double DefaultVal() const;
 
 		bool IsDefaultValue() const {
 			return (DefaultISset() && Value == DefaultValue);
 		}
-		
+
 #if defined(EBML_STRICT_API)
     private:
 #else

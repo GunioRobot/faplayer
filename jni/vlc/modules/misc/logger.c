@@ -177,7 +177,7 @@ vlc_module_begin ()
 #endif
     add_integer( "log-verbose", -1, LOGVERBOSE_TEXT, LOGVERBOSE_LONGTEXT,
            false )
-    
+
     add_obsolete_string( "rrd-file" )
 
     set_capability( "interface", 0 )
@@ -433,7 +433,7 @@ static void SyslogPrint( const msg_item_t *p_msg )
     else
         syslog( i_priority, "%s%s%s",
                 p_msg->psz_module, ppsz_type[p_msg->i_type], p_msg->psz_msg );
- 
+
 }
 #endif
 

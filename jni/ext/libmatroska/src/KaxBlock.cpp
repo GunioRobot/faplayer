@@ -9,12 +9,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -126,7 +126,7 @@ bool KaxInternalBlock::AddFrame(const KaxTrackEntry & track, uint64 timecode, Da
 
 	if (lacing == LACING_XIPH)
 		// decide wether a new frame can be added or not
-		// a frame in a lace is not efficient when the place necessary to code it in a lace is bigger 
+		// a frame in a lace is not efficient when the place necessary to code it in a lace is bigger
 		// than the size of a simple Block. That means more than 6 bytes (4 in struct + 2 for EBML) to code the size
 		return (buffer.Size() < 6*0xFF);
 	else
@@ -235,7 +235,7 @@ KaxBlockVirtual::KaxBlockVirtual(EBML_EXTRA_DEF)
 KaxBlockVirtual::~KaxBlockVirtual()
 {
     if(GetBuffer() == DataBlock)
-        SetBuffer( NULL, 0 ); 
+        SetBuffer( NULL, 0 );
 }
 
 filepos_t KaxBlockVirtual::UpdateSize(bool bSaveDefault, bool bForceRender)
@@ -245,7 +245,7 @@ filepos_t KaxBlockVirtual::UpdateSize(bool bSaveDefault, bool bForceRender)
 	// fill data
 	if (TrackNumber < 0x80) {
         assert(GetSize() >= 4);
-		*cursor++ = TrackNumber | 0x80; // set the first bit to 1 
+		*cursor++ = TrackNumber | 0x80; // set the first bit to 1
 	} else {
         assert(GetSize() >= 5);
 		*cursor++ = (TrackNumber >> 8) | 0x40; // set the second bit to 1
@@ -290,7 +290,7 @@ filepos_t KaxInternalBlock::RenderData(IOCallback & output, bool bForceRender, b
 
 		// write Block Head
 		if (TrackNumber < 0x80) {
-			*cursor++ = TrackNumber | 0x80; // set the first bit to 1 
+			*cursor++ = TrackNumber | 0x80; // set the first bit to 1
 		} else {
 			*cursor++ = (TrackNumber >> 8) | 0x40; // set the second bit to 1
 			*cursor++ = TrackNumber & 0xFF;
@@ -318,7 +318,7 @@ filepos_t KaxInternalBlock::RenderData(IOCallback & output, bool bForceRender, b
 			if (bIsDiscardable)
 				*cursor |= 0x01;
 		}
-		
+
 		// lacing flag
 		switch (mLacing)
 		{
@@ -417,7 +417,7 @@ uint64 KaxInternalBlock::ReadInternalHead(IOCallback & input)
 	uint64 Result = input.read(cursor, 4);
 	if (Result != 4)
 		return Result;
-	
+
 	// update internal values
 	TrackNumber = *cursor++;
 	if ((TrackNumber & 0x80) == 0) {
@@ -433,7 +433,7 @@ uint64 KaxInternalBlock::ReadInternalHead(IOCallback & input)
 		TrackNumber &= 0x7F;
 	}
 
-    
+
 	big_int16 b16;
 	b16.Eval(cursor);
 	assert(ParentCluster != NULL);
@@ -712,7 +712,7 @@ bool KaxBlockGroup::AddFrame(const KaxTrackEntry & track, uint64 timecode, DataB
 //	assert(past_timecode < 0);
 
 //	assert(forw_timecode > 0);
-	
+
 	KaxBlock & theBlock = GetChild<KaxBlock>(*this);
 	assert(ParentCluster != NULL);
 	theBlock.SetParent(*ParentCluster);
@@ -802,7 +802,7 @@ const KaxReferenceBlock & KaxBlockGroup::Reference(unsigned int Index) const
 {
 	KaxReferenceBlock * MyBlockAdds = static_cast<KaxReferenceBlock *>(FindFirstElt(EBML_INFO(KaxReferenceBlock)));
 	assert(MyBlockAdds != NULL); // call of a non existing reference
-	
+
 	while (Index != 0) {
 		MyBlockAdds = static_cast<KaxReferenceBlock *>(FindNextElt(*MyBlockAdds));
 		assert(MyBlockAdds != NULL);
@@ -881,7 +881,7 @@ int64 KaxInternalBlock::GetDataPosition(size_t FrameNumber)
 	if (ValueIsSet() && FrameNumber < SizeList.size())
 	{
 		_Result = FirstFrameLocation;
-	
+
 		size_t _Idx = 0;
 		while(FrameNumber--)
 		{
@@ -1006,7 +1006,7 @@ bool KaxBlockBlob::ReplaceSimpleByGroup()
 		}
 	}
 #if MATROSKA_VERSION >= 2
-	else 
+	else
 	{
 
 		if (Block.simpleblock != NULL) {

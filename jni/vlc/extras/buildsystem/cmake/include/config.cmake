@@ -40,7 +40,7 @@ if(ENABLE_CONTRIB)
   # include extras/contrib/include in the header search pathes
   include_directories(${CONTRIB_INCLUDE})
   set( CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES} ${CONTRIB_INCLUDE} )
-  
+
   # include the extras/contrib/bin to the search path, otherwise, when finding programs it will automatically
   # default to system applications (e.g. we should favor the extras/contrib/bin/pkg-config over the system defined
   # one).
@@ -484,7 +484,7 @@ if(FFmpeg_FOUND)
   vlc_check_include_files (ffmpeg/swscale.h libswscale/swscale.h)
   check_c_source_compiles( "#include <stdint.h>\n#include <postproc/postprocess.h>\nint main(){return 0;}" HAVE_POSTPROC_POSTPROCESS_H )
   vlc_check_include_files (libpostproc/postprocess.h)
-  
+
   message( STATUS "avcodec found ${HAVE_FFMPEG_AVCODEC_H} || ${HAVE_LIBAVCODEC_AVCODEC_H}")
   message( STATUS "avutil found ${HAVE_FFMPEG_AVUTIL_H} || ${HAVE_LIBAVUTIL_AVUTIL_H}")
   message( STATUS "swscale found ${HAVE_FFMPEG_SWSCALE_H} || ${HAVE_LIBSWSCALE_SWSCALE_H}")
@@ -493,7 +493,7 @@ if(FFmpeg_FOUND)
   vlc_enable_modules(ffmpeg)
   vlc_add_module_compile_flag(ffmpeg ${FFmpeg_CFLAGS})
   vlc_module_add_link_libraries(ffmpeg ${FFmpeg_LIBRARIES})
-  
+
   set( CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_FLAGS_saved} )
   set( CMAKE_REQUIRED_FLAGS_saved )
 endif(FFmpeg_FOUND)
@@ -544,7 +544,7 @@ if(QT4_FOUND)
       SET(outfile ${CMAKE_CURRENT_BINARY_DIR}/${outfile})
       ADD_CUSTOM_COMMAND(OUTPUT ${outfile}
         COMMAND mkdir -p `dirname ${outfile}`
-        COMMAND ${QT_MOC_EXECUTABLE} 
+        COMMAND ${QT_MOC_EXECUTABLE}
         ARGS ${flags_list}
         ARGS -I ${CMAKE_BINARY_DIR}/include
         ARGS -o ${outfile} ${infile}

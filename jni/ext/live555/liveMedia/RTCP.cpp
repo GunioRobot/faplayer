@@ -333,7 +333,7 @@ void RTCPInstance::incomingReportHandler1() {
     if (packetReadWasIncomplete) {
       fNumBytesAlreadyRead += numBytesRead;
       return; // more reads are needed to get the entire packet
-    } else { // normal case: We've read the entire packet 
+    } else { // normal case: We've read the entire packet
       packetSize = fNumBytesAlreadyRead + numBytesRead;
       fNumBytesAlreadyRead = 0; // for next time
     }

@@ -61,7 +61,7 @@ typedef struct vlc_event_listeners_group_t
       Correctly when vlc_event_detach was called during
       a callback */
     bool          b_sublistener_removed;
-                                         
+
 } vlc_event_listeners_group_t;
 
 static bool
@@ -147,7 +147,7 @@ int vlc_event_manager_register_event_type(
 
     listeners_group->event_type = event_type;
     ARRAY_INIT( listeners_group->listeners );
- 
+
     vlc_mutex_lock( &p_em->object_lock );
     ARRAY_APPEND( p_em->listeners_groups, listeners_group );
     vlc_mutex_unlock( &p_em->object_lock );
@@ -197,7 +197,7 @@ void vlc_event_send( vlc_event_manager_t * p_em,
         }
     FOREACH_END()
     vlc_mutex_unlock( &p_em->object_lock );
- 
+
     /* Call the function attached */
     cached_listener = array_of_cached_listeners;
 
@@ -250,7 +250,7 @@ int vlc_event_attach( vlc_event_manager_t * p_em,
     listener = malloc(sizeof(vlc_event_listener_t));
     if( !listener )
         return VLC_ENOMEM;
- 
+
     listener->p_user_data = p_user_data;
     listener->pf_callback = pf_callback;
 

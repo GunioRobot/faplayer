@@ -9,12 +9,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -56,7 +56,7 @@ void KaxCuePoint::PositionSet(const KaxBlockGroup & BlockReference, uint64 Globa
 	KaxCueTrackPositions & NewPositions = AddNewChild<KaxCueTrackPositions>(*this);
 	KaxCueTrack & TheTrack = GetChild<KaxCueTrack>(NewPositions);
 	*static_cast<EbmlUInteger*>(&TheTrack) = BlockReference.TrackNumber();
-	
+
 	KaxCueClusterPosition & TheClustPos = GetChild<KaxCueClusterPosition>(NewPositions);
 	*static_cast<EbmlUInteger*>(&TheClustPos) = BlockReference.ClusterPosition();
 
@@ -92,7 +92,7 @@ void KaxCuePoint::PositionSet(const KaxBlockBlob & BlobReference, uint64 GlobalT
 	KaxCueTrackPositions & NewPositions = AddNewChild<KaxCueTrackPositions>(*this);
 	KaxCueTrack & TheTrack = GetChild<KaxCueTrack>(NewPositions);
 	*static_cast<EbmlUInteger*>(&TheTrack) = BlockReference.TrackNum();
-	
+
 	KaxCueClusterPosition & TheClustPos = GetChild<KaxCueClusterPosition>(NewPositions);
 	*static_cast<EbmlUInteger*>(&TheClustPos) = BlockReference.ClusterPosition();
 
@@ -213,7 +213,7 @@ const KaxCueTrackPositions * KaxCuePoint::GetSeekPosition() const
 			aPosition = uint64(*aPos);
 			result = aPoss;
 		}
-		
+
 		aPoss = static_cast<const KaxCueTrackPositions *>(FindNextElt(*aPoss));
 	}
 	return result;

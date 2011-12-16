@@ -16,7 +16,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 // "liveMedia"
 // Copyright (c) 1996-2011 Live Networks, Inc.  All rights reserved.
 // A template for a MediaSource encapsulating an audio/video input device
-// 
+//
 // NOTE: Sections of this code labeled "%%% TO BE WRITTEN %%%" are incomplete, and needto be written by the programmer
 // (depending on the features of the particulardevice).
 // C++ header

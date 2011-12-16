@@ -66,7 +66,7 @@ function updateStatus(){
 				if(pollStatus){
 					setTimeout( updateStatus, 1000 );
 				}
-				
+
 			}
 			$('band',data).each(function(){
 				var id		=	$(this).attr('id');
@@ -145,7 +145,7 @@ function sendCommand(params,append){
 					updatePlayList();
 				}
 			});
-		}	
+		}
 	}
 }
 function browse(dir){

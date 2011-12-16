@@ -124,8 +124,8 @@ unsigned RTSPClient::sendGetParameterCommand(MediaSession& session, responseHand
 
   // We assume that:
   //    parameterName is NULL means: Send no body in the request.
-  //    parameterName is "" means: Send only \r\n in the request body.  
-  //    parameterName is non-empty means: Send "<parameterName>\r\n" as the request body.  
+  //    parameterName is "" means: Send only \r\n in the request body.
+  //    parameterName is non-empty means: Send "<parameterName>\r\n" as the request body.
   unsigned parameterNameLen = parameterName == NULL ? 0 : strlen(parameterName);
   char* paramString = new char[parameterNameLen + 3]; // the 3 is for \r\n + the '\0' byte
   if (parameterName == NULL) {
@@ -138,7 +138,7 @@ unsigned RTSPClient::sendGetParameterCommand(MediaSession& session, responseHand
   return result;
 }
 
-Boolean RTSPClient::changeResponseHandler(unsigned cseq, responseHandler* newResponseHandler) { 
+Boolean RTSPClient::changeResponseHandler(unsigned cseq, responseHandler* newResponseHandler) {
   // Look for the matching request record in each of our 'pending requests' queues:
   RequestRecord* request;
   if ((request = fRequestsAwaitingConnection.findByCSeq(cseq)) != NULL
@@ -374,7 +374,7 @@ int RTSPClient::openConnection() {
     // We don't yet have a TCP socket (or we used to have one, but it got closed).  Set it up now.
     fInputSocketNum = fOutputSocketNum = setupStreamSocket(envir(), 0);
     if (fInputSocketNum < 0) break;
-      
+
     // Connect to the remote endpoint:
     fServerAddress = *(unsigned*)(destAddress.data());
     int connectResult = connectToServer(fInputSocketNum, destPortNum);
@@ -386,7 +386,7 @@ int RTSPClient::openConnection() {
     }
     return connectResult;
   } while (0);
-  
+
   resetTCPSockets();
   return -1;
 }
@@ -531,7 +531,7 @@ unsigned RTSPClient::sendRequest(RequestRecord* request) {
     char const* protocolStr = "RTSP/1.0"; // by default
 
     char* extraHeaders = (char*)""; // by default
-    Boolean extraHeadersWereAllocated = False; 
+    Boolean extraHeadersWereAllocated = False;
 
     char* contentLengthHeader = (char*)""; // by default
     Boolean contentLengthHeaderWasAllocated = False;
@@ -639,7 +639,7 @@ unsigned RTSPClient::sendRequest(RequestRecord* request) {
 	our_MD5Data((unsigned char*)(&seedData), sizeof seedData, fSessionCookie);
 	// DSS seems to require that the 'session cookie' string be 22 bytes long:
 	fSessionCookie[23] = '\0';
-	
+
 	char const* const extraHeadersFmt =
 	  "x-sessioncookie: %s\r\n"
 	  "Accept: application/x-rtsp-tunnelled\r\n"
@@ -688,7 +688,7 @@ unsigned RTSPClient::sendRequest(RequestRecord* request) {
 	cmdURL = new char[strlen(prefix) + strlen(separator) + strlen(suffix) + 1];
 	cmdURLWasAllocated = True;
 	sprintf(cmdURL, "%s%s%s", prefix, separator, suffix);
-	
+
 	sessionId = request->subsession()->sessionId;
 	originalScale = request->subsession()->scale();
       }
@@ -1351,14 +1351,14 @@ void RTSPClient::handleResponseBytes(int newBytesRead) {
 
     if (newBytesRead <= 0) resetTCPSockets();
     resetResponseBuffer();
-    return;    
+    return;
   } while (0);
 
   fResponseBufferBytesLeft -= newBytesRead;
   fResponseBytesAlreadySeen += newBytesRead;
   fResponseBuffer[fResponseBytesAlreadySeen] = '\0';
   if (fVerbosityLevel >= 1 && newBytesRead > 1) envir() << "Received " << newBytesRead << " new bytes of response data.\n";
-  
+
   // Data was read OK.  Look through the data that we've read so far, to see if it contains <CR><LF><CR><LF>.
   // (If not, wait for more data to arrive.)
   Boolean endOfHeaders = False;
@@ -1420,7 +1420,7 @@ void RTSPClient::handleResponseBytes(int newBytesRead) {
       if (lineStart[0] == '\0') break; // this is a blank line
       reachedEndOfHeaders = False;
 
-      char const* headerParamsStr; 
+      char const* headerParamsStr;
       if (checkForHeader(lineStart, "CSeq:", 5, headerParamsStr)) {
         if (sscanf(headerParamsStr, "%u", &cseq) != 1 || cseq <= 0) {
 	  envir().setResultMsg("Bad \"CSeq:\" header: \"", lineStart, "\"");
@@ -1706,7 +1706,7 @@ char* RTSPClient::sendOptionsCmd(char const* url,
       // Use the separately supplied username and password:
       authenticator = new Authenticator(username,password);
       haveAllocatedAuthenticator = True;
-      
+
       result = sendOptionsCmd(url, username, password, authenticator, timeout);
       if (result != NULL) return result; // We are already authorized
 

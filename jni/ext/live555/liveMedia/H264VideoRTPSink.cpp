@@ -118,7 +118,7 @@ char const* H264VideoRTPSink::auxSDPLine() {
   } else {
     profile_level_id = (sps[1]<<16)|(sps[2]<<8)|sps[3]; // profile_idc|constraint_setN_flag|level_idc
   }
-  
+
   // Set up the "a=fmtp:" SDP line for this stream:
   char* sps_base64 = base64Encode((char*)sps, spsSize);
   char* pps_base64 = base64Encode((char*)pps, ppsSize);

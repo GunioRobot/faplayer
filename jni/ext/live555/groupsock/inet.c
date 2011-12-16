@@ -463,6 +463,6 @@ __bzero (to, count)
     {
       *to++ = 0;
     }
-}             
+}
 #endif
 #endif

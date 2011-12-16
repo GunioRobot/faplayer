@@ -622,7 +622,7 @@ Boolean AMRDeinterleavingBuffer
     }
   } else {
     fNumSuccessiveSyncedFrames = 0;
-  } 
+  }
 
   // Check whether this frame is missing; if so, return a FT_NO_DATA frame:
   if (fromSize == 0) {

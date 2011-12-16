@@ -35,7 +35,7 @@ function main()
     line = fd:readline()
     while line ~= nil
     do
-         if string.match( line, "title" ) then 
+         if string.match( line, "title" ) then
             title = vlc.strings.resolve_xml_special_chars( find( line, "title\":\"(.-)\""))
             art = find( line, "poster\":\"(.-)\"")
             if string.match( art, "http://" ) then

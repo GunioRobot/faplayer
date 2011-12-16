@@ -5,21 +5,21 @@
 /*
  * Copyright (C) 1991-2, RSA Data Security, Inc. Created 1991. All rights
  * reserved.
- * 
+ *
  * License to copy and use this software is granted provided that it is
  * identified as the "RSA Data Security, Inc. MD5 Message-Digest Algorithm"
  * in all material mentioning or referencing this software or this function.
- * 
+ *
  * License is also granted to make and use derivative works provided that such
  * works are identified as "derived from the RSA Data Security, Inc. MD5
  * Message-Digest Algorithm" in all material mentioning or referencing the
  * derived work.
- * 
+ *
  * RSA Data Security, Inc. makes no representations concerning either the
  * merchantability of this software or the suitability of this software for
  * any particular purpose. It is provided "as is" without express or implied
  * warranty of any kind.
- * 
+ *
  * These notices must be retained in any copies of any part of this
  * documentation and/or software.
  */
@@ -95,7 +95,7 @@ static unsigned char PADDING[64] = {
  * Encodes input (UNSIGNED32) into output (unsigned char). Assumes len is a
  * multiple of 4.
  */
-static void 
+static void
 Encode(unsigned char *output, UNSIGNED32 * input, unsigned int len)
 {
 	unsigned int    i, j;
@@ -116,7 +116,7 @@ Encode(unsigned char *output, UNSIGNED32 * input, unsigned int len)
  * Decodes input (unsigned char) into output (UNSIGNED32). Assumes len is a
  * multiple of 4.
  */
-static void 
+static void
 Decode(UNSIGNED32 * output, unsigned char const *input, unsigned int len)
 {
 	unsigned int    i, j;
@@ -129,7 +129,7 @@ Decode(UNSIGNED32 * output, unsigned char const *input, unsigned int len)
 /*
  * MD5 basic transformation. Transforms state based on block.
  */
-static void 
+static void
 MD5Transform(UNSIGNED32 state[4], const unsigned char block[64])
 {
   UNSIGNED32 a = state[0], b = state[1], c = state[2], d = state[3], x[16];
@@ -222,10 +222,10 @@ MD5Transform(UNSIGNED32 state[4], const unsigned char block[64])
 /**
  * our_MD5Init:
  * @context: MD5 context to be initialized.
- * 
+ *
  * Initializes MD5 context for the start of message digest computation.
  **/
-void 
+void
 our_MD5Init(MD5_CTX * context)
 {
 	context->count[0] = context->count[1] = 0;
@@ -241,12 +241,12 @@ our_MD5Init(MD5_CTX * context)
  * @context: MD5 context to be updated.
  * @input: pointer to data to be fed into MD5 algorithm.
  * @inputLen: size of @input data in bytes.
- * 
+ *
  * MD5 block update operation. Continues an MD5 message-digest operation,
  * processing another message block, and updating the context.
  **/
 
-void 
+void
 ourMD5Update(MD5_CTX * context, const unsigned char *input, unsigned int inputLen)
 {
 	unsigned int    i, index, partLen;
@@ -284,13 +284,13 @@ ourMD5Update(MD5_CTX * context, const unsigned char *input, unsigned int inputLe
  * our_MD5Final:
  * @digest: 16-byte buffer to write MD5 checksum.
  * @context: MD5 context to be finalized.
- * 
+ *
  * Ends an MD5 message-digest operation, writing the the message
  * digest and zeroing the context.  The context must be initialized
  * with our_MD5Init() before being used for other MD5 checksum calculations.
  **/
 
-void 
+void
 our_MD5Final(unsigned char digest[16], MD5_CTX * context)
 {
 	unsigned char   bits[8];

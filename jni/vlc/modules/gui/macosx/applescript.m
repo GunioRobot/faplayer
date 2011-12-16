@@ -93,9 +93,9 @@
     {
         return nil;
     }
- 
+
     VLCControls * o_controls = [[VLCMain sharedInstance] controls];
- 
+
     if ( o_controls )
     {
         if ( [o_command isEqualToString:@"play"] )
@@ -141,7 +141,7 @@
  *****************************************************************************/
 @implementation NSApplication(ScriptSupport)
 
-- (BOOL) scriptFullscreenMode {    
+- (BOOL) scriptFullscreenMode {
     return [[[VLCMain sharedInstance] controls] isFullscreen];
 }
 - (void) setScriptFullscreenMode: (BOOL) mode {

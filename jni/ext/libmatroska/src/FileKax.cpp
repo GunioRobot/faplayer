@@ -11,12 +11,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -60,8 +60,8 @@ FileMatroska::FileMatroska(IOCallback & output)
 {
 #ifdef OLD
     myStreamInfo.MainHeaderSize = TypeHeader::default_size() +
-		ActualHeader::default_size() + 
-		ExtendedInfo::default_size() + 
+		ActualHeader::default_size() +
+		ExtendedInfo::default_size() +
 		ContentInfo::default_size();
     myStreamInfo.TrackEntrySize = Track::default_size();
     myStreamInfo.BlockHeadSize = BLOCK_HEADER_SIZE;
@@ -264,7 +264,7 @@ uint32 FileMatroska::ReadTracks()
 	    Track * tmpTrack = Track::ReadEntry(myFile, TrackIdx+1, myStreamInfo);
 	    if (tmpTrack == NULL)
 		throw 0;
-	    
+
 	    myTracks.push_back(tmpTrack);
 	}
 
@@ -432,7 +432,7 @@ bool FileMatroska::ReadFrame(Track * & aTrack, uint32 & aTimecode, const binary 
 	// get the track associated (normally from myTracks)
 	aTrack = myTracks[myCurrReadBlockTrack-1];
     }
-    
+
     Frame *  myReadFrame;
     aTrack->GetNextFrame(aTimecode, myReadFrame, aKeyFrame, aBFrame);
     aFrame = myReadFrame->buf();

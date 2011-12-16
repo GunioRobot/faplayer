@@ -54,7 +54,7 @@ static VLCCoreInteraction *_o_sharedInstance = nil;
         _o_sharedInstance = [super init];
         b_lockAspectRatio = YES;
     }
-    
+
     return _o_sharedInstance;
 }
 
@@ -66,7 +66,7 @@ static VLCCoreInteraction *_o_sharedInstance = nil;
 
 - (void)awakeFromNib
 {
-    [[NSNotificationCenter defaultCenter] addObserver: self 
+    [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(applicationWillFinishLaunching:)
                                                  name: NSApplicationWillFinishLaunchingNotification
                                                object: nil];
@@ -79,14 +79,14 @@ static VLCCoreInteraction *_o_sharedInstance = nil;
 {
     playlist_t * p_playlist = pl_Get( VLCIntf );
     bool empty;
-    
+
     PL_LOCK;
     empty = playlist_IsEmpty( p_playlist );
     PL_UNLOCK;
-    
+
     if( empty )
         [[[VLCMain sharedInstance] open] openFileGeneric];
-    
+
     var_SetInteger( VLCIntf->p_libvlc, "key-action", ACTIONID_PLAY_PAUSE );
 }
 
@@ -165,7 +165,7 @@ static VLCCoreInteraction *_o_sharedInstance = nil;
 {
     vlc_value_t val;
     playlist_t * p_playlist = pl_Get( VLCIntf );
-    
+
     var_Get( p_playlist, "random", &val );
     val.b_bool = !val.b_bool;
     var_Set( p_playlist, "random", val );
@@ -179,7 +179,7 @@ static VLCCoreInteraction *_o_sharedInstance = nil;
         //vout_OSDMessage( VLCIntf, SPU_DEFAULT_CHANNEL, "%s", _( "Random Off" ) );
         config_PutInt( p_playlist, "random", 0 );
     }
-    
+
     VLCIntf->p_sys->b_playmode_update = true;
     VLCIntf->p_sys->b_intf_update = true;
 }
@@ -273,7 +273,7 @@ static VLCCoreInteraction *_o_sharedInstance = nil;
 - (void)toggleFullscreen
 {
     input_thread_t * p_input = pl_CurrentInput( VLCIntf );
-    
+
     if( p_input != NULL )
     {
         vout_thread_t *p_vout = input_GetVout( p_input );

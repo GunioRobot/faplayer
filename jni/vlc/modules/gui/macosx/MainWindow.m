@@ -197,7 +197,7 @@ static VLCMainWindow *_o_sharedInstance = nil;
         [o_effects_btn setImage: [NSImage imageNamed:@"effects-double-buttons_dark"]];
         [o_effects_btn setAlternateImage: [NSImage imageNamed:@"effects-double-buttons-pressed_dark"]];
         [o_fullscreen_btn setImage: [NSImage imageNamed:@"fullscreen-double-buttons_dark"]];
-        [o_fullscreen_btn setAlternateImage: [NSImage imageNamed:@"fullscreen-double-buttons-pressed_dark"]];        
+        [o_fullscreen_btn setAlternateImage: [NSImage imageNamed:@"fullscreen-double-buttons-pressed_dark"]];
     }
     [o_repeat_btn setImage: o_repeat_img];
     [o_repeat_btn setAlternateImage: o_repeat_pressed_img];

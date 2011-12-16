@@ -146,7 +146,7 @@
     IBOutlet id o_btn_volume_down;
     IBOutlet id o_volumeslider;
     IBOutlet id o_btn_volume_up;
-    
+
     NSPoint dragStart;
 }
 
@@ -160,7 +160,7 @@
 @interface statusbar : NSView
 {
     IBOutlet id o_text;
-	
+
 	BOOL mainwindow;
 }
 

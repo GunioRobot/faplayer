@@ -6,14 +6,14 @@
      name, a colon and a space.  Otherwise, error will call this
      function without parameters instead.  */
 ! extern void (*error_print_progname) (void);
-  
+
   /* This variable is incremented each time `error' is called.  */
 ! extern unsigned int error_message_count;
-  
+
   /* Sometimes we want to have at most one error per line.  This
      variable controls whether this mode is selected or not.  */
 ! extern int error_one_per_line;
-  
+
   #ifdef	__cplusplus
   }
 --- 50,63 ----
@@ -21,13 +21,13 @@
      name, a colon and a space.  Otherwise, error will call this
      function without parameters instead.  */
 ! extern DLL_VARIABLE void (*error_print_progname) (void);
-  
+
   /* This variable is incremented each time `error' is called.  */
 ! extern DLL_VARIABLE unsigned int error_message_count;
-  
+
   /* Sometimes we want to have at most one error per line.  This
      variable controls whether this mode is selected or not.  */
 ! extern DLL_VARIABLE int error_one_per_line;
-  
+
   #ifdef	__cplusplus
   }

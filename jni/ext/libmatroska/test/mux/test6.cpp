@@ -11,12 +11,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -60,7 +60,7 @@ unsigned int BIN_FILE_SIZE = 15000;
 unsigned int TXT_FILE_SIZE = 3000;
 const unsigned int BIN_FRAME_SIZE = 1500;
 const unsigned int TXT_FRAME_SIZE = 200;
-const uint64  TIMECODE_SCALE = 1000000; 
+const uint64  TIMECODE_SCALE = 1000000;
 
 const bool bWriteDefaultValues = false;
 
@@ -94,10 +94,10 @@ int main(int argc, char **argv)
 
 		// size is unknown and will always be, we can render it right away
 		uint64 SegmentSize = FileSegment.WriteHead(out_file, 5, bWriteDefaultValues);
-		
+
 		KaxTracks & MyTracks = GetChild<KaxTracks>(FileSegment);
 
-		// reserve some space for the Meta Seek writen at the end		
+		// reserve some space for the Meta Seek writen at the end
 		EbmlVoid Dummy;
 		Dummy.SetSize(300); // 300 octets
 		Dummy.Render(out_file, bWriteDefaultValues);
@@ -157,7 +157,7 @@ int main(int argc, char **argv)
 
 		// audio specific params
 		KaxTrackAudio & MyTrack1Audio = GetChild<KaxTrackAudio>(MyTrack1);
-		
+
 		KaxAudioSamplingFreq & MyTrack1Freq = GetChild<KaxAudioSamplingFreq>(MyTrack1Audio);
 		*(static_cast<EbmlFloat *>(&MyTrack1Freq)) = 44100.0;
 		MyTrack1Freq.ValidateSize();
@@ -291,7 +291,7 @@ int main(int argc, char **argv)
 
 		DataBuffer *data2 = new DataBuffer((binary *)"tttyyy", countof("tttyyy"));
 		Clust2.AddFrame(MyTrack1, 350 * TIMECODE_SCALE, *data2, MyNewBlock, *MyLastBlockTrk1);
-		
+
         KaxBlockBlob *Blob4 = new KaxBlockBlob(BLOCK_BLOB_NO_SIMPLE);
         Blob4->SetBlockGroup(*MyNewBlock);
 		AllCues.AddBlockBlob(*Blob4);

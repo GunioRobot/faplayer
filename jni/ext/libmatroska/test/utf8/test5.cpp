@@ -16,7 +16,7 @@
 ** Foundation and appearing in the file LICENSE.GPL included in the
 ** packaging of this file.
 **
-** Licensees holding an other license may use this file in accordance with 
+** Licensees holding an other license may use this file in accordance with
 ** the Agreement provided with the Software.
 **
 ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
@@ -72,7 +72,7 @@ int main(void)
     testUTF8_1 = test1.c_str();
 
     TruncString8 testUTF8_2(10);
-    testUTF8_2 = test2.c_str(); 
+    testUTF8_2 = test2.c_str();
     // in UTF8 0xE8=1110-1000 should become 110.00110-10.001000=0xC6 0x88
 
     FileName test01(64);

@@ -88,7 +88,7 @@
 
 - (void)willBePopped
 {
-    PRINT_ME();    
+    PRINT_ME();
 }
 
 #pragma mark -
@@ -126,7 +126,7 @@
 - (id)itemForRow:(NSInteger)row
 {
     BOOL isDirectory = ![[mediaListAspect nodeAtIndex:row] isLeaf];
-    
+
     BRTextMenuItemLayer * item = nil;
 
     if(isDirectory) {
@@ -137,7 +137,7 @@
     }
 
     [item setTitle:[self titleForRow:row]];
-    
+
     return item;
 }
 
@@ -145,9 +145,9 @@
 {
     VLCMediaListAspectNode * node = [mediaListAspect nodeAtIndex:row];
     BOOL isDirectory = ![node isLeaf];
-    
+
     BRController * controller = nil;
-    
+
     if(isDirectory) {
         controller = [[[VLCMediaListController alloc] initWithMediaListAspect:[node children] andTitle:[[node media] valueForKeyPath:@"metaDictionary.title"]] autorelease];
     }
@@ -156,11 +156,11 @@
         if(playerController == nil) {
             playerController = [[VLCPlayerController alloc] init];
         }
-        
+
         playerController.media = [mediaListAspect mediaAtIndex:row];
         controller = playerController;
     }
-    
+
     if(controller != nil) {
         [[self stack] pushController:controller];
     }

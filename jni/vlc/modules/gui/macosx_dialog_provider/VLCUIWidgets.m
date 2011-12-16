@@ -85,7 +85,7 @@
 - (void)recomputeWindowSize
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(recomputeWindowSize) object:nil];
-    
+
     NSWindow *window = [self window];
     NSRect frame = [window frame];
     NSRect contentRect = [window contentRectForFrameRect:frame];
@@ -151,7 +151,7 @@
         remaining = (self.bounds.size.height - height) / autosizedRows;
     if (remaining < 0)
         remaining = 0;
-    
+
     return remaining;
 }
 
@@ -206,7 +206,7 @@
         if (!constrainedWidth)
             autosizedCol++;
         width += constrainedWidth + [self marginX];
-        
+
     }
     CGFloat remaining = 0;
     if (width < self.bounds.size.width && autosizedCol)
@@ -231,7 +231,7 @@
     for (NSUInteger i = 0; i < targetColumn; i++)
     {
         left += [self widthOfColumn:i] + [self marginX];
-        
+
     }
     return left;
 }
@@ -245,7 +245,7 @@
         NSUInteger colSpan = [[obj objectForKey:@"colSpan"] intValue];
         NSView *view = [obj objectForKey:@"view"];
         NSRect rect;
-        
+
         // Get the height
         if ([view autoresizingMask] & NSViewHeightSizable || rowSpan > 1) {
             CGFloat height = 0;
@@ -258,7 +258,7 @@
         }
         else
             rect.size.height = [self objectSizeToFit:view].height;
-        
+
         // Get the width
         if ([view autoresizingMask] & NSViewWidthSizable) {
             CGFloat width = 0;
@@ -268,11 +268,11 @@
         }
         else
             rect.size.width = [self objectSizeToFit:view].width;
-        
+
         // Top corner
         rect.origin.y = [self topOfRow:row] + ([self heightOfRow:row] - rect.size.height) / 2;
         rect.origin.x = [self leftOfColumn:col];
-        
+
         [view setFrame:rect];
         [view setNeedsDisplay:YES];
     }
@@ -294,10 +294,10 @@
         _rowCount = row + 1;
     if (column + 1 > _colCount)
         _colCount = column + 1;
-    
+
     if (!_gridedViews)
         _gridedViews = [[NSMutableArray alloc] init];
-    
+
     NSMutableDictionary *dict = [self objectForView:view];
     if (!dict) {
         dict = [NSMutableDictionary dictionary];
@@ -308,11 +308,11 @@
     [dict setObject:[NSNumber numberWithInt:colSpan] forKey:@"colSpan"];
     [dict setObject:[NSNumber numberWithInt:row] forKey:@"row"];
     [dict setObject:[NSNumber numberWithInt:column] forKey:@"col"];
-    
-    
+
+
     [self addSubview:view];
     [self relayout];
-    
+
     // Recompute the size of the window after making sure we won't see anymore update
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(recomputeWindowSize) object:nil];
     [self performSelector:@selector(recomputeWindowSize) withObject:nil afterDelay:0.1];
@@ -324,10 +324,10 @@
     if (dict)
         [_gridedViews removeObject:dict];
     [view removeFromSuperview];
-    
+
     [self recomputeCount];
     [self recomputeWindowSize];
-    
+
     [self relayout];
     [self setNeedsDisplay:YES];
 }
@@ -342,7 +342,7 @@
 {
     if (!_rowCount || !_colCount)
         return size;
-    
+
     CGFloat minHeight = [self marginY];
     BOOL canFlexHeight = NO;
     for (NSUInteger i = 0; i < _rowCount; i++) {
@@ -353,7 +353,7 @@
         }
         minHeight += constrained + [self marginY];
     }
-    
+
     CGFloat minWidth = [self marginX];
     BOOL canFlexWidth = NO;
     for (NSUInteger i = 0; i < _colCount; i++) {

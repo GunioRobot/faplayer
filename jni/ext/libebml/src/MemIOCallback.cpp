@@ -9,12 +9,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -47,10 +47,10 @@ MemIOCallback::MemIOCallback(uint64 DefaultSize)
 		std::stringstream Msg;
 		Msg << "Failed to alloc memory block of size ";
 // not working with VC6		Msg << DefaultSize;
-		mLastErrorStr = Msg.str();				
+		mLastErrorStr = Msg.str();
 		return;
 	}
-	
+
 	dataBufferMemorySize = DefaultSize;
 	dataBufferPos = 0;
 	dataBufferTotalSize = 0;
@@ -76,7 +76,7 @@ uint32 MemIOCallback::read(void *Buffer, size_t Size)
 		dataBufferPos = dataBufferTotalSize;
 		return dataBufferTotalSize - oldDataPos;
 	}
-		
+
 	//Well... We made it here, so do a quick and simple copy
 	memcpy(Buffer, dataBuffer+dataBufferPos, Size);
 	dataBufferPos += Size;
@@ -99,7 +99,7 @@ size_t MemIOCallback::write(const void *Buffer, size_t Size)
 	if (dataBufferMemorySize < dataBufferPos + Size)
 	{
 		//We need more memory!
-		dataBuffer = (binary *)realloc((void *)dataBuffer, dataBufferPos + Size);		
+		dataBuffer = (binary *)realloc((void *)dataBuffer, dataBufferPos + Size);
 	}
 	memcpy(dataBuffer+dataBufferPos, Buffer, Size);
 	dataBufferPos += Size;
@@ -114,7 +114,7 @@ uint32 MemIOCallback::write(IOCallback & IOToRead, size_t Size)
 	if (dataBufferMemorySize < dataBufferPos + Size)
 	{
 		//We need more memory!
-		dataBuffer = (binary *)realloc((void *)dataBuffer, dataBufferPos + Size);		
+		dataBuffer = (binary *)realloc((void *)dataBuffer, dataBufferPos + Size);
 	}
 	IOToRead.readFully(&dataBuffer[dataBufferPos], Size);
 	dataBufferTotalSize = Size;

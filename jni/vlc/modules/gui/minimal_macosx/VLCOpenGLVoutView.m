@@ -106,7 +106,7 @@ void cocoaglvoutviewEnd( vout_thread_t * p_vout )
 
     [p_vout->p_sys->o_pool release];
     p_vout->p_sys->o_pool = nil;
- 
+
 }
 
 /*****************************************************************************

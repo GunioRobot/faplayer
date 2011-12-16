@@ -27,7 +27,7 @@
 #if defined(CAN_COMPILE_MMX)
 
 /* MMX assembly */
- 
+
 #define MMX_CALL(MMX_INSTRUCTIONS)          \
     do {                                    \
     __asm__ __volatile__(                   \
@@ -107,7 +107,7 @@ movq      %%mm1, 8(%0)  # Store high UYVY                                 \n\
     *(uint64_t*)p_line = (uint64_t)mm2;     \
     mm0 = _mm_unpackhi_pi8(mm0, mm1);       \
     *(uint64_t*)(p_line+8) = (uint64_t)mm0;
- 
+
 #define MMX_YUV422_YVYU                     \
     mm0 = (__m64)*(uint64_t*)p_y;           \
     mm2 = _mm_cvtsi32_si64(*(int*)p_u);     \
@@ -131,7 +131,7 @@ movq      %%mm1, 8(%0)  # Store high UYVY                                 \n\
     *(uint64_t*)(p_line+8) = (uint64_t)mm1;
 
 #endif
- 
+
 #elif defined( MODULE_NAME_IS_i422_yuy2_sse2 )
 
 #if defined(CAN_COMPILE_SSE2)
@@ -253,7 +253,7 @@ movdqu    %%xmm1, 16(%0)  # Store high UYVY                               \n\
     _mm_stream_si128((__m128i*)(p_line), xmm2); \
     xmm0 = _mm_unpackhi_epi8(xmm0, xmm1);       \
     _mm_stream_si128((__m128i*)(p_line+16), xmm0);
- 
+
 #define SSE2_YUV422_YUYV_UNALIGNED              \
     xmm0 = _mm_loadu_si128((__m128i *)p_y);     \
     xmm1 = _mm_loadl_epi64((__m128i *)p_u);     \
@@ -264,7 +264,7 @@ movdqu    %%xmm1, 16(%0)  # Store high UYVY                               \n\
     _mm_storeu_si128((__m128i*)(p_line), xmm2); \
     xmm0 = _mm_unpackhi_epi8(xmm0, xmm1);       \
     _mm_storeu_si128((__m128i*)(p_line+16), xmm0);
- 
+
 #define SSE2_YUV422_YVYU_ALIGNED                \
     xmm0 = _mm_load_si128((__m128i *)p_y);      \
     xmm2 = _mm_loadl_epi64((__m128i *)p_u);     \

@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
   // Then create a filter that packs the H.264 video data into a Transport Stream:
   MPEG2TransportStreamFromESSource* tsFrames = MPEG2TransportStreamFromESSource::createNew(*env);
   tsFrames->addNewVideoSource(framer, 5/*mpegVersion: H.264*/);
-  
+
   // Open the output file as a 'file sink':
   MediaSink* outputSink = FileSink::createNew(*env, outputFileName);
   if (outputSink == NULL) {

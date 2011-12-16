@@ -32,14 +32,14 @@
 - init
 {
     self = [super init];
-    
+
     BRLayer * layer = [self layer];
     _mediaLayer = [VLCMediaLayer layer];
     _mediaLayer.frame = layer.bounds;
     _mediaLayer.autoresizingMask = kCALayerWidthSizable|kCALayerHeightSizable;
-    
+
     [layer addSublayer:_mediaLayer];
-    
+
     return self;
 }
 
@@ -58,9 +58,9 @@
     BREventUsage usage = [event usage];
     BREventValue value = [event value];
     VLCMediaPlayer * player = [_mediaLayer player];
-    
+
     NSLog(@"usage: %d value: %d", usage, value);
-    
+
     switch(usage) {
         case BREventOKUsage:
             [_mediaLayer playPause];

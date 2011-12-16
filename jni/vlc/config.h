@@ -633,7 +633,7 @@
 #define HAVE___VA_COPY 1
 
 /* Define as const if the declaration of iconv() needs const. */
-#define ICONV_CONST 
+#define ICONV_CONST
 
 /* Dynamic object extension */
 #define LIBEXT ".so"

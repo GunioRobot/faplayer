@@ -96,7 +96,7 @@ pColorPacket CAtmoOutputFilter::PercentFilter(pColorPacket filter_input, ATMO_BO
   {
 	filter_output->zone[zone].r = (filter_input->zone[zone].r *
          (100-percentNew) + m_percent_filter_output_old->zone[zone].r * percentNew) / 100;
-	
+
     filter_output->zone[zone].g = (filter_input->zone[zone].g *
          (100-percentNew) + m_percent_filter_output_old->zone[zone].g * percentNew) / 100;
 

@@ -9,12 +9,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -49,7 +49,7 @@ KaxCluster::KaxCluster(EBML_EXTRA_DEF)
 	,bSilentTracksUsed(false)
 {}
 
-KaxCluster::KaxCluster(const KaxCluster & ElementToClone) 
+KaxCluster::KaxCluster(const KaxCluster & ElementToClone)
  :EbmlMaster(ElementToClone)
  ,bSilentTracksUsed(ElementToClone.bSilentTracksUsed)
 {
@@ -197,7 +197,7 @@ filepos_t KaxCluster::Render(IOCallback & output, KaxCues & CueToUpdate, bool bS
 
 		Result = EbmlMaster::Render(output, bSaveDefault);
 		// For all Blocks add their position on the CueEntry
-		
+
         for (Itr = begin(); Itr != end(); ++Itr)
         {
 			if (EbmlId(*(*Itr)) == EBML_ID(KaxBlockGroup)) {
@@ -266,12 +266,12 @@ uint64 KaxCluster::GlobalTimecode() const
 
 	if (result < PreviousTimecode)
 		result = PreviousTimecode + 1;
-	
+
 	return result;
 }
 
 /*!
-	\brief retrieve the relative 
+	\brief retrieve the relative
 	\todo !!! We need a way to know the TimecodeScale
 */
 int16 KaxCluster::GetBlockLocalTimecode(uint64 aGlobalTimecode) const

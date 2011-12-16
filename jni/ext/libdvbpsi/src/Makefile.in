@@ -368,7 +368,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libdvbpsi.la: $(libdvbpsi_la_OBJECTS) $(libdvbpsi_la_DEPENDENCIES) 
+libdvbpsi.la: $(libdvbpsi_la_OBJECTS) $(libdvbpsi_la_DEPENDENCIES)
 	$(libdvbpsi_la_LINK) -rpath $(libdir) $(libdvbpsi_la_OBJECTS) $(libdvbpsi_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:

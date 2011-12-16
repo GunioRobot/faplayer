@@ -11,12 +11,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -111,7 +111,7 @@ inline int ADbg::_OutPut(const char * format,va_list params) const
 			wsprintfA( myformat, "%s - %s\r\n", prefix, format);
 	}
 	result = vsprintf(tst,myformat,params);
-	
+
 	if (my_debug_output)
 		OutputDebugStringA(tst);
 
@@ -125,7 +125,7 @@ inline int ADbg::_OutPut(const char * format,va_list params) const
 		time_t nowSecs;
 		struct tm *now;
 		struct timeval tv;
-		
+
 		nowSecs = time(NULL);
 		gettimeofday(&tv, NULL);
 		now = gmtime(&nowSecs);
@@ -139,7 +139,7 @@ inline int ADbg::_OutPut(const char * format,va_list params) const
 					now->tm_year, now->tm_mon, now->tm_mday,
 					now->tm_hour, now->tm_min, tv.tv_sec,
 					(long)tv.tv_usec / 1000, prefix, format);
-		
+
 	} else {
 		if (prefix[0] == '\0')
 			sprintf( myformat, "%s\r\n", format);
@@ -148,7 +148,7 @@ inline int ADbg::_OutPut(const char * format,va_list params) const
 	}
 
 	result = vsprintf(tst,myformat,params);
-	
+
 	if (my_debug_output)
 		fputs(tst, stderr);
 
@@ -162,7 +162,7 @@ inline int ADbg::_OutPut(const char * format,va_list params) const
 int ADbg::OutPut(int forLevel, const char * format,...) const
 {
 	int result=0;
-	
+
 	if (forLevel >= my_level) {
 		va_list tstlist;
 
@@ -193,7 +193,7 @@ bool ADbg::setDebugFile(const char * NewFilename) {
 
 #ifdef WIN32
 		hFile = CreateFileA(NewFilename, GENERIC_WRITE, FILE_SHARE_WRITE|FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-		
+
 		if (hFile != INVALID_HANDLE_VALUE) {
 			SetFilePointer( hFile, 0, 0, FILE_END );
 
@@ -215,7 +215,7 @@ bool ADbg::setDebugFile(const char * NewFilename) {
 
 bool ADbg::unsetDebugFile() {
 	bool result = (hFile == NULL);
-	
+
 #ifdef WIN32
 	if (hFile != NULL) {
 		result = (CloseHandle(hFile) != 0);

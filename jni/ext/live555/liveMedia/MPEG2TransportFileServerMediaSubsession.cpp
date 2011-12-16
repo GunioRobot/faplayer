@@ -289,7 +289,7 @@ void ClientTrickPlayState::updateStateFromNPT(double npt, double streamDuration)
   unsigned long numTSRecordsToStream = 0;
   if (streamDuration > 0.0) {
     // Use the index file to figure out how many Transport Packets we get to stream:
-    unsigned long toTSRecordNum, toIxRecordNum;    
+    unsigned long toTSRecordNum, toIxRecordNum;
     float toNPT = (float)(fNPT + streamDuration);
     fIndexFile->lookupTSPacketNumFromNPT(toNPT, toTSRecordNum, toIxRecordNum);
     if (toTSRecordNum > tsRecordNum) { // sanity check

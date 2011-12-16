@@ -609,9 +609,9 @@ static inline char * __config_GetLabel( vlc_object_t *p_this, const char *psz_na
     assert( p_main );
     unsigned confsize;
     module_config_t *p_config;
-    
+
     p_config = module_config_get (p_main, &confsize);
-    
+
     for (size_t i = 0; i < confsize; i++)
     {
         module_config_t *p_item = p_config + i;
@@ -630,7 +630,7 @@ static inline char * __config_GetLabel( vlc_object_t *p_this, const char *psz_na
     }
     module_config_free (p_config);
     module_release (p_main);
-                  
+
     [o_hotkeyDescriptions release];
     o_hotkeyDescriptions = [[NSArray alloc] initWithArray: o_tempArray_desc copyItems: YES];
     [o_tempArray_desc release];
@@ -1206,7 +1206,7 @@ static inline void save_module_list( intf_thread_t * p_intf, id object, const ch
             [o_hotkeys_change_taken_lbl setStringValue: [NSString stringWithFormat:
                                                          _NS("This combination is already taken by \"%@\"."),
                                                          [o_hotkeyDescriptions objectAtIndex: i_returnValue2]]];
-        
+
         else
             [o_hotkeys_change_taken_lbl setStringValue: @""];
 
@@ -1247,13 +1247,13 @@ static inline void save_module_list( intf_thread_t * p_intf, id object, const ch
     NSMutableString *tempString = [[[NSMutableString alloc] init] autorelease];
     if( [o_theEvent modifierFlags] & NSControlKeyMask )
         [tempString appendString:@"Ctrl-"];
-    
+
     if( [o_theEvent modifierFlags] & NSAlternateKeyMask  )
         [tempString appendString:@"Alt-"];
-    
+
     if( [o_theEvent modifierFlags] & NSShiftKeyMask )
         [tempString appendString:@"Shift-"];
-    
+
     if( [o_theEvent modifierFlags] & NSCommandKeyMask )
         [tempString appendString:@"Command-"];
 

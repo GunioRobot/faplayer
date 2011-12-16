@@ -17,19 +17,19 @@ diff -ruN liba52.orig/a52_internal.h liba52/a52_internal.h
 -    sample_t slev;		/* surround channels mix level */
 +    level_t clev;		/* centre channel mix level */
 +    level_t slev;		/* surround channels mix level */
- 
+
      int output;			/* type of output */
 -    sample_t level;		/* output level */
 +    level_t level;		/* output level */
      sample_t bias;		/* output bias */
- 
+
      int dynrnge;		/* apply dynamic range */
 -    sample_t dynrng;		/* dynamic range */
 +    level_t dynrng;		/* dynamic range */
      void * dynrngdata;		/* dynamic range callback funtion and data */
 -    sample_t (* dynrngcall) (sample_t range, void * dynrngdata);
 +    level_t (* dynrngcall) (level_t range, void * dynrngdata);
- 
+
      uint8_t chincpl;		/* channel coupled */
      uint8_t phsflginu;		/* phase flags in use (stereo only) */
      uint8_t cplstrtmant;	/* coupling channel start mantissa */
@@ -37,13 +37,13 @@ diff -ruN liba52.orig/a52_internal.h liba52/a52_internal.h
      uint32_t cplbndstrc;	/* coupling band structure */
 -    sample_t cplco[5][18];	/* coupling coordinates */
 +    level_t cplco[5][18];	/* coupling coordinates */
- 
+
      /* derived information */
      uint8_t cplstrtbnd;		/* coupling start band (for bit allocation) */
 @@ -107,14 +107,79 @@
  		       int start, int end, int fastleak, int slowleak,
  		       expbap_t * expbap);
- 
+
 -int a52_downmix_init (int input, int flags, sample_t * level,
 -		      sample_t clev, sample_t slev);
 -int a52_downmix_coeff (sample_t * coeff, int acmod, int output, sample_t level,
@@ -56,7 +56,7 @@ diff -ruN liba52.orig/a52_internal.h liba52/a52_internal.h
 -		  sample_t clev, sample_t slev);
 +		  level_t clev, level_t slev);
  void a52_upmix (sample_t * samples, int acmod, int output);
- 
+
  void a52_imdct_init (uint32_t mm_accel);
  void a52_imdct_256 (sample_t * data, sample_t * delay, sample_t bias);
  void a52_imdct_512 (sample_t * data, sample_t * delay, sample_t bias);
@@ -139,15 +139,15 @@ diff -ruN liba52.orig/bit_allocate.c liba52/bit_allocate.c
 @@ -21,14 +21,14 @@
   * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   */
- 
+
 -#include "config.h"
 +#include "config-a52.h"
- 
+
  #include <inttypes.h>
- 
+
  #include "a52.h"
  #include "a52_internal.h"
- 
+
 -static int hthtab[3][50] = {
 +static int hthtab[3][50] IDATA_ATTR = {
      {0x730, 0x730, 0x7c0, 0x800, 0x820, 0x840, 0x850, 0x850, 0x860, 0x860,
@@ -156,7 +156,7 @@ diff -ruN liba52.orig/bit_allocate.c liba52/bit_allocate.c
 @@ -46,7 +46,7 @@
       0x8d0, 0x8b0, 0x840, 0x7f0, 0x790, 0x760, 0x7a0, 0x7c0, 0x7b0, 0x720}
  };
- 
+
 -static int8_t baptab[305] = {
 +static int8_t baptab[305] IDATA_ATTR = {
      16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
@@ -165,12 +165,12 @@ diff -ruN liba52.orig/bit_allocate.c liba52/bit_allocate.c
 @@ -71,11 +71,11 @@
       0,  0,  0,  0					/* 148 padding elems */
  };
- 
+
 -static int bndtab[30] = {21, 22,  23,  24,  25,  26,  27,  28,  31,  34,
 +static int bndtab[30] IDATA_ATTR = {21, 22,  23,  24,  25,  26,  27,  28,  31,  34,
  			 37, 40,  43,  46,  49,  55,  61,  67,  73,  79,
  			 85, 97, 109, 121, 133, 157, 181, 205, 229, 253};
- 
+
 -static int8_t latab[256] = {
 +static int8_t latab[256] IDATA_ATTR = {
      -64, -63, -62, -61, -60, -59, -58, -57, -56, -55, -54, -53,
@@ -178,7 +178,7 @@ diff -ruN liba52.orig/bit_allocate.c liba52/bit_allocate.c
      -43, -42, -41, -41, -40, -39, -38, -38, -37, -36, -36, -35,
 @@ -231,7 +231,7 @@
  	int startband, endband;
- 
+
  	startband = j;
 -	endband = ((bndtab-20)[i] < end) ? (bndtab-20)[i] : end;
 +	endband = (bndtab[i-20] < end) ? bndtab[i-20] : end;
@@ -199,12 +199,12 @@ diff -ruN liba52.orig/bitstream.c liba52/bitstream.c
 @@ -21,7 +21,7 @@
   * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   */
- 
+
 -#include "config.h"
 +#include "config-a52.h"
- 
+
  #include <inttypes.h>
- 
+
 @@ -38,7 +38,9 @@
      align = (long)buf & 3;
      state->buffer_start = (uint32_t *) (buf - align);
@@ -213,7 +213,7 @@ diff -ruN liba52.orig/bitstream.c liba52/bitstream.c
      bitstream_get (state, align * 8);
 +    bitstream_get_2 (state, 0);	/* pretend function is used - keep gcc happy */
  }
- 
+
  static inline void bitstream_fill_current (a52_state_t * state)
 diff -ruN liba52.orig/bitstream.h liba52/bitstream.h
 --- liba52.orig/bitstream.h	2002-07-28 03:52:07.000000000 +0200
@@ -229,19 +229,19 @@ diff -ruN liba52.orig/bitstream.h liba52/bitstream.h
 @@ -21,29 +21,29 @@
   * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   */
- 
+
 -/* (stolen from the kernel) */
 +//#define swab32(x) (betoh32(x))
  #ifdef WORDS_BIGENDIAN
- 
+
 -#	define swab32(x) (x)
 +#   define swab32(x) (x)
- 
+
  #else
- 
+
 -#	if 0 && defined (__i386__)
 +#   if defined (__i386__)
- 
+
 -#	define swab32(x) __i386_swab32(x)
 -	static inline const uint32_t __i386_swab32(uint32_t x)
 -	{
@@ -254,19 +254,19 @@ diff -ruN liba52.orig/bitstream.h liba52/bitstream.h
 +        __asm__("bswap %0" : "=r" (x) : "0" (x));
 +        return x;
 +    }
- 
+
 -#	else
 +#   else
- 
+
 -#	define swab32(x)\
 +#   define swab32(x)\
  ((((uint8_t*)&x)[0] << 24) | (((uint8_t*)&x)[1] << 16) |  \
   (((uint8_t*)&x)[2] << 8)  | (((uint8_t*)&x)[3]))
- 
+
 -#	endif
 +#   endif
  #endif
- 
+
  void a52_bitstream_set_ptr (a52_state_t * state, uint8_t * buf);
 diff -ruN liba52.orig/config-a52.h liba52/config-a52.h
 --- liba52.orig/config-a52.h	1970-01-01 01:00:00.000000000 +0100
@@ -312,16 +312,16 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 @@ -21,7 +21,7 @@
   * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   */
- 
+
 -#include "config.h"
 +#include "config-a52.h"
- 
+
  #include <string.h>
  #include <inttypes.h>
 @@ -31,8 +31,8 @@
- 
+
  #define CONVERT(acmod,output) (((output) << 3) + (acmod))
- 
+
 -int a52_downmix_init (int input, int flags, sample_t * level,
 -		      sample_t clev, sample_t slev)
 +int a52_downmix_init (int input, int flags, level_t * level,
@@ -330,26 +330,26 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
      static uint8_t table[11][8] = {
  	{A52_CHANNEL,	A52_DOLBY,	A52_STEREO,	A52_STEREO,
 @@ -66,94 +66,106 @@
- 
+
      output = table[output][input & 7];
- 
+
 -    if ((output == A52_STEREO) &&
 -	((input == A52_DOLBY) || ((input == A52_3F) && (clev == LEVEL_3DB))))
 +    if (output == A52_STEREO &&
 +	(input == A52_DOLBY || (input == A52_3F && clev == LEVEL (LEVEL_3DB))))
  	output = A52_DOLBY;
- 
+
 -    if (flags & A52_ADJUST_LEVEL)
 +    if (flags & A52_ADJUST_LEVEL) {
 +	level_t adjust;
 +
  	switch (CONVERT (input & 7, output)) {
- 
+
  	case CONVERT (A52_3F, A52_MONO):
 -	    *level *= LEVEL_3DB / (1 + clev);
 +	    adjust = DIV (LEVEL_3DB, LEVEL (1) + clev);
  	    break;
- 
+
  	case CONVERT (A52_STEREO, A52_MONO):
  	case CONVERT (A52_2F2R, A52_2F1R):
  	case CONVERT (A52_3F2R, A52_3F1R):
@@ -357,7 +357,7 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 -	    *level *= LEVEL_3DB;
 +	    adjust = LEVEL (LEVEL_3DB);
  	    break;
- 
+
  	case CONVERT (A52_3F2R, A52_2F1R):
 -	    if (clev < LEVEL_PLUS3DB - 1)
 +	    if (clev < LEVEL (LEVEL_PLUS3DB - 1))
@@ -370,66 +370,66 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 -	    *level /= 1 + clev;
 +	    adjust = DIV (1, LEVEL (1) + clev);
  	    break;
- 
+
  	case CONVERT (A52_2F1R, A52_MONO):
 -	    *level *= LEVEL_PLUS3DB / (2 + slev);
 +	    adjust = DIV (LEVEL_PLUS3DB, LEVEL (2) + slev);
  	    break;
- 
+
  	case CONVERT (A52_2F1R, A52_STEREO):
  	case CONVERT (A52_3F1R, A52_3F):
 -	    *level /= 1 + slev * LEVEL_3DB;
 +	    adjust = DIV (1, LEVEL (1) + MUL_C (slev, LEVEL_3DB));
  	    break;
- 
+
  	case CONVERT (A52_3F1R, A52_MONO):
 -	    *level *= LEVEL_3DB / (1 + clev + 0.5 * slev);
 +	    adjust = DIV (LEVEL_3DB, LEVEL (1) + clev + MUL_C (slev, 0.5));
  	    break;
- 
+
  	case CONVERT (A52_3F1R, A52_STEREO):
 -	    *level /= 1 + clev + slev * LEVEL_3DB;
 +	    adjust = DIV (1, LEVEL (1) + clev + MUL_C (slev, LEVEL_3DB));
  	    break;
- 
+
  	case CONVERT (A52_2F2R, A52_MONO):
 -	    *level *= LEVEL_3DB / (1 + slev);
 +	    adjust = DIV (LEVEL_3DB, LEVEL (1) + slev);
  	    break;
- 
+
  	case CONVERT (A52_2F2R, A52_STEREO):
  	case CONVERT (A52_3F2R, A52_3F):
 -	    *level /= 1 + slev;
 +	    adjust = DIV (1, LEVEL (1) + slev);
  	    break;
- 
+
  	case CONVERT (A52_3F2R, A52_MONO):
 -	    *level *= LEVEL_3DB / (1 + clev + slev);
 +	    adjust = DIV (LEVEL_3DB, LEVEL (1) + clev + slev);
  	    break;
- 
+
  	case CONVERT (A52_3F2R, A52_STEREO):
 -	    *level /= 1 + clev + slev;
 +	    adjust = DIV (1, LEVEL (1) + clev + slev);
  	    break;
- 
+
  	case CONVERT (A52_MONO, A52_DOLBY):
 -	    *level *= LEVEL_PLUS3DB;
 +	    adjust = LEVEL (LEVEL_PLUS3DB);
  	    break;
- 
+
  	case CONVERT (A52_3F, A52_DOLBY):
  	case CONVERT (A52_2F1R, A52_DOLBY):
 -	    *level *= 1 / (1 + LEVEL_3DB);
 +	    adjust = LEVEL (1 / (1 + LEVEL_3DB));
  	    break;
- 
+
  	case CONVERT (A52_3F1R, A52_DOLBY):
  	case CONVERT (A52_2F2R, A52_DOLBY):
 -	    *level *= 1 / (1 + 2 * LEVEL_3DB);
 +	    adjust = LEVEL (1 / (1 + 2 * LEVEL_3DB));
  	    break;
- 
+
  	case CONVERT (A52_3F2R, A52_DOLBY):
 -	    *level *= 1 / (1 + 3 * LEVEL_3DB);
 +	    adjust = LEVEL (1 / (1 + 3 * LEVEL_3DB));
@@ -438,13 +438,13 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 +	default:
 +	    return output;
  	}
- 
+
 +	*level = MUL_L (*level, adjust);
 +    }
 +
      return output;
  }
- 
+
 -int a52_downmix_coeff (sample_t * coeff, int acmod, int output, sample_t level,
 -		       sample_t clev, sample_t slev)
 +int a52_downmix_coeff (level_t * coeff, int acmod, int output, level_t level,
@@ -455,42 +455,42 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 +    level_3db = MUL_C (level, LEVEL_3DB);
 +
      switch (CONVERT (acmod, output & A52_CHANNEL_MASK)) {
- 
+
      case CONVERT (A52_CHANNEL, A52_CHANNEL):
 @@ -169,120 +181,138 @@
  	return 0;
- 
+
      case CONVERT (A52_CHANNEL, A52_MONO):
 -	coeff[0] = coeff[1] = level * LEVEL_6DB;
 +	coeff[0] = coeff[1] = MUL_C (level, LEVEL_6DB);
  	return 3;
- 
+
      case CONVERT (A52_STEREO, A52_MONO):
 -	coeff[0] = coeff[1] = level * LEVEL_3DB;
 +	coeff[0] = coeff[1] = level_3db;
  	return 3;
- 
+
      case CONVERT (A52_3F, A52_MONO):
 -	coeff[0] = coeff[2] = level * LEVEL_3DB;
 -	coeff[1] = level * clev * LEVEL_PLUS3DB;
 +	coeff[0] = coeff[2] = level_3db;
 +	coeff[1] = MUL_C (MUL_L (level_3db, clev), LEVEL_PLUS6DB);
  	return 7;
- 
+
      case CONVERT (A52_2F1R, A52_MONO):
 -	coeff[0] = coeff[1] = level * LEVEL_3DB;
 -	coeff[2] = level * slev * LEVEL_3DB;
 +	coeff[0] = coeff[1] = level_3db;
 +	coeff[2] = MUL_L (level_3db, slev);
  	return 7;
- 
+
      case CONVERT (A52_2F2R, A52_MONO):
 -	coeff[0] = coeff[1] = level * LEVEL_3DB;
 -	coeff[2] = coeff[3] = level * slev * LEVEL_3DB;
 +	coeff[0] = coeff[1] = level_3db;
 +	coeff[2] = coeff[3] = MUL_L (level_3db, slev);
  	return 15;
- 
+
      case CONVERT (A52_3F1R, A52_MONO):
 -	coeff[0] = coeff[2] = level * LEVEL_3DB;
 -	coeff[1] = level * clev * LEVEL_PLUS3DB;
@@ -499,7 +499,7 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 +	coeff[1] = MUL_C (MUL_L (level_3db, clev), LEVEL_PLUS6DB);
 +	coeff[3] = MUL_L (level_3db, slev);
  	return 15;
- 
+
      case CONVERT (A52_3F2R, A52_MONO):
 -	coeff[0] = coeff[2] = level * LEVEL_3DB;
 -	coeff[1] = level * clev * LEVEL_PLUS3DB;
@@ -508,12 +508,12 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 +	coeff[1] = MUL_C (MUL_L (level_3db, clev), LEVEL_PLUS6DB);
 +	coeff[3] = coeff[4] = MUL_L (level_3db, slev);
  	return 31;
- 
+
      case CONVERT (A52_MONO, A52_DOLBY):
 -	coeff[0] = level * LEVEL_3DB;
 +	coeff[0] = level_3db;
  	return 0;
- 
+
      case CONVERT (A52_3F, A52_DOLBY):
 -	clev = LEVEL_3DB;
 +	coeff[0] = coeff[2] = coeff[3] = coeff[4] = level;
@@ -527,7 +527,7 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 -	coeff[1] = level * clev;
 +	coeff[1] = MUL_L (level, clev);
  	return 7;
- 
+
      case CONVERT (A52_2F1R, A52_DOLBY):
 -	slev = 1;
 +	coeff[0] = coeff[1] = level;
@@ -539,7 +539,7 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 -	coeff[2] = level * slev * LEVEL_3DB;
 +	coeff[2] = MUL_L (level_3db, slev);
  	return 7;
- 
+
      case CONVERT (A52_3F1R, A52_DOLBY):
 -	clev = LEVEL_3DB;
 -	slev = 1;
@@ -554,7 +554,7 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 +	coeff[1] = MUL_L (level, clev);
 +	coeff[3] = MUL_L (level_3db, slev);
  	return 15;
- 
+
      case CONVERT (A52_2F2R, A52_DOLBY):
 -	slev = LEVEL_3DB;
 +	coeff[0] = coeff[1] = level;
@@ -566,7 +566,7 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 -	coeff[2] = coeff[3] = level * slev;
 +	coeff[2] = coeff[3] = MUL_L (level, slev);
  	return 15;
- 
+
      case CONVERT (A52_3F2R, A52_DOLBY):
 -	clev = LEVEL_3DB;
 +	coeff[0] = coeff[2] = level;
@@ -587,37 +587,37 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 +	coeff[1] = MUL_L (level, clev);
 +	coeff[3] = coeff[4] = MUL_L (level, slev);
  	return 31;
- 
+
      case CONVERT (A52_3F1R, A52_3F):
  	coeff[0] = coeff[1] = coeff[2] = level;
 -	coeff[3] = level * slev * LEVEL_3DB;
 +	coeff[3] = MUL_L (level_3db, slev);
  	return 13;
- 
+
      case CONVERT (A52_3F2R, A52_3F):
  	coeff[0] = coeff[1] = coeff[2] = level;
 -	coeff[3] = coeff[4] = level * slev;
 +	coeff[3] = coeff[4] = MUL_L (level, slev);
  	return 29;
- 
+
      case CONVERT (A52_2F2R, A52_2F1R):
  	coeff[0] = coeff[1] = level;
 -	coeff[2] = coeff[3] = level * LEVEL_3DB;
 +	coeff[2] = coeff[3] = level_3db;
  	return 12;
- 
+
      case CONVERT (A52_3F2R, A52_3F1R):
  	coeff[0] = coeff[1] = coeff[2] = level;
 -	coeff[3] = coeff[4] = level * LEVEL_3DB;
 +	coeff[3] = coeff[4] = level_3db;
  	return 24;
- 
+
      case CONVERT (A52_2F1R, A52_2F2R):
  	coeff[0] = coeff[1] = level;
 -	coeff[2] = level * LEVEL_3DB;
 +	coeff[2] = level_3db;
  	return 0;
- 
+
      case CONVERT (A52_3F1R, A52_2F2R):
  	coeff[0] = coeff[2] = level;
 -	coeff[1] = level * clev;
@@ -625,57 +625,57 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 +	coeff[1] = MUL_L (level, clev);
 +	coeff[3] = level_3db;
  	return 7;
- 
+
      case CONVERT (A52_3F1R, A52_3F2R):
  	coeff[0] = coeff[1] = coeff[2] = level;
 -	coeff[3] = level * LEVEL_3DB;
 +	coeff[3] = level_3db;
  	return 0;
- 
+
      case CONVERT (A52_CHANNEL, A52_CHANNEL1):
 @@ -304,7 +334,7 @@
      int i;
- 
+
      for (i = 0; i < 256; i++)
 -	dest[i] += src[i] + bias;
 +	dest[i] += BIAS (src[i]);
  }
- 
+
  static void mix3to1 (sample_t * samples, sample_t bias)
 @@ -312,7 +342,7 @@
      int i;
- 
+
      for (i = 0; i < 256; i++)
 -	samples[i] += samples[i + 256] + samples[i + 512] + bias;
 +	samples[i] += BIAS (samples[i + 256] + samples[i + 512]);
  }
- 
+
  static void mix4to1 (sample_t * samples, sample_t bias)
 @@ -320,8 +350,8 @@
      int i;
- 
+
      for (i = 0; i < 256; i++)
 -	samples[i] += (samples[i + 256] + samples[i + 512] +
 -		       samples[i + 768] + bias);
 +	samples[i] += BIAS (samples[i + 256] + samples[i + 512] +
 +			    samples[i + 768]);
  }
- 
+
  static void mix5to1 (sample_t * samples, sample_t bias)
 @@ -329,8 +359,8 @@
      int i;
- 
+
      for (i = 0; i < 256; i++)
 -	samples[i] += (samples[i + 256] + samples[i + 512] +
 -		       samples[i + 768] + samples[i + 1024] + bias);
 +	samples[i] += BIAS (samples[i + 256] + samples[i + 512] +
 +			    samples[i + 768] + samples[i + 1024]);
  }
- 
+
  static void mix3to2 (sample_t * samples, sample_t bias)
 @@ -339,7 +369,7 @@
      sample_t common;
- 
+
      for (i = 0; i < 256; i++) {
 -	common = samples[i + 256] + bias;
 +	common = BIAS (samples[i + 256]);
@@ -684,7 +684,7 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
      }
 @@ -351,7 +381,7 @@
      sample_t common;
- 
+
      for (i = 0; i < 256; i++) {
 -	common = right[i + 256] + bias;
 +	common = BIAS (right[i + 256]);
@@ -692,7 +692,7 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
  	right[i] += common;
      }
 @@ -364,8 +394,8 @@
- 
+
      for (i = 0; i < 256; i++) {
  	surround = samples[i + 512];
 -	samples[i] += bias - surround;
@@ -701,10 +701,10 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 +	samples[i + 256] += BIAS (surround);
      }
  }
- 
+
 @@ -375,7 +405,7 @@
      sample_t common;
- 
+
      for (i = 0; i < 256; i++) {
 -	common = samples[i + 256] + samples[i + 768] + bias;
 +	common = BIAS (samples[i + 256] + samples[i + 768]);
@@ -713,7 +713,7 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
      }
 @@ -387,7 +417,7 @@
      sample_t common, surround;
- 
+
      for (i = 0; i < 256; i++) {
 -	common = samples[i + 256] + bias;
 +	common = BIAS (samples[i + 256]);
@@ -721,7 +721,7 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
  	samples[i] += common - surround;
  	samples[i + 256] = samples[i + 512] + common + surround;
 @@ -401,8 +431,8 @@
- 
+
      for (i = 0; i < 256; i++) {
  	surround = samples[i + 512] + samples[i + 768];
 -	samples[i] += bias - surround;
@@ -730,10 +730,10 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 +	samples[i + 256] += BIAS (surround);
      }
  }
- 
+
 @@ -412,7 +442,7 @@
      sample_t common;
- 
+
      for (i = 0; i < 256; i++) {
 -	common = samples[i + 256] + bias;
 +	common = BIAS (samples[i + 256]);
@@ -742,7 +742,7 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
      }
 @@ -424,7 +454,7 @@
      sample_t common, surround;
- 
+
      for (i = 0; i < 256; i++) {
 -	common = samples[i + 256] + bias;
 +	common = BIAS (samples[i + 256]);
@@ -751,16 +751,16 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
  	samples[i + 256] = samples[i + 512] + common + surround;
 @@ -436,7 +466,7 @@
      int i;
- 
+
      for (i = 0; i < 256; i++)
 -	dest[i] = src[i] + src[i + 256] + bias;
 +	dest[i] = BIAS (src[i] + src[i + 256]);
  }
- 
+
  static void zero (sample_t * samples)
 @@ -448,8 +478,11 @@
  }
- 
+
  void a52_downmix (sample_t * samples, int acmod, int output, sample_t bias,
 -		  sample_t clev, sample_t slev)
 +		  level_t clev, level_t slev)
@@ -769,11 +769,11 @@ diff -ruN liba52.orig/downmix.c liba52/downmix.c
 +    (void)clev;
 +
      switch (CONVERT (acmod, output & A52_CHANNEL_MASK)) {
- 
+
      case CONVERT (A52_CHANNEL, A52_CHANNEL2):
 @@ -583,7 +616,7 @@
  	break;
- 
+
      case CONVERT (A52_3F1R, A52_3F2R):
 -	memcpy (samples + 1027, samples + 768, 256 * sizeof (sample_t));
 +	memcpy (samples + 1024, samples + 768, 256 * sizeof (sample_t));
@@ -794,10 +794,10 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 @@ -24,12 +24,13 @@
   * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   */
- 
+
 -#include "config.h"
 +#include "config-a52.h"
- 
+
  #include <math.h>
  #include <stdio.h>
  #ifdef LIBA52_DJBFFT
@@ -808,7 +808,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
  #define M_PI 3.1415926535897932384626433832795029
 @@ -57,25 +58,26 @@
  };
- 
+
  /* Root values for IFFT */
 -static sample_t roots16[3];
 -static sample_t roots32[7];
@@ -818,7 +818,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +//static sample_t roots32[7];
 +//static sample_t roots64[15];
 +//static sample_t roots128[31];
- 
+
  /* Twiddle factors for IMDCT */
 -static complex_t pre1[128];
 -static complex_t post1[64];
@@ -828,34 +828,34 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +//static complex_t post1[64];
 +//static complex_t pre2[64];
 +//static complex_t post2[32];
- 
+
 -static sample_t a52_imdct_window[256];
 +//static sample_t a52_imdct_window[256];
 +#include "imdct_lookups.h"
- 
+
  static void (* ifft128) (complex_t * buf);
  static void (* ifft64) (complex_t * buf);
- 
+
  static inline void ifft2 (complex_t * buf)
  {
 -    double r, i;
 +    sample_t r, i;
- 
+
      r = buf[0].real;
      i = buf[0].imag;
 @@ -87,7 +89,7 @@
- 
+
  static inline void ifft4 (complex_t * buf)
  {
 -    double tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7, tmp8;
 +    sample_t tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7, tmp8;
- 
+
      tmp1 = buf[0].real + buf[1].real;
      tmp2 = buf[3].real + buf[2].real;
 @@ -108,25 +110,37 @@
      buf[3].imag = tmp6 - tmp8;
  }
- 
+
 +/* basic radix-2 ifft butterfly */
 +
 +#define BUTTERFLY_0(t0,t1,W0,W1,d0,d1) do {	\
@@ -871,7 +871,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +} while (0)
 +
  /* the basic split-radix ifft butterfly */
- 
+
 -#define BUTTERFLY(a0,a1,a2,a3,wr,wi) do {	\
 -    tmp5 = a2.real * wr + a2.imag * wi;		\
 -    tmp6 = a2.imag * wr - a2.real * wi;		\
@@ -905,11 +905,11 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +    a1.real += tmp3;					\
 +    a1.imag += tmp4;					\
  } while (0)
- 
+
  /* split-radix ifft butterfly, specialized for wr=1 wi=0 */
 @@ -149,10 +163,10 @@
  /* split-radix ifft butterfly, specialized for wr=wi */
- 
+
  #define BUTTERFLY_HALF(a0,a1,a2,a3,w) do {	\
 -    tmp5 = (a2.real + a2.imag) * w;		\
 -    tmp6 = (a2.imag - a2.real) * w;		\
@@ -923,12 +923,12 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
      tmp2 = tmp6 + tmp8;				\
      tmp3 = tmp6 - tmp8;				\
 @@ -169,7 +183,7 @@
- 
+
  static inline void ifft8 (complex_t * buf)
  {
 -    double tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7, tmp8;
 +    sample_t tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7, tmp8;
- 
+
      ifft4 (buf);
      ifft2 (buf + 4);
 @@ -183,7 +197,7 @@
@@ -938,11 +938,11 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 -    double tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7, tmp8;
 +    sample_t tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7, tmp8;
      int i;
- 
+
      buf++;
 @@ -196,7 +210,8 @@
      i = n - 1;
- 
+
      do {
 -	BUTTERFLY (buf[0], buf1[0], buf2[0], buf3[0], weight[n], weight[2*i]);
 +	BUTTERFLY (buf[0], buf1[0], buf2[0], buf3[0],
@@ -957,7 +957,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 -    ifft_pass (buf, roots16 - 4, 4);
 +    ifft_pass (buf, roots16, 4);
  }
- 
+
  static void ifft32 (complex_t * buf)
 @@ -218,7 +233,7 @@
      ifft16 (buf);
@@ -966,7 +966,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 -    ifft_pass (buf, roots32 - 8, 8);
 +    ifft_pass (buf, roots32, 8);
  }
- 
+
  static void ifft64_c (complex_t * buf)
 @@ -226,7 +241,7 @@
      ifft32 (buf);
@@ -975,7 +975,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 -    ifft_pass (buf, roots64 - 16, 16);
 +    ifft_pass (buf, roots64, 16);
  }
- 
+
  static void ifft128_c (complex_t * buf)
 @@ -234,11 +249,11 @@
      ifft32 (buf);
@@ -983,13 +983,13 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
      ifft16 (buf + 48);
 -    ifft_pass (buf, roots64 - 16, 16);
 +    ifft_pass (buf, roots64, 16);
- 
+
      ifft32 (buf + 64);
      ifft32 (buf + 96);
 -    ifft_pass (buf, roots128 - 32, 32);
 +    ifft_pass (buf, roots128, 32);
  }
- 
+
  void a52_imdct_512 (sample_t * data, sample_t * delay, sample_t bias)
 @@ -252,9 +267,7 @@
  	k = fftorder[i];
@@ -1000,7 +1000,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 -	buf[i].imag = t_r * data[255-k] - t_i * data[k];
 +	BUTTERFLY_0 (buf[i].real, buf[i].imag, t_r, t_i, data[k], data[255-k]);
      }
- 
+
      ifft128 (buf);
 @@ -265,27 +278,22 @@
  	/* y[n] = z[n] * (xcos1[n] + j * xsin1[n]) ; */
@@ -1013,14 +1013,14 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 -	b_i = t_r * buf[127-i].real - t_i * buf[127-i].imag;
 +	BUTTERFLY_0 (a_r, a_i, t_i, t_r, buf[i].imag, buf[i].real);
 +	BUTTERFLY_0 (b_r, b_i, t_r, t_i, buf[127-i].imag, buf[127-i].real);
- 
+
  	w_1 = window[2*i];
  	w_2 = window[255-2*i];
 -	data[2*i]     = delay[2*i] * w_2 - a_r * w_1 + bias;
 -	data[255-2*i] = delay[2*i] * w_1 + a_r * w_2 + bias;
 +	BUTTERFLY_B (data[255-2*i], data[2*i], w_2, w_1, a_r, delay[2*i]);
  	delay[2*i] = a_i;
- 
+
  	w_1 = window[2*i+1];
  	w_2 = window[254-2*i];
 -	data[2*i+1]   = delay[2*i+1] * w_2 + b_r * w_1 + bias;
@@ -1029,7 +1029,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
  	delay[2*i+1] = b_i;
      }
  }
- 
+
 -void a52_imdct_256(sample_t * data, sample_t * delay, sample_t bias)
 +void a52_imdct_256 (sample_t * data, sample_t * delay, sample_t bias)
  {
@@ -1048,10 +1048,10 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +	BUTTERFLY_0 (buf1[i].real, buf1[i].imag, t_r, t_i, data[k], data[254-k]);
 +	BUTTERFLY_0 (buf2[i].real, buf2[i].imag, t_r, t_i, data[k+1], data[255-k]);
      }
- 
+
      ifft64 (buf1);
 @@ -314,43 +318,34 @@
- 	/* y1[n] = z1[n] * (xcos2[n] + j * xs in2[n]) ; */ 
+ 	/* y1[n] = z1[n] * (xcos2[n] + j * xs in2[n]) ; */
  	t_r = post2[i].real;
  	t_i = post2[i].imag;
 -
@@ -1068,28 +1068,28 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +	BUTTERFLY_0 (b_r, b_i, t_r, t_i, buf1[63-i].imag, buf1[63-i].real);
 +	BUTTERFLY_0 (c_r, c_i, t_i, t_r, buf2[i].imag, buf2[i].real);
 +	BUTTERFLY_0 (d_r, d_i, t_r, t_i, buf2[63-i].imag, buf2[63-i].real);
- 
+
  	w_1 = window[2*i];
  	w_2 = window[255-2*i];
 -	data[2*i]     = delay[2*i] * w_2 - a_r * w_1 + bias;
 -	data[255-2*i] = delay[2*i] * w_1 + a_r * w_2 + bias;
 +	BUTTERFLY_B (data[255-2*i], data[2*i], w_2, w_1, a_r, delay[2*i]);
  	delay[2*i] = c_i;
- 
+
  	w_1 = window[128+2*i];
  	w_2 = window[127-2*i];
 -	data[128+2*i] = delay[127-2*i] * w_2 + a_i * w_1 + bias;
 -	data[127-2*i] = delay[127-2*i] * w_1 - a_i * w_2 + bias;
 +	BUTTERFLY_B (data[128+2*i], data[127-2*i], w_1, w_2, a_i, delay[127-2*i]);
  	delay[127-2*i] = c_r;
- 
+
  	w_1 = window[2*i+1];
  	w_2 = window[254-2*i];
 -	data[2*i+1]   = delay[2*i+1] * w_2 - b_i * w_1 + bias;
 -	data[254-2*i] = delay[2*i+1] * w_1 + b_i * w_2 + bias;
 +	BUTTERFLY_B (data[254-2*i], data[2*i+1], w_2, w_1, b_i, delay[2*i+1]);
  	delay[2*i+1] = d_r;
- 
+
  	w_1 = window[129+2*i];
  	w_2 = window[126-2*i];
 -	data[129+2*i] = delay[126-2*i] * w_2 + b_r * w_1 + bias;
@@ -1098,7 +1098,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
  	delay[126-2*i] = d_i;
      }
  }
- 
+
 +/*
  static double besselI0 (double x)
  {
@@ -1108,7 +1108,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
      return bessel;
  }
 +*/
- 
+
  void a52_imdct_init (uint32_t mm_accel)
  {
 -    int i, k;
@@ -1116,7 +1116,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +/*    int i, k;
      double sum;
 +    double local_imdct_window[256];*/
- 
+
      /* compute imdct window - kaiser-bessel derived window, alpha = 5.0 */
 -    sum = 0;
 +    /*    sum = 0;
@@ -1142,11 +1142,11 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +
 +    /*    for (i = 0; i < 3; i++)
 +	roots16[i] = SAMPLE (cos ((M_PI / 8) * (i + 1)));
- 
+
 -    for (i = 0; i < 3; i++)
 -	roots16[i] = cos ((M_PI / 8) * (i + 1));
 +    printf("static sample_t roots16[3]={%d,%d,%d};\n\n",roots16[0],roots16[1],roots16[2]);
- 
+
      for (i = 0; i < 7; i++)
 -	roots32[i] = cos ((M_PI / 16) * (i + 1));
 +	roots32[i] = SAMPLE (cos ((M_PI / 16) * (i + 1)));
@@ -1154,7 +1154,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +    printf("static sample_t roots32[7]={");
 +    for (i=0;i<7;i++) { printf("%d%s",roots32[i],(i < 6 ? "," : "")); }
 +    printf("};\n");
- 
+
      for (i = 0; i < 15; i++)
 -	roots64[i] = cos ((M_PI / 32) * (i + 1));
 +	roots64[i] = SAMPLE (cos ((M_PI / 32) * (i + 1)));
@@ -1162,11 +1162,11 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +    printf("static sample_t roots64[15]={");
 +    for (i=0;i<15;i++) { printf("%d%s",roots64[i],(i < 14 ? "," : "")); }
 +    printf("};\n");
- 
+
      for (i = 0; i < 31; i++)
 -	roots128[i] = cos ((M_PI / 64) * (i + 1));
 +	roots128[i] = SAMPLE (cos ((M_PI / 64) * (i + 1)));
- 
+
 +    printf("static sample_t roots128[31]={");
 +    for (i=0;i<31;i++) { printf("%d%s",roots128[i],(i < 30 ? "," : "")); }
 +    printf("};\n");
@@ -1179,7 +1179,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +	pre1[i].real = SAMPLE (cos ((M_PI / 256) * (k - 0.25)));
 +	pre1[i].imag = SAMPLE (sin ((M_PI / 256) * (k - 0.25)));
      }
- 
+
      for (i = 64; i < 128; i++) {
  	k = fftorder[i] / 2 + 64;
 -	pre1[i].real = -cos ((M_PI / 256) * (k - 0.25));
@@ -1187,7 +1187,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +	pre1[i].real = SAMPLE (-cos ((M_PI / 256) * (k - 0.25)));
 +	pre1[i].imag = SAMPLE (-sin ((M_PI / 256) * (k - 0.25)));
      }
- 
+
 +    printf("static complex_t pre1[128]={");
 +    for (i=0;i<128;i++) { printf("{%d,%d}%s",pre1[i].real,pre1[i].imag,(i < 127 ? "," : "")); }
 +    printf("};\n");
@@ -1199,7 +1199,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +	post1[i].real = SAMPLE (cos ((M_PI / 256) * (i + 0.5)));
 +	post1[i].imag = SAMPLE (sin ((M_PI / 256) * (i + 0.5)));
      }
- 
+
 +    printf("static complex_t post1[64]={");
 +    for (i=0;i<64;i++) { printf("{%d,%d}%s",post1[i].real,post1[i].imag,(i < 63 ? "," : "")); }
 +    printf("};\n");
@@ -1213,7 +1213,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +	pre2[i].real = SAMPLE (cos ((M_PI / 128) * (k - 0.25)));
 +	pre2[i].imag = SAMPLE (sin ((M_PI / 128) * (k - 0.25)));
      }
- 
+
 +    printf("static complex_t pre2[64]={");
 +    for (i=0;i<64;i++) { printf("{%d,%d}%s",pre2[i].real,pre2[i].imag,(i < 63 ? "," : "")); }
 +    printf("};\n");
@@ -1224,7 +1224,7 @@ diff -ruN liba52.orig/imdct.c liba52/imdct.c
 +	post2[i].real = SAMPLE (cos ((M_PI / 128) * (i + 0.5)));
 +	post2[i].imag = SAMPLE (sin ((M_PI / 128) * (i + 0.5)));
      }
- 
+
 +    printf("static complex_t post2[32]={");
 +    for (i=0;i<32;i++) { printf("{%d,%d}%s",post2[i].real,post2[i].imag,(i < 31 ? "," : "")); }
 +    printf("};\n");
@@ -1280,18 +1280,18 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
 @@ -21,9 +21,8 @@
   * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   */
- 
+
 -#include "config.h"
 +#include "config-a52.h"
- 
+
 -#include <stdlib.h>
  #include <string.h>
  #include <inttypes.h>
- 
+
 @@ -32,7 +31,7 @@
  #include "bitstream.h"
  #include "tables.h"
- 
+
 -#ifdef HAVE_MEMALIGN
 +#if defined(HAVE_MEMALIGN) && !defined(__cplusplus)
  /* some systems have memalign() but no declaration for it */
@@ -1299,7 +1299,7 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  #else
 @@ -41,13 +40,16 @@
  #endif
- 
+
  typedef struct {
 -    sample_t q1[2];
 -    sample_t q2[2];
@@ -1315,40 +1315,40 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
 +
 +static a52_state_t istate IBSS_ATTR;
 +static sample_t isamples[256*12] IBSS_ATTR;
- 
+
  static uint8_t halfrate[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3};
- 
+
 @@ -56,16 +58,25 @@
      a52_state_t * state;
      int i;
- 
+
 -    state = malloc (sizeof (a52_state_t));
 +    #if defined(CPU_COLDFIRE)
 +    coldfire_set_macsr(EMAC_FRACTIONAL | EMAC_ROUND | EMAC_SATURATE);
 +    #endif
-+    /* 
++    /*
 +      this needs to come back if we ever want two decoder instances
 +      simultenously. NOTE, you also need to remove comments in a52_free.
 +    state = (a52_state_t *) malloc (sizeof (a52_state_t));
      if (state == NULL)
  	return NULL;
- 
+
 -    state->samples = memalign (16, 256 * 12 * sizeof (sample_t));
 +    state->samples = (sample_t *) memalign (16, 256 * 12 * sizeof (sample_t));
      if (state->samples == NULL) {
  	free (state);
  	return NULL;
      }
- 
+
 +    */
 +    state = &istate;
 +    state->samples = isamples;
      for (i = 0; i < 256 * 12; i++)
  	state->samples[i] = 0;
- 
+
 @@ -129,10 +140,12 @@
  }
- 
+
  int a52_frame (a52_state_t * state, uint8_t * buf, int * flags,
 -	       sample_t * level, sample_t bias)
 +	       level_t * level, sample_t bias)
@@ -1357,20 +1357,20 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
 -    static sample_t slev[4] = {LEVEL_3DB, LEVEL_6DB, 0, LEVEL_6DB};
 +    static level_t clev[4] = { LEVEL (LEVEL_3DB), LEVEL (LEVEL_45DB),
 +			       LEVEL (LEVEL_6DB), LEVEL (LEVEL_45DB) };
-+    static level_t slev[4] = { LEVEL (LEVEL_3DB), LEVEL (LEVEL_6DB), 
++    static level_t slev[4] = { LEVEL (LEVEL_3DB), LEVEL (LEVEL_6DB),
 +			       0,                 LEVEL (LEVEL_6DB) };
      int chaninfo;
      int acmod;
- 
+
 @@ -146,6 +159,8 @@
      if ((acmod == 2) && (bitstream_get (state, 2) == 2))	/* dsurmod */
  	acmod = A52_DOLBY;
- 
+
 +    state->clev = state->slev = 0;
 +
      if ((acmod & 1) && (acmod != 1))
  	state->clev = clev[bitstream_get (state, 2)];	/* cmixlev */
- 
+
 @@ -162,7 +177,7 @@
  	state->output |= A52_LFE;
      *flags = state->output;
@@ -1382,7 +1382,7 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
      state->dynrngcall = NULL;
 @@ -201,7 +216,7 @@
  }
- 
+
  void a52_dynrng (a52_state_t * state,
 -		 sample_t (* call) (sample_t, void *), void * data)
 +		 level_t (* call) (level_t, void *), void * data)
@@ -1390,13 +1390,13 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
      state->dynrnge = 0;
      if (call) {
 @@ -311,20 +326,38 @@
- 	
+
      state->lfsr_state = (uint16_t) nstate;
- 
+
 -    return nstate;
 +    return (3 * nstate) >> 2;
  }
- 
+
 +#ifndef LIBA52_FIXED
 +#define COEFF(c,t,l,s,e) (c) = (t) * (s)[e]
 +#else
@@ -1424,11 +1424,11 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
 +
 +#ifndef LIBA52_FIXED
      sample_t factor[25];
- 
+
      for (i = 0; i <= 24; i++)
  	factor[i] = scale_factor[i] * level;
 +#endif
- 
+
      exp = expbap->exp;
      bap = expbap->bap;
 @@ -336,7 +369,7 @@
@@ -1442,7 +1442,7 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  		coeff[i] = 0;
 @@ -344,76 +377,80 @@
  	    }
- 
+
  	case -1:
 -	    if (quantizer->q1_ptr >= 0) {
 -		coeff[i] = quantizer->q1[quantizer->q1_ptr--] * factor[exp[i]];
@@ -1452,9 +1452,9 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  		continue;
  	    } else {
  		int code;
- 
+
  		code = bitstream_get (state, 5);
- 
+
 -		quantizer->q1_ptr = 1;
 -		quantizer->q1[0] = q_1_2[code];
 -		quantizer->q1[1] = q_1_1[code];
@@ -1465,7 +1465,7 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
 +		COEFF (coeff[i], q_1_0[code], level, factor, exp[i]);
  		continue;
  	    }
- 
+
  	case -2:
 -	    if (quantizer->q2_ptr >= 0) {
 -		coeff[i] = quantizer->q2[quantizer->q2_ptr--] * factor[exp[i]];
@@ -1475,9 +1475,9 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  		continue;
  	    } else {
  		int code;
- 
+
  		code = bitstream_get (state, 7);
- 
+
 -		quantizer->q2_ptr = 1;
 -		quantizer->q2[0] = q_2_2[code];
 -		quantizer->q2[1] = q_2_1[code];
@@ -1488,13 +1488,13 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
 +		COEFF (coeff[i], q_2_0[code], level, factor, exp[i]);
  		continue;
  	    }
- 
+
  	case 3:
 -	    coeff[i] = q_3[bitstream_get (state, 3)] * factor[exp[i]];
 +	    COEFF (coeff[i], q_3[bitstream_get (state, 3)], level,
 +		   factor, exp[i]);
  	    continue;
- 
+
  	case -3:
 -	    if (quantizer->q4_ptr == 0) {
 -		quantizer->q4_ptr = -1;
@@ -1505,9 +1505,9 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  		continue;
  	    } else {
  		int code;
- 
+
  		code = bitstream_get (state, 7);
- 
+
 -		quantizer->q4_ptr = 0;
 -		quantizer->q4 = q_4_1[code];
 -		coeff[i] = q_4_0[code] * factor[exp[i]];
@@ -1516,13 +1516,13 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
 +		COEFF (coeff[i], q_4_0[code], level, factor, exp[i]);
  		continue;
  	    }
- 
+
  	case 4:
 -	    coeff[i] = q_5[bitstream_get (state, 4)] * factor[exp[i]];
 +	    COEFF (coeff[i], q_5[bitstream_get (state, 4)], level,
 +		   factor, exp[i]);
  	    continue;
- 
+
  	default:
 -	    coeff[i] = ((bitstream_get_2 (state, bapi) << (16 - bapi)) *
 -			  factor[exp[i]]);
@@ -1531,7 +1531,7 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  	}
      }
  }
- 
+
  static void coeff_get_coupling (a52_state_t * state, int nfchans,
 -				sample_t * coeff, sample_t (* samples)[256],
 -				quantizer_t * quantizer, uint8_t dithflag[5])
@@ -1543,7 +1543,7 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
      int8_t * bap;
 -    sample_t cplco[5];
 +    level_t cplco[5];
- 
+
      exp = state->cpl_expbap.exp;
      bap = state->cpl_expbap.bap;
 @@ -428,22 +465,26 @@
@@ -1553,12 +1553,12 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
 -	    cplco[ch] = state->cplco[ch][bnd] * coeff[ch];
 +	    cplco[ch] = MUL_L (state->cplco[ch][bnd], coeff[ch]);
  	bnd++;
- 
+
  	while (i < i_end) {
 -	    sample_t cplcoeff;
 +	    quantizer_t cplcoeff;
  	    int bapi;
- 
+
  	    bapi = bap[i];
  	    switch (bapi) {
  	    case 0:
@@ -1580,7 +1580,7 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  		    }
 @@ -451,33 +492,33 @@
  		continue;
- 
+
  	    case -1:
 -		if (quantizer->q1_ptr >= 0) {
 -		    cplcoeff = quantizer->q1[quantizer->q1_ptr--];
@@ -1589,9 +1589,9 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  		    break;
  		} else {
  		    int code;
- 
+
  		    code = bitstream_get (state, 5);
- 
+
 -		    quantizer->q1_ptr = 1;
 -		    quantizer->q1[0] = q_1_2[code];
 -		    quantizer->q1[1] = q_1_1[code];
@@ -1601,7 +1601,7 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  		    cplcoeff = q_1_0[code];
  		    break;
  		}
- 
+
  	    case -2:
 -		if (quantizer->q2_ptr >= 0) {
 -		    cplcoeff = quantizer->q2[quantizer->q2_ptr--];
@@ -1610,9 +1610,9 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  		    break;
  		} else {
  		    int code;
- 
+
  		    code = bitstream_get (state, 7);
- 
+
 -		    quantizer->q2_ptr = 1;
 -		    quantizer->q2[0] = q_2_2[code];
 -		    quantizer->q2[1] = q_2_1[code];
@@ -1624,7 +1624,7 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  		}
 @@ -487,17 +528,17 @@
  		break;
- 
+
  	    case -3:
 -		if (quantizer->q4_ptr == 0) {
 -		    quantizer->q4_ptr = -1;
@@ -1635,9 +1635,9 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  		    break;
  		} else {
  		    int code;
- 
+
  		    code = bitstream_get (state, 7);
- 
+
 -		    quantizer->q4_ptr = 0;
 -		    quantizer->q4 = q_4_1[code];
 +		    quant->q4_ptr = 0;
@@ -1675,15 +1675,15 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
 -    quantizer_t quantizer;
 +    quantizer_set_t quant;
      sample_t * samples;
- 
+
      nfchans = nfchans_tbl[state->acmod];
 @@ -546,13 +593,17 @@
- 
+
  	    dynrng = bitstream_get_2 (state, 8);
  	    if (state->dynrnge) {
 -		sample_t range;
 +		level_t range;
- 
+
 +#if !defined(LIBA52_FIXED)
  		range = ((((dynrng & 0x1f) | 0x20) << 13) *
  			 scale_factor[3 - (dynrng >> 5)]);
@@ -1713,7 +1713,7 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  	if ((state->acmod == 2) && state->phsflginu && cplcoe)
 @@ -691,11 +747,11 @@
      }
- 
+
      if (bitstream_get (state, 1)) {	/* baie */
 -	do_bit_alloc = -1;
 +	do_bit_alloc = 127;
@@ -1727,7 +1727,7 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  	    state->cplba.bai = bitstream_get (state, 7);
 @@ -711,7 +767,7 @@
      }
- 
+
      if (bitstream_get (state, 1)) {	/* deltbaie */
 -	do_bit_alloc = -1;
 +	do_bit_alloc = 127;
@@ -1737,18 +1737,18 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
 @@ -765,20 +821,20 @@
      chanbias = a52_downmix_coeff (coeff, state->acmod, state->output,
  				  state->dynrng, state->clev, state->slev);
- 
+
 -    quantizer.q1_ptr = quantizer.q2_ptr = quantizer.q4_ptr = -1;
 +    quant.q1_ptr = quant.q2_ptr = quant.q4_ptr = -1;
      done_cpl = 0;
- 
+
      for (i = 0; i < nfchans; i++) {
  	int j;
- 
+
 -	coeff_get (state, samples + 256 * i, state->fbw_expbap +i, &quantizer,
 +	coeff_get (state, samples + 256 * i, state->fbw_expbap +i, &quant,
  		   coeff[i], dithflag[i], state->endmant[i]);
- 
+
  	if ((state->chincpl >> i) & 1) {
  	    if (!done_cpl) {
  		done_cpl = 1;
@@ -1759,7 +1759,7 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  	    }
  	    j = state->cplendmant;
 @@ -821,14 +877,14 @@
- 
+
      if (state->lfeon) {
  	if (state->output & A52_LFE) {
 -	    coeff_get (state, samples - 256, &state->lfe_expbap, &quantizer,
@@ -1776,7 +1776,7 @@ diff -ruN liba52.orig/parse.c liba52/parse.c
  	}
      }
 @@ -896,6 +952,9 @@
- 
+
  void a52_free (a52_state_t * state)
  {
 +    (void)state;
@@ -1799,7 +1799,7 @@ diff -ruN liba52.orig/tables.h liba52/tables.h
 @@ -46,42 +46,44 @@
      25,25,25
  };
- 
+
 -#define Q0 ((-2 << 15) / 3.0)
 -#define Q1 (0)
 -#define Q2 ((2 << 15) / 3.0)
@@ -1849,11 +1849,11 @@ diff -ruN liba52.orig/tables.h liba52/tables.h
 +    Q0, Q1, Q2, Q0, Q1, Q2, Q0, Q1, Q2,
 +    0,  0,  0,  0,  0
  };
- 
+
  #undef Q0
  #undef Q1
  #undef Q2
- 
+
 -#define Q0 ((-4 << 15) / 5.0)
 -#define Q1 ((-2 << 15) / 5.0)
 -#define Q2 (0)
@@ -1864,7 +1864,7 @@ diff -ruN liba52.orig/tables.h liba52/tables.h
 +#define Q2 Q (0)
 +#define Q3 Q (2/5)
 +#define Q4 Q (4/5)
- 
+
 -static const sample_t q_2_0[128] = {
 +static const quantizer_t q_2_0[128] = {
      Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,Q0,
@@ -1873,7 +1873,7 @@ diff -ruN liba52.orig/tables.h liba52/tables.h
 @@ -90,7 +92,7 @@
      0,0,0
  };
- 
+
 -static const sample_t q_2_1[128] = {
 +static const quantizer_t q_2_1[128] = {
      Q0,Q0,Q0,Q0,Q0,Q1,Q1,Q1,Q1,Q1,Q2,Q2,Q2,Q2,Q2,Q3,Q3,Q3,Q3,Q3,Q4,Q4,Q4,Q4,Q4,
@@ -1882,7 +1882,7 @@ diff -ruN liba52.orig/tables.h liba52/tables.h
 @@ -99,7 +101,7 @@
      0,0,0
  };
- 
+
 -static const sample_t q_2_2[128] = {
 +static const quantizer_t q_2_2[128] = {
      Q0,Q1,Q2,Q3,Q4,Q0,Q1,Q2,Q3,Q4,Q0,Q1,Q2,Q3,Q4,Q0,Q1,Q2,Q3,Q4,Q0,Q1,Q2,Q3,Q4,
@@ -1891,7 +1891,7 @@ diff -ruN liba52.orig/tables.h liba52/tables.h
 @@ -114,24 +116,23 @@
  #undef Q3
  #undef Q4
- 
+
 -static const sample_t q_3[8] = {
 -    (-6 << 15)/7.0, (-4 << 15)/7.0, (-2 << 15)/7.0, 0,
 -    ( 2 << 15)/7.0, ( 4 << 15)/7.0, ( 6 << 15)/7.0, 0
@@ -1923,7 +1923,7 @@ diff -ruN liba52.orig/tables.h liba52/tables.h
 +#define Q8 Q (6/11)
 +#define Q9 Q (8/11)
 +#define QA Q (10/11)
- 
+
 -static const sample_t q_4_0[128] = {
 +static const quantizer_t q_4_0[128] = {
      Q0, Q0, Q0, Q0, Q0, Q0, Q0, Q0, Q0, Q0, Q0,
@@ -1932,7 +1932,7 @@ diff -ruN liba52.orig/tables.h liba52/tables.h
 @@ -146,7 +147,7 @@
      0,  0,  0,  0,  0,  0,  0
  };
- 
+
 -static const sample_t q_4_1[128] = {
 +static const quantizer_t q_4_1[128] = {
      Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, QA,
@@ -1941,7 +1941,7 @@ diff -ruN liba52.orig/tables.h liba52/tables.h
 @@ -173,15 +174,13 @@
  #undef Q9
  #undef QA
- 
+
 -static const sample_t q_5[16] = {
 -    (-14 << 15)/15.0,(-12 << 15)/15.0,(-10 << 15)/15.0,
 -    ( -8 << 15)/15.0,( -6 << 15)/15.0,( -4 << 15)/15.0,
@@ -1954,7 +1954,7 @@ diff -ruN liba52.orig/tables.h liba52/tables.h
 +    Q (-4/15), Q (-2/15), Q (0), Q (2/15), Q (4/15),
 +    Q (6/15), Q (8/15), Q (10/15), Q (12/15), Q (14/15), 0
  };
- 
+
 +#ifndef LIBA52_FIXED
  static const sample_t scale_factor[25] = {
      0.000030517578125,
@@ -1964,7 +1964,7 @@ diff -ruN liba52.orig/tables.h liba52/tables.h
      0.000000000001818989403545856475830078125
  };
 +#endif
- 
+
  static const uint16_t dither_lut[256] = {
      0x0000, 0xa011, 0xe033, 0x4022, 0x6077, 0xc066, 0x8044, 0x2055,
 diff -ruN include.orig/a52.h include/a52.h
@@ -1981,7 +1981,7 @@ diff -ruN include.orig/a52.h include/a52.h
 @@ -24,10 +24,15 @@
  #ifndef A52_H
  #define A52_H
- 
+
 -#ifndef LIBA52_DOUBLE
 -typedef float sample_t;
 -#else
@@ -1995,7 +1995,7 @@ diff -ruN include.orig/a52.h include/a52.h
 +typedef float sample_t;
 +typedef float level_t;
  #endif
- 
+
  typedef struct a52_state_s a52_state_t;
 @@ -53,9 +58,9 @@
  int a52_syncinfo (uint8_t * buf, int * flags,
@@ -2008,7 +2008,7 @@ diff -ruN include.orig/a52.h include/a52.h
 +		 level_t (* call) (level_t, void *), void * data);
  int a52_block (a52_state_t * state);
  void a52_free (a52_state_t * state);
- 
+
 diff -ruN include.orig/attributes.h include/attributes.h
 --- include.orig/attributes.h	2008-07-23 14:10:23.000000000 +0200
 +++ include/attributes.h	2008-07-23 14:10:36.000000000 +0200

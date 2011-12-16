@@ -93,7 +93,7 @@ public:
 
 public:
   class SyncFrame *nextSyncFrame;
-  unsigned sfFrameNum;  
+  unsigned sfFrameNum;
 };
 
 // A 64-bit counter, used below:
@@ -344,7 +344,7 @@ QuickTimeFileSink::createNew(UsageEnvironment& env,
 			     Boolean syncStreams,
 			     Boolean generateHintTracks,
 			     Boolean generateMP4Format) {
-  QuickTimeFileSink* newSink = 
+  QuickTimeFileSink* newSink =
     new QuickTimeFileSink(env, inputSession, outputFileName, bufferSize, movieWidth, movieHeight, movieFPS,
 			  packetLossCompensate, syncStreams, generateHintTracks, generateMP4Format);
   if (newSink == NULL || newSink->fOutFid == NULL) {
@@ -525,7 +525,7 @@ SubsessionIOState::SubsessionIOState(QuickTimeFileSink& sink,
 				     MediaSubsession& subsession)
   : fHintTrackForUs(NULL), fTrackHintedByUs(NULL),
     fOurSink(sink), fOurSubsession(subsession),
-    fLastPacketRTPSeqNum(0), fHaveBeenSynced(False), fQTTotNumSamples(0), 
+    fLastPacketRTPSeqNum(0), fHaveBeenSynced(False), fQTTotNumSamples(0),
     fHeadChunk(NULL), fTailChunk(NULL), fNumChunks(0),
     fHeadSyncFrame(NULL), fTailSyncFrame(NULL) {
   fTrackID = ++fCurrentTrackNumber;
@@ -1118,7 +1118,7 @@ void SubsessionIOState::setHintTrack(SubsessionIOState* hintedTrack,
 
 SyncFrame::SyncFrame(unsigned frameNum)
   : nextSyncFrame(NULL), sfFrameNum(frameNum) {
-}  
+}
 
 SyncFrame::~SyncFrame() {
   delete nextSyncFrame;
@@ -2012,7 +2012,7 @@ addAtom(stss); // Sync-Sample
       numSamplesSoFar += numSamples;
       chunk = chunk->fNextChunk;
     }
-  
+
     // Then, write out the sample numbers that we deem correspond to 'sync samples':
     unsigned i;
     for (i = 0; i < numSamplesSoFar; i += 12) {
@@ -2021,7 +2021,7 @@ addAtom(stss); // Sync-Sample
       size += addWord(i+1);
       ++numEntries;
     }
-  
+
     // Then, write out the last entry (if we haven't already done so):
     if (i != (numSamplesSoFar - 1)) {
       size += addWord(numSamplesSoFar);

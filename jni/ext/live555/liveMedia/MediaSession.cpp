@@ -593,7 +593,7 @@ Boolean MediaSubsession::initiate(int useSpecialRTPoffset) {
 	env().setResultMsg("Failed to create RTP socket");
 	break;
       }
-      
+
       // Set our RTCP port to be the RTP port +1
       portNumBits const rtcpPortNum = fClientPortNum|1;
       if (isSSM()) {
@@ -634,7 +634,7 @@ Boolean MediaSubsession::initiate(int useSpecialRTPoffset) {
 	if (!getSourcePort(env(), fRTPSocket->socketNum(), clientPort)) {
 	  break;
 	}
-	fClientPortNum = ntohs(clientPort.num()); 
+	fClientPortNum = ntohs(clientPort.num());
 	if ((fClientPortNum&1) != 0) { // it's odd
 	  // Record this socket in our table, and keep trying:
 	  unsigned key = (unsigned)fClientPortNum;

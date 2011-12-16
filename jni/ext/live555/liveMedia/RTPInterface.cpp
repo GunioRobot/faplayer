@@ -355,7 +355,7 @@ void SocketDescriptor::tcpReadHandler1(int mask) {
   //   a 2-byte packet size (in network byte order)
   //   the packet data.
   // However, because the socket is being read asynchronously, this data might arrive in pieces.
-  
+
   u_int8_t c;
   struct sockaddr_in fromAddress;
   if (fTCPReadingState != AWAITING_PACKET_DATA) {
@@ -367,7 +367,7 @@ void SocketDescriptor::tcpReadHandler1(int mask) {
       return;
     }
   }
-  
+
   switch (fTCPReadingState) {
     case AWAITING_DOLLAR: {
       if (c == '$') {
@@ -395,7 +395,7 @@ void SocketDescriptor::tcpReadHandler1(int mask) {
     case AWAITING_SIZE2: {
       // The byte that we read is the second (low) byte of the 16-bit RTP or RTCP packet 'size'.
       unsigned short size = (fSizeByte1<<8)|c;
-      
+
       // Record the information about the packet data that will be read next:
       RTPInterface* rtpInterface = lookupRTPInterface(fStreamChannelId);
       if (rtpInterface != NULL) {

@@ -8,14 +8,14 @@
 
 Function GetOptions
 	!define GetOptions `!insertmacro GetOptionsCall`
- 
+
 	!macro GetOptionsCall _PARAMETERS _OPTION _RESULT
 		Push `${_PARAMETERS}`
 		Push `${_OPTION}`
 		Call GetOptions
 		Pop ${_RESULT}
 	!macroend
- 
+
 	Exch $1
 	Exch
 	Exch $0
@@ -27,16 +27,16 @@ Function GetOptions
 	Push $6
 	Push $7
 	ClearErrors
- 
+
 	StrCpy $2 $1 '' 1
 	StrCpy $1 $1 1
 	StrLen $3 $2
 	StrCpy $7 0
- 
+
 	begin:
 	StrCpy $4 -1
 	StrCpy $6 ''
- 
+
 	quote:
 	IntOp $4 $4 + 1
 	StrCpy $5 $0 1 $4
@@ -68,7 +68,7 @@ Function GetOptions
 	StrCmp $6 '`' quote
 	StrCmp $5 $1 0 quote
 	StrCmp $7 0 trimleft trimright
- 
+
 	trimleft:
 	IntOp $4 $4 + 1
 	StrCpy $5 $0 $3 $4
@@ -82,7 +82,7 @@ Function GetOptions
 	goto -3
 	StrCpy $7 1
 	goto begin
- 
+
 	trimright:
 	StrCpy $0 $0 $4
 	StrCpy $4 $0 1 -1
@@ -97,11 +97,11 @@ Function GetOptions
 	StrCmp $3 '`' 0 end
 	StrCpy $0 $0 -1 1
 	goto end
- 
+
 	notfound:
 	SetErrors
 	StrCpy $0 ''
- 
+
 	end:
 	Pop $7
 	Pop $6
@@ -129,7 +129,7 @@ FunctionEnd
 !macroend
 !define HideIcons "!insertmacro HideIcons"
 
-; Adds shortcuts 
+; Adds shortcuts
 !macro ShowIcons
   WriteRegDWORD HKLM "Software\Clients\Media\VLC\InstallInfo" "IconsVisible" 1
   SetShellVarContext all  ; Set $DESKTOP to All Users
@@ -155,19 +155,19 @@ Section
 	IfErrors 0 +2
 	goto showIc
     !insertmacro HideIcons
-    
+
     showIc:
     ${GetOptions} $CMDLINE "ShowIcons"  $R0
     IfErrors 0 +2
     goto reinst
     !insertmacro ShowIcons
-    
+
     reinst:
     ${GetOptions} $CMDLINE "Reinstall"  $R0
 	IfErrors 0 +2
 	goto end
     !insertmacro Reinstall
-    
+
     end:
 SectionEnd
 

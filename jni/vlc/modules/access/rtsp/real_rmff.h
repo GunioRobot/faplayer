@@ -236,7 +236,7 @@ void rmff_fix_header(rmff_header_t *h);
  * returns the size of the header (incl. first data-header)
  */
 int rmff_get_header_size(rmff_header_t *h);
- 
+
 /*
  * dumps the header <h> to <buffer>. <max> is the size of <buffer>
  */

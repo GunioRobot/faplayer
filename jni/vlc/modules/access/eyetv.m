@@ -140,7 +140,7 @@ static void selectChannel( vlc_object_t *p_this, int theChannelNum )
     }
     NSDictionary *errorDict;
     NSAppleEventDescriptor *descriptor = [script executeAndReturnError:&errorDict];
-    if( nil == descriptor ) 
+    if( nil == descriptor )
     {
         NSString *errorString = [errorDict objectForKey:NSAppleScriptErrorMessage];
         msg_Err( p_this, "EyeTV source change failed with error status '%s'", [errorString UTF8String] );
@@ -159,7 +159,7 @@ static int Open( vlc_object_t *p_this )
 
     struct sockaddr_un publicAddr, peerAddr;
     int publicSock;
- 
+
     /* Init p_access */
     access_InitFields( p_access );
     ACCESS_SET_CALLBACKS( NULL, BlockRead, Control, NULL );
@@ -249,22 +249,22 @@ static void Close( vlc_object_t *p_this )
 {
     access_t     *p_access = (access_t *)p_this;
     access_sys_t *p_sys = p_access->p_sys;
- 
+
     msg_Dbg( p_access, "closing" );
- 
+
     /* tell the EyeTV plugin to close its msg port and stop sending */
     CFNotificationCenterPostNotification( CFNotificationCenterGetDistributedCenter (),
                                           CFSTR("VLCAccessStopDataSending"),
                                           CFSTR("VLCEyeTVSupport"),
                                           /*userInfo*/ NULL,
                                           TRUE );
- 
+
     msg_Dbg( p_access, "plugin notified" );
 
 	close(p_sys->eyetvSock);
- 
+
     msg_Dbg( p_access, "msg port closed and freed" );
- 
+
     free( p_sys );
 }
 
@@ -303,7 +303,7 @@ static int Control( access_t *p_access, int i_query, va_list args )
     int          *pi_int;
     int64_t      *pi_64;
     access_sys_t  *p_sys = (access_sys_t *) p_access->p_sys;
- 
+
     switch( i_query )
     {
         case ACCESS_CAN_SEEK:
@@ -325,7 +325,7 @@ static int Control( access_t *p_access, int i_query, va_list args )
             pi_64 = (int64_t*)va_arg( args, int64_t * );
             *pi_64 = (int64_t) p_sys->i_pts_delay * 1000;
             break;
-        
+
         case ACCESS_SET_PAUSE_STATE:
         case ACCESS_GET_TITLE_INFO:
         case ACCESS_SET_TITLE:
@@ -333,11 +333,11 @@ static int Control( access_t *p_access, int i_query, va_list args )
         case ACCESS_SET_PRIVATE_ID_STATE:
         case ACCESS_GET_CONTENT_TYPE:
             return VLC_EGENERIC;
- 
+
         default:
             msg_Warn( p_access, "unimplemented query in control" );
             return VLC_EGENERIC;
- 
+
     }
     return VLC_SUCCESS;
 }

@@ -11,12 +11,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -75,7 +75,7 @@ EbmlMaster::~EbmlMaster()
 	assert(!IsLocked()); // you're trying to delete a locked element !!!
 
 	size_t Index;
-	
+
 	for (Index = 0; Index < ElementList.size(); Index++) {
 		if (!(*ElementList[Index]).IsLocked())	{
 			delete ElementList[Index];
@@ -137,9 +137,9 @@ uint64 EbmlMaster::UpdateSize(bool bWithDefault, bool bForceRender)
 	if (!bForceRender) {
 		assert(CheckMandatory());
     }
-	
+
 	size_t Index;
-	
+
 	for (Index = 0; Index < ElementList.size(); Index++) {
 		if (!bWithDefault && (ElementList[Index])->IsDefaultValue())
 			continue;
@@ -217,7 +217,7 @@ bool EbmlMaster::CheckMandatory() const
 }
 
 std::vector<std::string> EbmlMaster::FindAllMissingElements()
-{	
+{
 	assert(Context.GetSize() != 0);
 
 	std::vector<std::string> missingElements;
@@ -263,7 +263,7 @@ std::vector<std::string> EbmlMaster::FindAllMissingElements()
 EbmlElement *EbmlMaster::FindElt(const EbmlCallbacks & Callbacks) const
 {
 	size_t Index;
-	
+
 	for (Index = 0; Index < ElementList.size(); Index++) {
 		EbmlElement * tmp = ElementList[Index];
 		if (EbmlId(*tmp) == EBML_INFO_ID(Callbacks))
@@ -276,12 +276,12 @@ EbmlElement *EbmlMaster::FindElt(const EbmlCallbacks & Callbacks) const
 EbmlElement *EbmlMaster::FindFirstElt(const EbmlCallbacks & Callbacks, bool bCreateIfNull)
 {
 	size_t Index;
-	
+
 	for (Index = 0; Index < ElementList.size(); Index++) {
 		if (ElementList[Index] && EbmlId(*(ElementList[Index])) == EBML_INFO_ID(Callbacks))
 			return ElementList[Index];
 	}
-	
+
 	if (bCreateIfNull) {
 		// add the element
 		EbmlElement *NewElt = &EBML_INFO_CREATE(Callbacks);
@@ -294,19 +294,19 @@ EbmlElement *EbmlMaster::FindFirstElt(const EbmlCallbacks & Callbacks, bool bCre
 		}
 		return NewElt;
 	}
-	
+
 	return NULL;
 }
 
 EbmlElement *EbmlMaster::FindFirstElt(const EbmlCallbacks & Callbacks) const
 {
 	size_t Index;
-	
+
 	for (Index = 0; Index < ElementList.size(); Index++) {
 		if (EbmlId(*(ElementList[Index])) == EBML_INFO_ID(Callbacks))
 			return ElementList[Index];
 	}
-	
+
 	return NULL;
 }
 
@@ -317,7 +317,7 @@ EbmlElement *EbmlMaster::FindFirstElt(const EbmlCallbacks & Callbacks) const
 EbmlElement *EbmlMaster::FindNextElt(const EbmlElement & PastElt, bool bCreateIfNull)
 {
 	size_t Index;
-	
+
 	for (Index = 0; Index < ElementList.size(); Index++) {
 		if ((ElementList[Index]) == &PastElt) {
 			// found past element, new one is :
@@ -354,7 +354,7 @@ EbmlElement *EbmlMaster::FindNextElt(const EbmlElement & PastElt, bool bCreateIf
 EbmlElement *EbmlMaster::FindNextElt(const EbmlElement & PastElt) const
 {
 	size_t Index;
-	
+
 	for (Index = 0; Index < ElementList.size(); Index++) {
 		if ((ElementList[Index]) == &PastElt) {
 			// found past element, new one is :
@@ -443,8 +443,8 @@ void EbmlMaster::Read(EbmlStream & inDataStream, const EbmlSemanticContext & sCo
 						goto processCrc;
 					ElementLevelA = FoundElt;
 					continue;
-				} 
-				
+				}
+
 				if (UpperEltFound < 0) {
 					UpperEltFound++;
 					if (UpperEltFound < 0)
@@ -453,7 +453,7 @@ void EbmlMaster::Read(EbmlStream & inDataStream, const EbmlSemanticContext & sCo
 
 				if (MaxSizeToRead <= 0)
 					goto processCrc;// this level is finished
-				
+
 				ElementLevelA = inDataStream.FindNextElement(sContext, UpperEltFound, MaxSizeToRead, AllowDummyElt);
 			}
 			if (UpperEltFound > 0) {

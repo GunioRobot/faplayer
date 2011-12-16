@@ -346,7 +346,7 @@ STDMETHODIMP CapturePin::Connect( IPin *,
     }
 
     if( !pmt ) return S_OK;
- 
+
     if( GUID_NULL != pmt->majortype &&
         media_types[0].majortype != pmt->majortype )
     {

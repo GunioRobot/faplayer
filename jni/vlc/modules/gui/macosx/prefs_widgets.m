@@ -858,7 +858,7 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
                         withView: o_parent_view];
         }
         break;
-    /* don't display keys in the advanced settings, since the current controls 
+    /* don't display keys in the advanced settings, since the current controls
     are broken by design. The user is required to change hotkeys in the sprefs
     and can only change really advanced stuff here..
     case CONFIG_ITEM_KEY:
@@ -1585,7 +1585,7 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
 
         o_textfieldTooltip = [[VLCMain sharedInstance] wrapString:
                               [[VLCMain sharedInstance]
-                               localizedString: (char *)p_item->psz_longtext ] toWidth: PREFS_WRAP];        
+                               localizedString: (char *)p_item->psz_longtext ] toWidth: PREFS_WRAP];
 
         /* add the label */
         if( p_item->psz_text )
@@ -1904,7 +1904,7 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
 
         o_tooltip = [[VLCMain sharedInstance] wrapString:
                      [[VLCMain sharedInstance]
-                      localizedString: (char *)p_item->psz_longtext ] toWidth: PREFS_WRAP];        
+                      localizedString: (char *)p_item->psz_longtext ] toWidth: PREFS_WRAP];
 
         /* add the label */
         if( p_item->psz_text )
@@ -2155,13 +2155,13 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
     if( _p_item->i_type == CONFIG_ITEM_MODULE_LIST )
         //TODO....
         return nil;
-    
+
     //Fill our array to know how may items we have...
     module_t *p_parser, **p_list;
     size_t i_module_index;
     NSRect mainFrame = [o_parent_view frame];
     NSString *o_labelString, *o_textfieldString, *o_tooltip;
-    
+
     o_modulearray = [[NSMutableArray alloc] initWithCapacity:10];
     /* build a list of available modules */
     p_list = module_list_get( NULL );
@@ -2169,20 +2169,20 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
     {
         int i;
         p_parser = p_list[i_module_index];
-        
+
         if( module_is_main( p_parser ) )
             continue;
-        
+
         unsigned int confsize;
         module_config_t *p_configlist = module_config_get( p_parser, &confsize );
-        
+
         for ( i = 0; i < confsize; i++ )
         {
             unsigned int unused;
             module_config_t *p_config = &p_configlist[i];
             NSString *o_modulelongname, *o_modulename;
             NSNumber *o_moduleenabled = nil;
-            
+
             /* Hack: required subcategory is stored in i_min */
             if( p_config->i_type == CONFIG_SUBCATEGORY &&
                p_config->value.i == _p_item->min.i )
@@ -2191,13 +2191,13 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
                                     module_get_name( p_parser, TRUE )];
                 o_modulename = [NSString stringWithUTF8String:
                                 module_get_object( p_parser )];
-                
+
                 if( _p_item->value.psz &&
                    strstr( _p_item->value.psz, module_get_object( p_parser ) ) )
                     o_moduleenabled = [NSNumber numberWithBool:YES];
                 else
                     o_moduleenabled = [NSNumber numberWithBool:NO];
-                
+
                 [o_modulearray addObject:[NSMutableArray
                                           arrayWithObjects: o_modulename, o_modulelongname,
                                           o_moduleenabled, nil]];
@@ -2206,7 +2206,7 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
         module_config_free( p_configlist );
     }
     module_list_free( p_list );
-    
+
     mainFrame.size.height = 30 + 20 * [o_modulearray count];
     mainFrame.size.width = mainFrame.size.width - LEFTMARGIN - RIGHTMARGIN;
     mainFrame.origin.x = LEFTMARGIN;
@@ -2214,11 +2214,11 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
     if( [super initWithFrame: mainFrame item: _p_item] != nil )
     {
         i_view_type = CONFIG_ITEM_MODULE_LIST;
-        
+
         o_tooltip = [[VLCMain sharedInstance] wrapString:
                      [[VLCMain sharedInstance]
                       localizedString: (char *)p_item->psz_longtext ] toWidth: PREFS_WRAP];
-        
+
         /* add the label */
         if( p_item->psz_text )
             o_labelString = [[VLCMain sharedInstance]
@@ -2228,7 +2228,7 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
         ADD_LABEL( o_label, mainFrame, 0, -3, o_labelString, o_tooltip )
         [o_label setAutoresizingMask:NSViewNotSizable ];
         [self addSubview: o_label];
-        
+
         /* build the textfield */
         if( p_item->value.psz )
             o_textfieldString = [[VLCMain sharedInstance]
@@ -2240,8 +2240,8 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
                       [o_label frame].size.width - 2, o_tooltip, o_textfieldString )
         [o_textfield setAutoresizingMask:NSViewWidthSizable ];
         [self addSubview: o_textfield];
-        
-        
+
+
         {
             NSRect s_rc = mainFrame;
             s_rc.size.height = mainFrame.size.height - 30;
@@ -2252,7 +2252,7 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
             [o_scrollview setDrawsBackground: NO];
             [o_scrollview setBorderType: NSBezelBorder];
             [o_scrollview setAutohidesScrollers:YES];
-            
+
             NSTableView *o_tableview;
             o_tableview = [[NSTableView alloc] initWithFrame : s_rc];
             [o_tableview setUsesAlternatingRowBackgroundColors:YES];
@@ -2260,7 +2260,7 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
             /* TODO: find a good way to fix the row height and text size*/
             /* FIXME: support for multiple selection... */
             //    [o_tableview setAllowsMultipleSelection:YES];
-            
+
             NSCell *o_headerCell = [[NSCell alloc] initTextCell:@"Enabled"];
             NSCell *o_dataCell = [[NSButtonCell alloc] init];
             [(NSButtonCell*)o_dataCell setButtonType:NSSwitchButton];
@@ -2272,7 +2272,7 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
             [o_tableColumn setDataCell: o_dataCell];
             [o_tableColumn setWidth:17];
             [o_tableview addTableColumn: o_tableColumn];
-            
+
             o_headerCell = [[NSCell alloc] initTextCell:@"Module Name"];
             o_dataCell = [[NSTextFieldCell alloc] init];
             [o_dataCell setFont:[NSFont systemFontOfSize:12]];
@@ -2284,7 +2284,7 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
             [o_tableview addTableColumn: o_tableColumn];
             [o_tableview registerForDraggedTypes:[NSArray arrayWithObjects:
                                                   @"VLC media player module", nil]];
-            
+
             [o_tableview setDataSource:self];
             [o_tableview setTarget: self];
             [o_tableview setAction: @selector(tableChanged:)];
@@ -2336,7 +2336,7 @@ o_textfield = [[[NSSecureTextField alloc] initWithFrame: s_rc] retain];       \
 
 -(void)resetValues
 {
-#warning Reset prefs of the module selector is broken atm. 
+#warning Reset prefs of the module selector is broken atm.
     NSLog( @"don't forget about modulelistconfig" );
     [super resetValues];
 }

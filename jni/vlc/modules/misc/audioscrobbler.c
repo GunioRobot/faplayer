@@ -32,9 +32,9 @@
  * Preamble
  *****************************************************************************/
 
-#if defined( WIN32 ) 
-#include <time.h> 
-#endif 
+#if defined( WIN32 )
+#include <time.h>
+#endif
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
@@ -437,7 +437,7 @@ static void Run( intf_thread_t *p_intf )
         }
         else
         {
-            msg_Err( p_intf, "Authentication failed, handshaking again (%s)", 
+            msg_Err( p_intf, "Authentication failed, handshaking again (%s)",
                              p_buffer );
             p_sys->b_handshaked = false;
             HandleInterval( &p_sys->next_exchange, &p_sys->i_interval );

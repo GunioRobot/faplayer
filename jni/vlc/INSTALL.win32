@@ -65,17 +65,17 @@ Usually, you don't want to compile those by yourself, so use pre-compiled ones.
   actually really easy to compile a full-featured version of vlc (these compiled
   libraries will only work with mingw or cygwin):
   http://download.videolan.org/pub/testing/win32/contrib-201xxxxx-win32-bin-gcc-x.x.x-runtime-x.xx.x-only.tar.bz2
-  (Check out for more recent versions at the same location). 
+  (Check out for more recent versions at the same location).
 
   All you need to do is extract it in your root directory (the include files
   and libraries will be put in /usr/win32). You can do this with the following
-  command: 
+  command:
 
     tar xjvf contrib-20110614-win32-bin-gcc-4.4.4-runtime-3.15.2-only.tar.bz2 -C /
 
   Please note the "-C /".
 
-* An automated way of building the contrib libraries is provided in 
+* An automated way of building the contrib libraries is provided in
   extra/contrib. It will download, configure and build the libraries.
   See the extras/contrib/README for more info.
 

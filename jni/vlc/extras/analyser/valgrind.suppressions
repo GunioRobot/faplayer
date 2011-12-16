@@ -159,7 +159,7 @@
 
 
 #############################################
-#             Uninitialized memory 
+#             Uninitialized memory
 #############################################
 
 ## Get Homedir
@@ -257,7 +257,7 @@
 
 
 #############################################
-#             Memory leaks 
+#             Memory leaks
 #############################################
 
 ## Plugins cache
@@ -317,7 +317,7 @@
 }
 
 
-## Plugins loading 
+## Plugins loading
 {
    LoadPlugins4
    Memcheck:Leak
@@ -637,7 +637,7 @@
   fun:dlopen
   fun:AllocatePlugin
 }
-{ 
+{
   AllocatePlugin4
   Memcheck:Leak
   fun:malloc

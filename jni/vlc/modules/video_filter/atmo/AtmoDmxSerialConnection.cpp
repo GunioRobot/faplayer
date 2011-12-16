@@ -205,7 +205,7 @@ ATMO_BOOL CAtmoDmxSerialConnection::setChannelValues(int numValues,unsigned char
 ATMO_BOOL CAtmoDmxSerialConnection::setChannelColor(int channel, tRGBColor color)
 {
 	DWORD iBytesWritten;
-	
+
     Lock();
 
     DMXout[channel+0+2]=color.r;

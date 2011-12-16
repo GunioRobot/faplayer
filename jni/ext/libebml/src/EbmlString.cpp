@@ -11,12 +11,12 @@
 ** modify it under the terms of the GNU Lesser General Public
 ** License as published by the Free Software Foundation; either
 ** version 2.1 of the License, or (at your option) any later version.
-** 
+**
 ** This library is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** Lesser General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU Lesser General Public
 ** License along with this library; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -43,7 +43,7 @@ EbmlString::EbmlString()
  :EbmlElement(0, false)
 {
 	SetDefaultSize(0);
-/* done automatically	
+/* done automatically
 	SetSize_(Value.length());
 	if (GetDefaultSize() > GetSize())
 		SetSize_(GetDefaultSize());*/
@@ -54,7 +54,7 @@ EbmlString::EbmlString(const std::string & aDefaultValue)
 {
 	SetDefaultSize(0);
 	SetDefaultIsSet();
-/* done automatically	
+/* done automatically
 	SetSize_(Value.length());
 	if (GetDefaultSize() > GetSize())
 		SetSize_(GetDefaultSize());*/
@@ -92,7 +92,7 @@ filepos_t EbmlString::RenderData(IOCallback & output, bool bForceRender, bool bW
 	filepos_t Result;
 	output.writeFully(Value.c_str(), Value.length());
 	Result = Value.length();
-	
+
 	if (Result < GetDefaultSize()) {
 		// pad the rest with 0
 		binary *Pad = new binary[GetDefaultSize() - Result];
@@ -105,7 +105,7 @@ filepos_t EbmlString::RenderData(IOCallback & output, bool bForceRender, bool bW
 		Result = GetDefaultSize();
 		delete [] Pad;
 	}
-	
+
 	return Result;
 }
 
@@ -115,7 +115,7 @@ EbmlString & EbmlString::operator=(const std::string & NewString)
 {
 	Value = NewString;
 	SetValueIsSet();
-/* done automatically	
+/* done automatically
 	SetSize_(Value.length());
 	if (GetDefaultSize() > GetSize())
 		SetSize_(GetDefaultSize());*/

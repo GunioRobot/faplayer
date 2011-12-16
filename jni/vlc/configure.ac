@@ -846,7 +846,7 @@ AC_ARG_VAR(PKG_CONFIG_PATH,
        [Paths where to find .pc not at the default location])
 PKG_PROG_PKG_CONFIG()
 
-dnl On some OS we need static linking 
+dnl On some OS we need static linking
 AS_IF([test -n "${PKG_CONFIG}" ],[
     AS_IF([test "${SYS}" = "mingw32" -o "${SYS}" = "mingwce" -o "${SYS}" = "darwin" ],[
         PKG_CONFIG="${PKG_CONFIG} --static"
@@ -863,7 +863,7 @@ if test "${have_zlib}" = "yes"
 then
   VLC_ADD_LIBS([access_http mp4 skins2 sap mkv unzip zip],[-lz])
   PKG_CHECK_MODULES([MINIZIP], [minizip] , [ have_minizip=yes ], [
-    AC_CHECK_HEADERS([unzip.h], [ 
+    AC_CHECK_HEADERS([unzip.h], [
       have_minizip=yes
       MINIZIP_LIBS="-lminizip -lz"
     ], [
@@ -1906,7 +1906,7 @@ lternatively you can use --disable-live555 to disable the liveMedia plugin.])
         AC_MSG_RESULT(no)
       if test "${enable_live555}" = "yes"; then
         AC_MSG_ERROR([cannot find ${real_live555_tree}/liveMedia/libliveMedia.a, make sure you compiled live555 in ${with_live555_tree}])
-      fi	
+      fi
     fi
   fi
 fi
@@ -2583,7 +2583,7 @@ AC_ARG_ENABLE(dxva2,
 AS_IF([test "${enable_dxva2}" != "no"], [
   if test "${SYS}" = "mingw32"; then
   AS_IF([test "x${have_avcodec}" = "xyes"], [
-    AC_CHECK_HEADERS(dxva2api.h, 
+    AC_CHECK_HEADERS(dxva2api.h,
       [
         AC_CHECK_HEADERS(libavcodec/dxva2.h, [
            VLC_ADD_LIBS([avcodec],[-lole32 -lshlwapi -luuid])

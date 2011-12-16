@@ -23,7 +23,7 @@ Data packets start with a 4-byte header:
 
     * Subtitle image number (2 bytes).
 
-    * Length of the rest of the packet (described in the next section). 
+    * Length of the rest of the packet (described in the next section).
 
 ================
 SUBTITLE PACKETS
@@ -32,26 +32,26 @@ SUBTITLE PACKETS
 The information below comes immediately after the packet header in the
 same packet.
 
-* Packet length (2 bytes) 
+* Packet length (2 bytes)
 
 The assembled subtitle, with stripped sequence numbers
 
-* Option byte (1 byte) 
+* Option byte (1 byte)
 
 This is normally set to 0x2e; bit 3 indicates that a field with the
 display-time of the subtitle is present. What the other bits do is not
 known.
 
-* Time to display the subtitle (4 bytes) 
+* Time to display the subtitle (4 bytes)
 
 This in 1/90000'th of a second. This is only present if bit 3 above is
 set. This value specifies how long the subtitle will be shown, not
 when. When the subtitle is to be shown is specified in the PTS in the
 PES header.
 
-* X position (2 bytes) 
+* X position (2 bytes)
 
-* Y position (2 bytes) 
+* Y position (2 bytes)
 
 * Width (2 bytes)
 
@@ -61,7 +61,7 @@ This value must be even.
 
 This value must be even.
 
-* Unknown (1 byte) 
+* Unknown (1 byte)
 
 * 4 Color Palette Entries (16 bytes)
 
@@ -73,12 +73,12 @@ This value must be even.
     * Transparency (1 byte). A 0 value means totally transparent and
       255 totally opaque.
 
-* Command (1 byte) 
+* Command (1 byte)
 
 if cmd>>6 == 1 then a shift command and (cmd>>4)&3 is the
 direction. 0=top, 1=left, 2 = right, 3 = bottom
 
-* Odd-field data offset (2 bytes) 
+* Odd-field data offset (2 bytes)
 
 Image data is stored interlaced with the even lines first. This offset
 specifies where the first odd-line image data starts.

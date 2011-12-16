@@ -26,17 +26,17 @@ function VlcSyntax()
   syn keyword cType vlc_fixed_t mtime_t byte_t dctelem_t count_t ssize_t off_t
   syn keyword cType vlc_bool_t vlc_fourcc_t vlc_value_t
   " Core custom structures
-  syn keyword cType vlc_t libvlc_t vlc_object_t vlc_error_t vlc_status_t 
+  syn keyword cType vlc_t libvlc_t vlc_object_t vlc_error_t vlc_status_t
   syn keyword cType variable_t date_t
   syn keyword cType vlc_thread_t vlc_cond_t vlc_mutex_t vlc_list_t
   " Objects, modules, configurations
   syn keyword cType module_bank_t module_t module_config_t module_symbols_t
   syn keyword cType module_cache_t config_category_t
   " Playlist
-  syn keyword cType playlist_t playlist_item_t playlist_view_t 
+  syn keyword cType playlist_t playlist_item_t playlist_view_t
   syn keyword cType services_discovery_t services_discovery_sys_t
   syn keyword cType playlist_add_t playlist_preparse_t
-  syn keyword cType item_info_t item_info_category_t 
+  syn keyword cType item_info_t item_info_category_t
   syn keyword cType sout_format_t playlist_export_t playlist_import_t
   " Intf
   syn keyword cType intf_thread_t intf_sys_t intf_console_t intf_msg_t
@@ -44,7 +44,7 @@ function VlcSyntax()
   syn keyword cType msg_bank_t msg_subscription_t
   " Input
   syn keyword cType input_thread_t input_thread_sys_t input_item_t
-  syn keyword cType access_t access_sys_t stream_t stream_sys_t 
+  syn keyword cType access_t access_sys_t stream_t stream_sys_t
   syn keyword cType demux_t demux_sys_t es_out_t es_out_id_t
   syn keyword cType es_out_sys_t  es_descriptor_t
   syn keyword cType seekpoint_t info_t info_category_t
@@ -55,21 +55,21 @@ function VlcSyntax()
   syn keyword cType aout_instance_t aout_sys_t
   syn keyword cType aout_fifo_t aout_input_t aout_buffer_t audio_sample_format_t
   syn keyword cType aout_mixer_sys_t aout_filter_sys_t audio_volume_t
-  syn keyword cType aout_mixer_t aout_output_t audio_date_t 
+  syn keyword cType aout_mixer_t aout_output_t audio_date_t
   syn keyword cType aout_filter_t
   " Vout
   syn keyword cType vout_thread_t  vout_sys_t vout_synchro_t
   syn keyword cType chroma_sys_t picture_t picture_sys_t picture_heap_t
   syn keyword cType video_frame_format_t
   " SPU
-  syn keyword cType spu_t subpicture_t subpicture_sys_t 
+  syn keyword cType spu_t subpicture_t subpicture_sys_t
   syn keyword cType subpicture_region_t text_style_t
   " Images
   syn keyword cType image_handler_t
   " Sout
   syn keyword cType sout_instance_t sout_instance_sys_t sout_cfg_t
   syn keyword cType sout_input_t sout_packetizer_input_t
-  syn keyword cType sout_access_out_t sout_access_out_sys_t 
+  syn keyword cType sout_access_out_t sout_access_out_sys_t
   syn keyword cType sout_mux_t sout_mux_sys_t
   syn keyword cType sout_stream_t sout_stream_sys_t
   " Sout - announce
@@ -82,7 +82,7 @@ function VlcSyntax()
   " Blocks
   syn keyword cType block_t block_fifo_t
   " Network
-  syn keyword cType network_socket_t vlc_acl_t 
+  syn keyword cType network_socket_t vlc_acl_t
   " HTTPD
   syn keyword cType httpd_t httpd_host_t httpd_url_t httpd_client_t
   syn keyword cType httpd_callback_sys_t httpd_message_t httpd_callback_t
@@ -105,7 +105,7 @@ function VlcSyntax()
   syn keyword cType vlm_t vlm_message_t vlm_media_t vlm_schedule_t
   " Misc
   syn keyword cType md5_t vlc_meta_t vlc_callback_t iso639_lang_t
-  
+
   " misc macros
   syn keyword cOperator VLC_OBJECT VLC_EXPORT VLC_COMMON_MEMBERS
   " don't use these any more, please

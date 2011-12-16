@@ -52,8 +52,8 @@ struct oggseek_index_entry
 
 
 
-const demux_index_entry_t *oggseek_theora_index_entry_add ( logical_stream_t *, 
-                                                            int64_t i_granule, 
+const demux_index_entry_t *oggseek_theora_index_entry_add ( logical_stream_t *,
+                                                            int64_t i_granule,
                                                             int64_t i_pagepos );
 
 void oggseek_index_entries_free ( demux_index_entry_t * );

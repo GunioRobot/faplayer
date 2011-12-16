@@ -53,7 +53,7 @@ CThread::~CThread(void)
 
 CThread::~CThread(void)
 {
-  CloseHandle(m_hThread);	
+  CloseHandle(m_hThread);
   CloseHandle(m_hTerminateEvent);
 }
 
@@ -94,7 +94,7 @@ DWORD CThread::Execute(void)
 	while(!bTerminated) {
 	 ...
 	}
-  */	
+  */
  return 0;
 }
 

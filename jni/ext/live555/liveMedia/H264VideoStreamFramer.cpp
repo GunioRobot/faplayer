@@ -474,7 +474,7 @@ void H264VideoStreamParser::analyze_sei_data() {
   unsigned seiSize;
   removeEmulationBytes(sei, sizeof sei, seiSize);
 
-  unsigned j = 1; // skip the initial byte (forbidden_zero_bit; nal_ref_idc; nal_unit_type); we've already seen it 
+  unsigned j = 1; // skip the initial byte (forbidden_zero_bit; nal_ref_idc; nal_unit_type); we've already seen it
   while (j < seiSize) {
     unsigned payloadType = 0;
     do {
@@ -555,18 +555,18 @@ unsigned H264VideoStreamParser::parse() {
 	get1Byte(); setParseState(); // ensures that we progress over bad data
       }
       skipBytes(4); // skip this initial code
-      
+
       setParseState();
       fHaveSeenFirstStartCode = True; // from now on
     }
-    
+
     if (fOutputStartCodeSize > 0) {
       // Include a start code in the output:
       save4Bytes(0x00000001);
     }
 
     // Then save everything up until the next 0x00000001 (4 bytes) or 0x000001 (4 bytes).
-    // Also make note of the first byte, because it contains the "nal_unit_type": 
+    // Also make note of the first byte, because it contains the "nal_unit_type":
     u_int32_t next4Bytes = test4Bytes();
     u_int8_t firstByte = next4Bytes>>24;
     u_int8_t nal_ref_idc = (firstByte&0x60)>>5;
@@ -640,7 +640,7 @@ unsigned H264VideoStreamParser::parse() {
     // If this NAL unit is a VCL NAL unit, we also scan the start of the next NAL unit, to determine whether this NAL unit
     // ends the current 'access unit'.  We need this information to figure out when to increment "fPresentationTime".
     // (RTP streamers also need to know this in order to figure out whether or not to set the "M" bit.)
-    Boolean thisNALUnitEndsAccessUnit = False; // until we learn otherwise 
+    Boolean thisNALUnitEndsAccessUnit = False; // until we learn otherwise
     Boolean const isVCL = nal_unit_type <= 5 && nal_unit_type > 0; // Would need to include type 20 for SVC and MVC #####
     if (isVCL) {
       u_int32_t first4BytesOfNextNALUnit = test4Bytes();
@@ -680,7 +680,7 @@ unsigned H264VideoStreamParser::parse() {
 	  Boolean field_pic_flag, bottom_field_flag;
 	  analyze_slice_header(fStartOfFrame + fOutputStartCodeSize, fTo, nal_unit_type,
 			       frame_num, pic_parameter_set_id, idr_pic_id, field_pic_flag, bottom_field_flag);
-	  
+
 	  // Next NAL unit's "slice_header":
 #ifdef DEBUG
 	  fprintf(stderr, "    Next NAL unit's slice_header:\n");

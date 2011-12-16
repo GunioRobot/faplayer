@@ -8,7 +8,7 @@
 #define CC_VERSION __VERSION__
 #define restrict __restrict
 #define EXTERN_PREFIX ""
-#define EXTERN_ASM 
+#define EXTERN_ASM
 #define SLIBSUF ".so"
 #define ARCH_ALPHA 0
 #define ARCH_ARM 1

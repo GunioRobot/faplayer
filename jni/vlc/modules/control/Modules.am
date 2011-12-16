@@ -29,4 +29,4 @@ else
 libvlc_LTLIBRARIES += \
 	libntservice_plugin.la
 endif
-endif	
+endif

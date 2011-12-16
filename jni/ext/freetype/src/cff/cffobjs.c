@@ -404,7 +404,7 @@
     FT_Int32  idx             = 0;
     FT_Int32  length          = strlen( name ) + 1;
     FT_Bool   continue_search = 1;
- 
+
 
     while ( continue_search )
     {
@@ -713,7 +713,7 @@
           char*  family_name = NULL;
 
 
-          remove_subset_prefix( cffface->family_name ); 
+          remove_subset_prefix( cffface->family_name );
 
           if ( dict->family_name )
           {

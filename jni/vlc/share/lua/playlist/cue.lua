@@ -92,7 +92,7 @@ function parse()
 	file = nil
 
     while true
-    do 
+    do
         line = vlc.readline()
         if not line then break end
 

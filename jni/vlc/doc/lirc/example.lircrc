@@ -98,7 +98,7 @@ end
 begin
   prog = vlc
   button = 4_UP
-  config = key-nav-left 
+  config = key-nav-left
 end
 
 begin

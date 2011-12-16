@@ -327,7 +327,7 @@ void X11Window::setFullscreen( ) const
         event.format = 32;
         event.data.l[ 0 ] = 1;
         event.data.l[ 1 ] = NET_WM_STATE_FULLSCREEN;
- 
+
         XSendEvent( XDISPLAY,
                     DefaultRootWindow( XDISPLAY ),
                     False, SubstructureNotifyMask|SubstructureRedirectMask,

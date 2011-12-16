@@ -47,7 +47,7 @@
     // VLCApplianceController * controller = [[VLCMediaListController alloc] initWithMediaListAspect:mediaListAspect];
 
     VLCApplianceController * controller = [[VLCApplianceController alloc] initWithPath:[NSHomeDirectory() stringByAppendingPathComponent:@"Movies"]];
-    
+
     return [controller autorelease];
 }
 

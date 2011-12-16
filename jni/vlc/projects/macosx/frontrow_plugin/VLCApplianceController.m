@@ -42,14 +42,14 @@
 - initWithPath:(NSString*)path
 {
     self = [super init];
-    
+
     _contents = [[NSMutableArray alloc] init];
-    
+
     self.path = path;
-    
+
     [[self header] setTitle:[[NSFileManager defaultManager] displayNameAtPath:self.path]];
     [[self list] setDatasource:self];
-    
+
     return self;
 }
 
@@ -65,19 +65,19 @@
     if(path != _path) {
         [_path release];
         _path = [path retain];
-        
+
         [_contents removeAllObjects];
-        
+
         NSArray * contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:_path error:NULL];
-        
+
         for(NSString * name in contents) {
             NSString * filepath = [path stringByAppendingPathComponent:name];
             int ok = 0;
-            
+
             if([name hasPrefix:@"."]) {
                 ok = -1;
             }
-            
+
             if(ok == 0) {
                 BOOL directory;
                 if(![[NSFileManager defaultManager] fileExistsAtPath:filepath isDirectory:&directory]) {
@@ -87,14 +87,14 @@
                     ok = 1;
                 }
             }
-            
+
             if(ok == 0) {
                 NSString * type = [[NSWorkspace sharedWorkspace] typeOfFile:filepath error:NULL];
                 if([[NSWorkspace sharedWorkspace] type:type conformsToType:(NSString*)kUTTypeMovie]) {
                     ok = 1;
                 }
             }
-                
+
             if(ok == 0) {
                 static NSSet * additionalValidExtensions = nil;
                 if(additionalValidExtensions == nil) {
@@ -102,13 +102,13 @@
                                                  @"mkv",
                                                  nil];
                 }
-                
+
                 NSString * extension = [[name pathExtension] lowercaseString];
                 if([additionalValidExtensions containsObject:extension]) {
                     ok = 1;
                 }
             }
-            
+
             if(ok == 1) {
                 [_contents addObject:name];
             }
@@ -123,7 +123,7 @@
 
 - (void)willBePopped
 {
-    PRINT_ME();    
+    PRINT_ME();
 }
 
 
@@ -171,9 +171,9 @@
 {
     NSString * path = [self pathForRow:row];
     BOOL isDirectory = [self isDirectoryAtPath:path];
-    
+
     BRTextMenuItemLayer * item = nil;
-    
+
     if(isDirectory) {
         item = [BRTextMenuItemLayer folderMenuItem];
     }
@@ -182,7 +182,7 @@
     }
 
     [item setTitle:[self titleForRow:row]];
-    
+
     return item;
 }
 
@@ -195,9 +195,9 @@
 {
     NSString * path = [self pathForRow:row];
     BOOL isDirectory = [self isDirectoryAtPath:path];
-    
+
     BRController * controller = nil;
-    
+
     if(isDirectory) {
         controller = [[[VLCApplianceController alloc] initWithPath:path] autorelease];
     }
@@ -209,12 +209,12 @@
         if(playerController == nil) {
             playerController = [[VLCPlayerController alloc] init];
         }
-        
+
         playerController.media = [VLCMedia mediaWithPath:path];
         controller = playerController;
 #endif
     }
-    
+
     if(controller != nil) {
         [[self stack] pushController:controller];
     }

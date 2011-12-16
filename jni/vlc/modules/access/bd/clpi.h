@@ -62,7 +62,7 @@ typedef struct
 
     int              i_stc;
     bd_clpi_stc_t    *p_stc;
-    
+
     int              i_pmt_pid;
     int              i_stream;
     bd_clpi_stream_t *p_stream;

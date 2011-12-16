@@ -577,7 +577,7 @@ static int Open( vlc_object_t *p_this )
             p_gamma[1] = p_gamma[2];
             p_gamma[2] = t;
         }
-        
+
         for( int i_index = 0; i_index < 256; i_index++ )
         {
             for( int i_index2 = 0; i_index2 <= ACCURACY; i_index2++ )

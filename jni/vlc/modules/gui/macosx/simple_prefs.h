@@ -170,8 +170,8 @@
 - (NSString *)OSXStringKeyToString:(NSString *)theString;
 
 /* toolbar */
-- (NSToolbarItem *) toolbar: (NSToolbar *)o_toolbar 
-      itemForItemIdentifier: (NSString *)o_itemIdent 
+- (NSToolbarItem *) toolbar: (NSToolbar *)o_toolbar
+      itemForItemIdentifier: (NSString *)o_itemIdent
   willBeInsertedIntoToolbar: (BOOL)b_willBeInserted;
 - (NSArray *)toolbarDefaultItemIdentifiers: (NSToolbar *)toolbar;
 - (NSArray *)toolbarAllowedItemIdentifiers: (NSToolbar *)toolbar;
@@ -181,7 +181,7 @@
 - (void)showSimplePrefs;
 
 - (IBAction)buttonAction:(id)sender;
-- (void)sheetDidEnd:(NSWindow *)o_sheet 
+- (void)sheetDidEnd:(NSWindow *)o_sheet
          returnCode:(int)i_return
         contextInfo:(void *)o_context;
 
